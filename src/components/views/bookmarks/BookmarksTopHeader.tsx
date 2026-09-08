@@ -113,7 +113,7 @@ export const BookmarksTopHeader: React.FC<BookmarksTopHeaderProps> = ({
           <div className="flex items-center gap-1.5 px-2.5 py-1 bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/30 rounded-xl text-xs text-blue-700 dark:text-blue-300 font-semibold shadow-2xs shrink-0">
             <span className="capitalize">{activeFilter.type.replace('_', ' ')}:</span>
             <span className="font-bold truncate max-w-[120px]">{activeFilter.name}</span>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onSelectFilter(null)}
               className="p-0.5 hover:bg-blue-500/20 rounded-full transition-colors cursor-pointer"
@@ -125,7 +125,7 @@ export const BookmarksTopHeader: React.FC<BookmarksTopHeaderProps> = ({
         )}
 
         {/* All Button */}
-        <button
+        <button aria-label="Action"
           type="button"
           id="bookmarks-filter-all"
           onClick={() => onSelectFilter(null)}
@@ -142,7 +142,7 @@ export const BookmarksTopHeader: React.FC<BookmarksTopHeaderProps> = ({
         {/* Folders Dropdown Button (if folders available) */}
         {folders.length > 0 && (
           <div className="relative inline-block text-left">
-            <button
+            <button aria-label="Action"
               type="button"
               id="bookmarks-folders-button"
               onClick={() => toggleDropdown('folders')}
@@ -173,7 +173,7 @@ export const BookmarksTopHeader: React.FC<BookmarksTopHeaderProps> = ({
                   {folders.map(f => {
                     const isSelected = isFilterActive('folder', f.name);
                     return (
-                      <button
+                      <button aria-label="Action"
                         key={f.name}
                         type="button"
                         onClick={() => handleSelectFolder(f.name)}
@@ -197,7 +197,7 @@ export const BookmarksTopHeader: React.FC<BookmarksTopHeaderProps> = ({
         {/* Tags Dropdown Button (if tags available) */}
         {tags.length > 0 && (
           <div className="relative inline-block text-left">
-            <button
+            <button aria-label="Action"
               type="button"
               id="bookmarks-tags-button"
               onClick={() => toggleDropdown('tags')}
@@ -228,7 +228,7 @@ export const BookmarksTopHeader: React.FC<BookmarksTopHeaderProps> = ({
                   {tags.map(t => {
                     const isSelected = isFilterActive('tag', t.name);
                     return (
-                      <button
+                      <button aria-label="Action"
                         key={t.name}
                         type="button"
                         onClick={() => handleSelectTag(t.name)}
@@ -253,7 +253,7 @@ export const BookmarksTopHeader: React.FC<BookmarksTopHeaderProps> = ({
       {/* Right: Direct 1-Click Import Button, Paste Link, Export HTML */}
       <div className="flex items-center gap-2 shrink-0 ml-auto">
         {/* Single Direct Import Button - 1 click opens importer directly */}
-        <button
+        <button aria-label="Action"
           type="button"
           id="bookmarks-header-import-button"
           onClick={() => {

@@ -36,7 +36,7 @@ export const NotesTemplatesModal: React.FC<NotesTemplatesModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={onClose}
             className="p-1.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer"

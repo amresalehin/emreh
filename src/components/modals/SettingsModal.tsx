@@ -148,7 +148,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
           >
@@ -158,7 +158,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
         {/* Tab Navigation */}
         <div className="px-5 pt-3 pb-0 border-b border-gray-100 dark:border-gray-800/80 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0 bg-white dark:bg-[#151518]">
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('startup')}
             className={`pb-3 px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'startup'
@@ -169,7 +169,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <Layers className="w-4 h-4" />
             <span>Default Views & Scope</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('layout')}
             className={`pb-3 px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'layout'
@@ -180,7 +180,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <LayoutGrid className="w-4 h-4" />
             <span>Density & Grid</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('visibility')}
             className={`pb-3 px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'visibility'
@@ -191,7 +191,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <Eye className="w-4 h-4" />
             <span>Content Visibility</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('sorting')}
             className={`pb-3 px-3 text-xs font-bold border-b-2 flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'sorting'
@@ -218,7 +218,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   {viewOptions.map(opt => {
                     const isSelected = draftSettings.defaultView === opt.id;
                     return (
-                      <button
+                      <button aria-label="Action"
                         key={opt.id}
                         type="button"
                         onClick={() => handleUpdateDraft({ defaultView: opt.id })}
@@ -252,7 +252,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   Default Date Range Scope
                 </label>
                 <div className="grid grid-cols-2 gap-2.5">
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => handleUpdateDraft({ defaultDateScope: 'day' })}
                     className={`p-3 rounded-2xl border flex items-center justify-between transition-all cursor-pointer ${
@@ -267,7 +267,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     </div>
                     {draftSettings.defaultDateScope === 'day' && <Check className="w-4 h-4 text-emerald-500" />}
                   </button>
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => handleUpdateDraft({ defaultDateScope: 'all' })}
                     className={`p-3 rounded-2xl border flex items-center justify-between transition-all cursor-pointer ${
@@ -363,7 +363,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   ].map(d => {
                     const isSelected = draftSettings.density === d.id;
                     return (
-                      <button
+                      <button aria-label="Action"
                         key={d.id}
                         type="button"
                         onClick={() => handleUpdateDraft({ density: d.id as LayoutDensity })}
@@ -402,7 +402,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   ].map(c => {
                     const isSelected = draftSettings.gridColumns === c.id;
                     return (
-                      <button
+                      <button aria-label="Action"
                         key={c.id}
                         type="button"
                         onClick={() => handleUpdateDraft({ gridColumns: c.id as GridColumnsOption })}
@@ -576,7 +576,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   ].map(s => {
                     const isSelected = draftSettings.defaultSortOrder === s.id;
                     return (
-                      <button
+                      <button aria-label="Action"
                         key={s.id}
                         type="button"
                         onClick={() => handleUpdateDraft({ defaultSortOrder: s.id as SortOrderOption })}
@@ -654,7 +654,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   <p className="text-[11px] text-gray-400">Export or import your complete view defaults configuration</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button
+                  <button aria-label="Action"
                     onClick={handleExport}
                     className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
@@ -672,7 +672,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
         {/* Footer */}
         <div className="px-5 py-3.5 border-t border-gray-100 dark:border-gray-800/80 bg-gray-50/50 dark:bg-[#18181c]/60 flex items-center justify-between shrink-0">
-          <button
+          <button aria-label="Action"
             onClick={handleReset}
             className="px-3 py-1.5 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
           >
@@ -680,13 +680,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </button>
 
           <div className="flex items-center gap-2">
-            <button
+            <button aria-label="Action"
               onClick={onClose}
               className="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold transition-all cursor-pointer"
             >
               Cancel
             </button>
-            <button
+            <button aria-label="Action"
               onClick={handleSave}
               className="px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold shadow-sm flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
             >

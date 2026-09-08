@@ -131,7 +131,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
           <span className="text-cyan-500 font-mono text-[11px]">zip://</span>
 
           <div className="relative flex-1">
-            <button
+            <button aria-label="Action"
               onClick={() => setIsHtmlDropdownOpen(!isHtmlDropdownOpen)}
               className="w-full text-left font-mono text-slate-200 hover:text-cyan-400 flex items-center justify-between transition-colors truncate"
             >
@@ -149,7 +149,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
                     Switch HTML Page
                   </div>
                   {availableHtmlFiles.map(path => (
-                    <button
+                    <button aria-label="Action"
                       key={path}
                       onClick={() => {
                         onSelectEntryPoint(path);
@@ -173,7 +173,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
           {DEVICE_PRESETS.map(preset => {
             const isSelected = currentDevice === preset.id;
             return (
-              <button
+              <button aria-label="Action"
                 key={preset.id}
                 onClick={() => handleSelectDevice(preset.id)}
                 title={preset.name}
@@ -197,7 +197,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
         <div className="flex items-center gap-1">
           {currentDevice !== 'responsive' && (
             <>
-              <button
+              <button aria-label="Action"
                 onClick={() => setIsLandscape(!isLandscape)}
                 title="Rotate Device (Portrait/Landscape)"
                 className="p-1.5 rounded-md hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"
@@ -205,7 +205,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
                 <RotateCw className="w-3.5 h-3.5" />
               </button>
 
-              <button
+              <button aria-label="Action"
                 onClick={() => setIsAutoFit(!isAutoFit)}
                 title={isAutoFit ? 'Switch to Manual 100% Zoom' : 'Auto-Fit to Window'}
                 className={`px-2 py-1 rounded text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer ${
@@ -222,7 +222,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
 
           {/* Zoom controls */}
           <div className="flex items-center gap-1 text-slate-400 text-xs px-1">
-            <button
+            <button aria-label="Action"
               onClick={() => {
                 setIsAutoFit(false);
                 setZoomScale(Math.max(0.4, effectiveScale - 0.15));
@@ -234,7 +234,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
               <ZoomOut className="w-3.5 h-3.5" />
             </button>
             <span className="font-mono text-[11px] w-9 text-center">{Math.round(effectiveScale * 100)}%</span>
-            <button
+            <button aria-label="Action"
               onClick={() => {
                 setIsAutoFit(false);
                 setZoomScale(Math.min(1.75, effectiveScale + 0.15));

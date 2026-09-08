@@ -120,7 +120,7 @@ export const TimelineTripsTab: React.FC<TimelineTripsTabProps> = ({
             className="w-full pl-8 pr-8 py-1.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-xs outline-none focus:border-blue-500 text-gray-900 dark:text-white"
           />
           {searchQuery && (
-            <button
+            <button aria-label="Action"
               onClick={() => setSearchQuery('')}
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
             >
@@ -139,7 +139,7 @@ export const TimelineTripsTab: React.FC<TimelineTripsTabProps> = ({
             { id: 'biking', label: '🚴 Cycling', icon: Bike },
             { id: 'flight', label: '✈️ Flights', icon: Plane }
           ].map(m => (
-            <button
+            <button aria-label="Action"
               key={m.id}
               onClick={() => setSelectedMode(m.id)}
               className={`px-2.5 py-1 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer border text-[11px] ${
@@ -225,7 +225,7 @@ export const TimelineTripsTab: React.FC<TimelineTripsTabProps> = ({
                         {distKm.toFixed(1)} km
                       </div>
                       {onJumpToDate && (
-                        <button
+                        <button aria-label="Action"
                           onClick={e => {
                             e.stopPropagation();
                             onJumpToDate(dateObj);

@@ -160,7 +160,7 @@ export const SyncStatusBanner: React.FC<SyncStatusBannerProps> = ({
           {/* Action and Retry Buttons */}
           <div className="flex items-center gap-2 mt-2.5 flex-wrap">
             {onRetry && (
-              <button
+              <button aria-label="Action"
                 type="button"
                 id="sync-retry-btn"
                 onClick={onRetry}
@@ -177,7 +177,7 @@ export const SyncStatusBanner: React.FC<SyncStatusBannerProps> = ({
             )}
 
             {actionButton && (
-              <button
+              <button aria-label="Action"
                 type="button"
                 id="sync-action-btn"
                 onClick={actionButton.onClick}

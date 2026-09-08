@@ -85,7 +85,7 @@ export const FitActivityWidget: React.FC<FitActivityWidgetProps> = ({
           </div>
 
           {onNavigateView && (
-            <button
+            <button aria-label="Action"
               onClick={() => onNavigateView('fit')}
               className="px-2 py-1 rounded-lg text-xs font-semibold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/10 transition-colors flex items-center gap-1 cursor-pointer"
             >
@@ -147,7 +147,7 @@ export const FitActivityWidget: React.FC<FitActivityWidgetProps> = ({
       {/* Footer link */}
       {!todayMetric && onImportClick && (
         <div className="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5">
-          <button
+          <button aria-label="Action"
             onClick={onImportClick}
             className="w-full py-1.5 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
           >

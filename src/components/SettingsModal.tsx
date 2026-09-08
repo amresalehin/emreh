@@ -236,7 +236,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         <aside className="w-full sm:w-56 shrink-0 border-b sm:border-b-0 sm:border-r border-stone-200 dark:border-stone-800/80 bg-stone-100/70 dark:bg-[#18181b]/70 flex flex-col">
           {/* Header with Emreh Logo & Farsi Branding */}
           <div className="p-4 border-b border-stone-200 dark:border-stone-800/80 flex items-center justify-between">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setShowLogoStory(!showLogoStory)}
               className="flex items-center gap-2.5 text-left group cursor-pointer"
@@ -275,7 +275,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 className="w-full pl-7 pr-6 py-1 text-xs bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700/80 rounded-lg text-stone-800 dark:text-stone-200 placeholder:text-stone-400 focus:outline-none focus:border-stone-400"
               />
               {searchFilter && (
-                <button
+                <button aria-label="Action"
                   onClick={() => setSearchFilter('')}
                   className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
                 >
@@ -293,7 +293,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 const Icon = cat.icon;
                 const isActive = activeCategory === cat.id && !showLogoStory;
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={cat.id}
                     onClick={() => {
                       setActiveCategory(cat.id);
@@ -414,7 +414,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 </div>
 
                 <div className="pt-1">
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setShowLogoStory(false)}
                     className="px-3.5 py-1.5 text-xs font-medium bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 rounded-lg hover:opacity-90 cursor-pointer"
                   >
@@ -437,7 +437,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                           const Icon = v.icon;
                           const isSelected = settings.defaultView === v.id;
                           return (
-                            <button
+                            <button aria-label="Action"
                               key={v.id}
                               onClick={() => {
                                 onUpdateSettings({ defaultView: v.id });
@@ -464,7 +464,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                         Clock Format
                       </label>
                       <div className="grid grid-cols-2 gap-2">
-                        <button
+                        <button aria-label="Action"
                           onClick={() => {
                             onUpdateSettings({ timeFormat: '12h' });
                             showToast('12-Hour clock');
@@ -477,7 +477,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                         >
                           12-Hour (3:45 PM)
                         </button>
-                        <button
+                        <button aria-label="Action"
                           onClick={() => {
                             onUpdateSettings({ timeFormat: '24h' });
                             showToast('24-Hour clock');
@@ -500,7 +500,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       </label>
                       <div className="grid grid-cols-3 gap-2">
                         {(['compact', 'comfortable', 'spacious'] as LayoutDensity[]).map(d => (
-                          <button
+                          <button aria-label="Action"
                             key={d}
                             onClick={() => {
                               onUpdateSettings({ density: d });
@@ -594,7 +594,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                             const Icon = t.icon;
                             const isSelected = settings.theme === t.id;
                             return (
-                              <button
+                              <button aria-label="Action"
                                 key={t.id}
                                 type="button"
                                 onClick={() => {
@@ -650,7 +650,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                             const Icon = lum.icon;
                             const isSelected = settings.luminance === lum.id;
                             return (
-                              <button
+                              <button aria-label="Action"
                                 key={lum.id}
                                 type="button"
                                 onClick={() => {
@@ -728,7 +728,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     <div className="space-y-2">
                       <label className="text-xs font-medium text-stone-700 dark:text-stone-300">Backup & Restore</label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <button
+                        <button aria-label="Action"
                           onClick={onExportFullBackup}
                           className="py-2 px-3 rounded-lg border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900/70 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 text-xs flex items-center justify-center gap-1.5 cursor-pointer"
                         >
@@ -736,7 +736,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                           <span>Export JSON</span>
                         </button>
 
-                        <button
+                        <button aria-label="Action"
                           onClick={handleExportCSV}
                           className="py-2 px-3 rounded-lg border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900/70 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 text-xs flex items-center justify-center gap-1.5 cursor-pointer"
                         >
@@ -744,7 +744,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                           <span>Export CSV</span>
                         </button>
 
-                        <button
+                        <button aria-label="Action"
                           onClick={() => fileInputRef.current?.click()}
                           className="py-2 px-3 rounded-lg border border-stone-300 dark:border-stone-700 bg-stone-50 dark:bg-stone-900/70 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 text-xs flex items-center justify-center gap-1.5 cursor-pointer"
                         >
@@ -769,7 +769,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                           <div className="text-xs text-stone-600 dark:text-stone-400">
                             Load realistic sample data (music, places, journal reflections, photos)
                           </div>
-                          <button
+                          <button aria-label="Action"
                             onClick={() => {
                               onLoadDemoData();
                               showToast('Loaded sample demo timeline');
@@ -792,7 +792,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                         </div>
                         {isResetConfirmOpen ? (
                           <div className="flex items-center gap-1.5">
-                            <button
+                            <button aria-label="Action"
                               onClick={() => {
                                 onClearAllData();
                                 setIsResetConfirmOpen(false);
@@ -802,7 +802,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                             >
                               Confirm Clear
                             </button>
-                            <button
+                            <button aria-label="Action"
                               onClick={() => setIsResetConfirmOpen(false)}
                               className="px-2.5 py-1 text-xs text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 cursor-pointer"
                             >
@@ -810,7 +810,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                             </button>
                           </div>
                         ) : (
-                          <button
+                          <button aria-label="Action"
                             onClick={() => setIsResetConfirmOpen(true)}
                             className="px-2.5 py-1 text-xs text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded border border-red-200 dark:border-red-900/50 cursor-pointer"
                           >
@@ -847,7 +847,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                             <span className="text-xs text-stone-500">
                               {unresolvedCount > 0 ? `${unresolvedCount} locations pending resolution` : 'All locations resolved'}
                             </span>
-                            <button
+                            <button aria-label="Action"
                               onClick={onBatchResolveGeo}
                               disabled={isGeoResolving || unresolvedCount === 0}
                               className="py-1 px-2.5 text-xs rounded border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 hover:bg-stone-100 text-stone-700 dark:text-stone-200 disabled:opacity-50 flex items-center gap-1 cursor-pointer"
@@ -865,7 +865,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <label className="text-xs font-medium text-stone-700 dark:text-stone-300">Connected Services</label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {onOpenRaindropSync && (
-                          <button
+                          <button aria-label="Action"
                             onClick={onOpenRaindropSync}
                             className="p-2.5 rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-900/40 text-left hover:border-stone-300 dark:hover:border-stone-700 transition-colors cursor-pointer"
                           >
@@ -875,7 +875,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                         )}
 
                         {onOpenImportedFiles && (
-                          <button
+                          <button aria-label="Action"
                             onClick={onOpenImportedFiles}
                             className="p-2.5 rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50/50 dark:bg-stone-900/40 text-left hover:border-stone-300 dark:hover:border-stone-700 transition-colors cursor-pointer"
                           >

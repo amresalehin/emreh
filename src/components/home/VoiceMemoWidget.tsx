@@ -121,7 +121,7 @@ export const VoiceMemoWidget: React.FC<VoiceMemoWidgetProps> = ({
           </p>
 
           {/* Primary Action Button */}
-          <button
+          <button aria-label="Action"
             type="button"
             id="home-record-voice-memo-btn"
             onClick={onOpenVoiceMemo}
@@ -163,7 +163,7 @@ export const VoiceMemoWidget: React.FC<VoiceMemoWidgetProps> = ({
 
       {/* Footer Navigation Links */}
       <div className="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-between gap-2">
-        <button
+        <button aria-label="Action"
           type="button"
           onClick={() => onNavigateView?.('notes')}
           className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer"
@@ -172,7 +172,7 @@ export const VoiceMemoWidget: React.FC<VoiceMemoWidgetProps> = ({
           <span>Notes Workspace</span>
         </button>
 
-        <button
+        <button aria-label="Action"
           type="button"
           onClick={() => onNavigateView?.('timeline')}
           className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer"

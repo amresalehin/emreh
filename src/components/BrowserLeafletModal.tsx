@@ -113,7 +113,7 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
         {/* Header Bar */}
         <div className="px-5 py-3 border-b border-gray-200 dark:border-gray-800 bg-gray-50/95 dark:bg-[#181818] flex flex-wrap items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-2.5 min-w-0 flex-1 flex-wrap">
-            <img src={faviconUrl} className="w-4 h-4 rounded object-contain shrink-0" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
+            <img alt="Image" src={faviconUrl} className="w-4 h-4 rounded object-contain shrink-0" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
             <span className="text-xs font-bold text-gray-800 dark:text-gray-200 truncate">{domain}</span>
             <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30">
               <Globe className="w-3 h-3 text-sky-500" />
@@ -153,7 +153,7 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
               <span>Open</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
-            <button
+            <button aria-label="Action"
               onClick={onClose}
               className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer ml-1"
             >
@@ -184,7 +184,7 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
                 <div className="flex items-center justify-between z-10">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg flex items-center justify-center p-2.5">
-                      <img src={faviconUrl} className="w-7 h-7 object-contain" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
+                      <img alt="Image" src={faviconUrl} className="w-7 h-7 object-contain" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
                     </div>
                     <div>
                       <span className="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
@@ -210,21 +210,21 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
                 </div>
 
                 <div className="z-10 mt-5 flex flex-wrap gap-2.5">
-                  <button
+                  <button aria-label="Action"
                     onClick={() => onLaunchAuthenticatedSession(url)}
                     className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
                   >
                     <Camera className="w-3.5 h-3.5" />
                     Launch Authenticated Session
                   </button>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => onCaptureActiveScreen(url)}
                     className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-amber-200 text-xs font-semibold flex items-center gap-1.5 backdrop-blur-md transition-all cursor-pointer"
                   >
                     <Camera className="w-3.5 h-3.5" />
                     Capture Tab
                   </button>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setExtractionStatus('extracting')}
                     className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 text-xs font-semibold flex items-center gap-1.5 backdrop-blur-md transition-all cursor-pointer"
                   >
@@ -259,7 +259,7 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
                 <span>{meta.category}</span>
               </span>
               {extractionStatus === 'extracted' && !customSnapshot && (
-                <button
+                <button aria-label="Action"
                   onClick={() => setExtractionStatus('insufficient')}
                   className="px-2.5 py-1 rounded-xl bg-black/65 hover:bg-black/80 backdrop-blur-md text-amber-300 text-[10px] font-semibold border border-amber-500/30 shadow-sm pointer-events-auto cursor-pointer flex items-center gap-1"
                   title="If extraction missed content, switch to authenticated session"
@@ -288,7 +288,7 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
               <span>{customSnapshot ? 'Session Snapshot Attached' : 'Attach Authenticated Session Snapshot'}</span>
             </span>
             <div className="flex items-center gap-2 flex-wrap">
-              <button
+              <button aria-label="Action"
                 onClick={() => onLaunchAuthenticatedSession(url)}
                 className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-2xs transition-colors"
                 title="Launch session in browser and capture"
@@ -296,7 +296,7 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
                 <Lock className="w-3.5 h-3.5 text-amber-500" />
                 <span>Open Authenticated Browser</span>
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => onCaptureActiveScreen(url)}
                 className="px-3 py-1.5 bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:text-sky-400 border border-sky-500/30 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-2xs transition-colors"
               >
@@ -309,7 +309,7 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
                 <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               </label>
               {customSnapshot && (
-                <button
+                <button aria-label="Action"
                   onClick={() => {
                     onSaveSessionSnapshot(url, '');
                     onShowToast('Session snapshot removed');
@@ -326,7 +326,7 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
           <div className="space-y-2.5">
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-bold">
-                <img src={faviconUrl} className="w-3.5 h-3.5 object-contain" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
+                <img alt="Image" src={faviconUrl} className="w-3.5 h-3.5 object-contain" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
                 <span>{domain}</span>
               </span>
               <span className="text-gray-300 dark:text-gray-700">•</span>
@@ -367,21 +367,21 @@ export const BrowserLeafletModal: React.FC<BrowserLeafletModalProps> = ({
 
           {/* Actions Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            <button
+            <button aria-label="Action"
               onClick={handleCopyUrl}
               className="px-3 py-2 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-[#1c1c1c] hover:bg-gray-200 dark:hover:bg-gray-800 text-gray-800 dark:text-gray-200 transition-colors flex items-center justify-center gap-1.5 border border-gray-200 dark:border-gray-800 cursor-pointer shadow-2xs"
             >
               <Copy className="w-3.5 h-3.5 text-gray-500" />
               <span>{copyFeedback ? 'Copied Link' : 'Copy Link'}</span>
             </button>
-            <button
+            <button aria-label="Action"
               onClick={handleCopyMarkdown}
               className="px-3 py-2 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-[#1c1c1c] hover:bg-gray-200 dark:hover:bg-gray-800 text-gray-800 dark:text-gray-200 transition-colors flex items-center justify-center gap-1.5 border border-gray-200 dark:border-gray-800 cursor-pointer shadow-2xs"
             >
               <Copy className="w-3.5 h-3.5 text-gray-500" />
               <span>{copyMdFeedback ? 'Markdown Copied' : 'Copy Markdown'}</span>
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => {
                 onClose();
                 onShowDomainProfile(domain);

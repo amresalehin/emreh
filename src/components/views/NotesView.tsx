@@ -480,7 +480,7 @@ export const NotesView: React.FC<NotesViewProps> = ({
         importLabel="Import"
         leftActions={
           <div className="flex items-center gap-1.5">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               title={isSidebarOpen ? 'Hide Notes Sidebar' : 'Show Notes Sidebar'}
@@ -497,7 +497,7 @@ export const NotesView: React.FC<NotesViewProps> = ({
         rightActions={
           <div className="flex items-center gap-1.5">
             {/* Quick New Note Button */}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => handleCreateNewNote()}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-semibold cursor-pointer shadow-xs transition-all"
@@ -507,7 +507,7 @@ export const NotesView: React.FC<NotesViewProps> = ({
             </button>
 
             {/* Toggle Outline & Stats Panel */}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsRightPanelOpen(!isRightPanelOpen)}
               title={isRightPanelOpen ? 'Hide Document Outline' : 'Show Document Outline & Tools'}
@@ -612,7 +612,7 @@ export const NotesView: React.FC<NotesViewProps> = ({
               <p className="text-sm font-medium mb-4 text-stone-500 dark:text-stone-400">
                 No note selected
               </p>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => handleCreateNewNote()}
                 className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-semibold shadow-xs cursor-pointer"
@@ -671,14 +671,14 @@ export const NotesView: React.FC<NotesViewProps> = ({
               </div>
             </div>
             <div className="flex items-center justify-end gap-2 pt-2">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setNotePendingDelete(null)}
                 className="px-4 py-2 rounded-xl text-xs font-semibold text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   executeDeleteNote(notePendingDelete.id);

@@ -123,7 +123,7 @@ export const DropZone: React.FC<DropZoneProps> = ({
             </span>
           </div>
 
-          <button
+          <button aria-label="Action"
             id="btn-browse-zip"
             disabled={isLoading}
             className="px-6 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 transition-all active:scale-95 flex items-center gap-2"

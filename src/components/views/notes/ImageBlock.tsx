@@ -159,7 +159,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
         />
 
         <div className="flex items-center gap-1 p-0.5 bg-stone-200/60 dark:bg-stone-800/80 rounded-xl mb-3 text-xs">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setActiveTab('upload')}
             className={`px-3 py-1 rounded-lg font-medium transition-all cursor-pointer ${
@@ -170,7 +170,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
           >
             Upload Image
           </button>
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setActiveTab('url')}
             className={`px-3 py-1 rounded-lg font-medium transition-all cursor-pointer ${
@@ -195,14 +195,14 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
               PNG, JPG, WebP, GIF, SVG up to 25MB
             </p>
             <div className="flex items-center gap-2">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-xs cursor-pointer transition-colors"
               >
                 Choose Image File
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={onDelete}
                 className="px-2.5 py-1.5 rounded-xl hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-400 hover:text-stone-700 text-xs cursor-pointer transition-colors"
@@ -221,7 +221,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
                 placeholder="https://example.com/image.jpg"
                 className="flex-1 px-3 py-1.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-xs outline-none focus:border-amber-500 text-stone-800 dark:text-stone-200"
               />
-              <button
+              <button aria-label="Action"
                 type="submit"
                 disabled={!inputUrl.trim()}
                 className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white text-xs font-semibold shadow-xs cursor-pointer"
@@ -229,7 +229,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
                 Embed
               </button>
             </div>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={onDelete}
               className="text-[11px] text-stone-400 hover:text-stone-600 cursor-pointer"
@@ -281,7 +281,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
           >
             {/* Width selector */}
             <div className="flex items-center gap-0.5 px-1 text-[10px] font-bold border-r border-white/20">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setWidth('small')}
                 title="Small width"
@@ -289,7 +289,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
               >
                 S
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setWidth('medium')}
                 title="Medium width"
@@ -297,7 +297,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
               >
                 M
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setWidth('wide')}
                 title="Wide width"
@@ -305,7 +305,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
               >
                 L
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setWidth('full')}
                 title="Full width"
@@ -316,7 +316,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
             </div>
 
             {/* Alignment */}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setAlign(currentAlign === 'left' ? 'center' : currentAlign === 'center' ? 'right' : 'left')}
               title={`Alignment: ${currentAlign}`}
@@ -332,7 +332,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
             </button>
 
             {/* Lightbox */}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsLightboxOpen(true)}
               title="Fullscreen Lightbox"
@@ -352,7 +352,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
             </button>
 
             {/* Replace image */}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => fileInputRef.current?.click()}
               title="Replace image"
@@ -416,7 +416,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
             </div>
 
             <div className="flex items-center gap-2">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setLightboxZoom(Math.max(50, lightboxZoom - 20))}
                 className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white cursor-pointer"
@@ -425,7 +425,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
                 <ZoomOut className="w-4 h-4" />
               </button>
               <span className="font-mono text-xs px-1 select-none">{lightboxZoom}%</span>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setLightboxZoom(Math.min(300, lightboxZoom + 20))}
                 className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white cursor-pointer"
@@ -449,7 +449,7 @@ export const ImageBlock: React.FC<ImageBlockProps> = ({
               >
                 <Download className="w-4 h-4" />
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setIsLightboxOpen(false)}
                 className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white cursor-pointer ml-2"

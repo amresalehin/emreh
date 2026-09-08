@@ -45,7 +45,7 @@ export const WordCountModal: React.FC<WordCountModalProps> = ({
               Word count
             </h3>
           </div>
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={onClose}
             className="p-1 rounded-lg text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 cursor-pointer"
@@ -87,7 +87,7 @@ export const WordCountModal: React.FC<WordCountModalProps> = ({
         </div>
 
         <div className="pt-2 flex justify-end">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={onClose}
             className="px-4 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs cursor-pointer shadow-xs transition-colors"

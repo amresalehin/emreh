@@ -193,7 +193,7 @@ export const ResolvedPlacesLogModal: React.FC<ResolvedPlacesLogModalProps> = ({
               <Download className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Export Log</span>
             </button>
-            <button
+            <button aria-label="Action"
               onClick={onClose}
               className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
             >
@@ -217,7 +217,7 @@ export const ResolvedPlacesLogModal: React.FC<ResolvedPlacesLogModalProps> = ({
 
           {/* Filter Pills */}
           <div className="flex items-center gap-1.5 flex-wrap">
-            <button
+            <button aria-label="Action"
               onClick={() => setFilterType('all')}
               className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 filterType === 'all'
@@ -227,7 +227,7 @@ export const ResolvedPlacesLogModal: React.FC<ResolvedPlacesLogModalProps> = ({
             >
               All ({placeList.length})
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => setFilterType('resolved')}
               className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 filterType === 'resolved'
@@ -238,7 +238,7 @@ export const ResolvedPlacesLogModal: React.FC<ResolvedPlacesLogModalProps> = ({
               Resolved ({stats.resolved})
             </button>
             {stats.unresolved > 0 && (
-              <button
+              <button aria-label="Action"
                 onClick={() => setFilterType('unresolved')}
                 className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   filterType === 'unresolved'
@@ -322,7 +322,7 @@ export const ResolvedPlacesLogModal: React.FC<ResolvedPlacesLogModalProps> = ({
 
                   {/* Quick Action Buttons */}
                   <div className="flex items-center gap-1.5 shrink-0">
-                    <button
+                    <button aria-label="Action"
                       onClick={() => handleCopyCoord(place)}
                       className="p-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-xl text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1"
                       title="Copy Coordinates"
@@ -341,7 +341,7 @@ export const ResolvedPlacesLogModal: React.FC<ResolvedPlacesLogModalProps> = ({
                     </a>
 
                     {onSelectPlace && (
-                      <button
+                      <button aria-label="Action"
                         onClick={() => {
                           onSelectPlace(place.sampleItem);
                           onClose();
@@ -365,7 +365,7 @@ export const ResolvedPlacesLogModal: React.FC<ResolvedPlacesLogModalProps> = ({
             Showing {filteredList.length} of {placeList.length} total places
           </span>
           {onExportClick && (
-            <button
+            <button aria-label="Action"
               onClick={() => {
                 onClose();
                 onExportClick();

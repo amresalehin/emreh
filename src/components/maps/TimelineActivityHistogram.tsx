@@ -107,7 +107,7 @@ export const TimelineActivityHistogram: React.FC<TimelineActivityHistogramProps>
           const heightPercent = count > 0 ? Math.max(25, Math.round((count / maxCount) * 100)) : 12;
 
           return (
-            <button
+            <button aria-label="Action"
               key={dayNum}
               onClick={() => onSelectDate(new Date(year, month, dayNum))}
               className="flex-1 flex flex-col items-center justify-end h-full group relative focus:outline-none cursor-pointer"

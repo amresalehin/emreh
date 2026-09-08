@@ -205,7 +205,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
       <div className="p-4 border-b border-gray-200/80 dark:border-white/10 bg-gray-50/90 dark:bg-[#18181b]/90 backdrop-blur-md shrink-0 space-y-3">
         <div className="flex items-start justify-between gap-2.5">
           <div className="flex items-start gap-3 min-w-0 flex-1">
-            <img
+            <img alt="Image"
               src={favicon}
               className="w-9 h-9 rounded-xl bg-white dark:bg-gray-800 p-1.5 border border-gray-200 dark:border-gray-700 shrink-0 object-contain shadow-2xs"
               onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
@@ -244,7 +244,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
           {/* Action buttons */}
           <div className="flex items-center gap-1 shrink-0">
             {onDeleteItem && (
-              <button
+              <button aria-label="Action"
                 onClick={() => {
                   onDeleteItem(item.id);
                   onClose();
@@ -258,7 +258,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
             )}
 
             {onOpenDetailModal && (
-              <button
+              <button aria-label="Action"
                 onClick={() => onOpenDetailModal(item)}
                 className="p-1.5 rounded-lg text-gray-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-gray-200/60 dark:hover:bg-white/10 transition-colors cursor-pointer"
                 title="Expand to Full Modal"
@@ -318,7 +318,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
 
         {/* Preview Mode Switcher */}
         <div className="flex items-center justify-between gap-1.5 bg-gray-200/70 dark:bg-[#202023] p-1 rounded-xl text-xs">
-          <button
+          <button aria-label="Action"
             onClick={() => setPreviewTab('snapshot')}
             className={`flex-1 py-1 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               previewTab === 'snapshot'
@@ -329,7 +329,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
             <Layers className="w-3.5 h-3.5 text-sky-500" />
             <span>Preview</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setPreviewTab('frame')}
             className={`flex-1 py-1 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               previewTab === 'frame'
@@ -340,7 +340,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
             <Monitor className="w-3.5 h-3.5 text-emerald-500" />
             <span>Live Frame</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setPreviewTab('raw')}
             className={`flex-1 py-1 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               previewTab === 'raw'
@@ -382,7 +382,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
                 <div className="w-full min-h-[180px] p-6 flex flex-col justify-between bg-gradient-to-br from-slate-900 via-neutral-900 to-black relative">
                   <div className="flex items-center gap-3 z-10">
                     <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center p-2">
-                      <img src={favicon} className="w-6 h-6 object-contain" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
+                      <img alt="Image" src={favicon} className="w-6 h-6 object-contain" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
                     </div>
                     <div>
                       <span className="text-xs font-bold text-white tracking-wide block">{domain}</span>
@@ -403,14 +403,14 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
                 <Camera className="w-3 h-3 text-sky-500" /> Capture Snapshot:
               </span>
               <div className="flex items-center gap-1.5">
-                <button
+                <button aria-label="Action"
                   onClick={() => onCaptureActiveScreen(url)}
                   className="px-2 py-1 rounded-lg font-semibold bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 text-[11px] hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer shadow-2xs"
                   title="Screen capture active window"
                 >
                   Screen
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={() => onLaunchAuthenticatedSession(url)}
                   className="px-2 py-1 rounded-lg font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[11px] hover:bg-emerald-500/20 cursor-pointer"
                   title="Launch & Capture Tab"
@@ -432,7 +432,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-2 bg-gray-100 dark:bg-white/5 p-1 rounded-xl text-xs">
               <div className="flex items-center gap-1">
-                <button
+                <button aria-label="Action"
                   onClick={() => setViewportMode('desktop')}
                   className={`p-1.5 rounded-lg transition-all ${
                     viewportMode === 'desktop' ? 'bg-white dark:bg-gray-800 text-sky-500 shadow-xs' : 'text-gray-400 hover:text-gray-600'
@@ -441,7 +441,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
                 >
                   <Monitor className="w-3.5 h-3.5" />
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={() => setViewportMode('tablet')}
                   className={`p-1.5 rounded-lg transition-all ${
                     viewportMode === 'tablet' ? 'bg-white dark:bg-gray-800 text-sky-500 shadow-xs' : 'text-gray-400 hover:text-gray-600'
@@ -450,7 +450,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
                 >
                   <Tablet className="w-3.5 h-3.5" />
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={() => setViewportMode('mobile')}
                   className={`p-1.5 rounded-lg transition-all ${
                     viewportMode === 'mobile' ? 'bg-white dark:bg-gray-800 text-sky-500 shadow-xs' : 'text-gray-400 hover:text-gray-600'
@@ -460,7 +460,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
                   <Smartphone className="w-3.5 h-3.5" />
                 </button>
               </div>
-              <button
+              <button aria-label="Action"
                 onClick={() => setIframeKey(k => k + 1)}
                 className="flex items-center gap-1 px-2 py-1 text-[11px] rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-50"
                 title="Reload Frame"
@@ -573,7 +573,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
                 className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 group"
               >
                 <span>#{t}</span>
-                <button
+                <button aria-label="Action"
                   onClick={() => onRemoveTag(url, t)}
                   className="hover:text-red-500 opacity-60 hover:opacity-100 transition-opacity"
                   title="Remove tag"
@@ -592,7 +592,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
               placeholder="Add tag (e.g. design, api, research)..."
               className="flex-1 px-3 py-1.5 rounded-xl border border-gray-200/80 dark:border-white/10 bg-white dark:bg-black/30 text-xs text-gray-800 dark:text-gray-200 outline-none focus:border-emerald-500"
             />
-            <button
+            <button aria-label="Action"
               type="submit"
               className="px-3 py-1.5 bg-emerald-500 text-white rounded-xl text-xs font-semibold hover:bg-emerald-600 cursor-pointer shadow-2xs flex items-center gap-1"
             >

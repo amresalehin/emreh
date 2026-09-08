@@ -57,7 +57,7 @@ export const EventModal: React.FC<EventModalProps> = ({
             <CalendarPlus className="w-4 h-4 text-emerald-500" />
             Add Event ({dateKey})
           </h3>
-          <button onClick={onClose} className="w-7 h-7 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer">
+          <button aria-label="Action" onClick={onClose} className="w-7 h-7 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -122,14 +122,14 @@ export const EventModal: React.FC<EventModalProps> = ({
           </div>
 
           <div className="flex justify-end gap-2 mt-4 pt-2">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={onClose}
               className="px-4 py-2 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 cursor-pointer"
             >
               Cancel
             </button>
-            <button
+            <button aria-label="Action"
               type="submit"
               className="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-500 text-white hover:bg-emerald-600 transition-colors shadow-sm cursor-pointer"
             >

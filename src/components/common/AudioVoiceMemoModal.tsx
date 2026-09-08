@@ -295,7 +295,7 @@ export const AudioVoiceMemoModal: React.FC<AudioVoiceMemoModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             id="close-voice-memo-btn"
             onClick={onClose}
             className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition"
@@ -355,7 +355,7 @@ export const AudioVoiceMemoModal: React.FC<AudioVoiceMemoModalProps> = ({
             {/* Main Action Buttons */}
             <div className="mt-5 flex items-center gap-4">
               {!isRecording ? (
-                <button
+                <button aria-label="Action"
                   id="start-voice-recording-btn"
                   onClick={startRecording}
                   className="flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold text-sm shadow-lg shadow-amber-500/25 active:scale-95 transition-all"
@@ -364,7 +364,7 @@ export const AudioVoiceMemoModal: React.FC<AudioVoiceMemoModalProps> = ({
                   <span>Start Recording</span>
                 </button>
               ) : (
-                <button
+                <button aria-label="Action"
                   id="stop-voice-recording-btn"
                   onClick={stopRecording}
                   className="flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-lg shadow-red-600/25 active:scale-95 transition-all animate-pulse"
@@ -397,7 +397,7 @@ export const AudioVoiceMemoModal: React.FC<AudioVoiceMemoModalProps> = ({
                   onEnded={() => setIsPlayingAudio(false)}
                   className="hidden"
                 />
-                <button
+                <button aria-label="Action"
                   id="play-voice-preview-btn"
                   onClick={() => {
                     if (audioElementRef.current) {
@@ -461,7 +461,7 @@ export const AudioVoiceMemoModal: React.FC<AudioVoiceMemoModalProps> = ({
               Save Voice Memo To:
             </span>
             <div className="grid grid-cols-2 gap-3">
-              <button
+              <button aria-label="Action"
                 id="save-voice-to-journal-btn"
                 onClick={handleSaveToJournal}
                 disabled={isRecording || (!transcript.trim() && !audioBlob)}
@@ -474,7 +474,7 @@ export const AudioVoiceMemoModal: React.FC<AudioVoiceMemoModalProps> = ({
                 <span className="text-[10px] text-gray-400">Append to today</span>
               </button>
 
-              <button
+              <button aria-label="Action"
                 id="save-voice-to-notes-btn"
                 onClick={handleSaveToNotes}
                 disabled={isRecording || (!transcript.trim() && !audioBlob)}

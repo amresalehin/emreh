@@ -160,7 +160,7 @@ export const TimelineCorrelationsTab: React.FC<TimelineCorrelationsTabProps> = (
 
         {/* Media Type Chips */}
         <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 text-xs">
-          <button
+          <button aria-label="Action"
             onClick={() => setSelectedMediaType('all')}
             className={`px-2.5 py-1 rounded-lg font-medium transition-colors cursor-pointer shrink-0 ${
               selectedMediaType === 'all'
@@ -170,7 +170,7 @@ export const TimelineCorrelationsTab: React.FC<TimelineCorrelationsTabProps> = (
           >
             All ({stats.totalCorrelated})
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setSelectedMediaType('spotify')}
             className={`px-2.5 py-1 rounded-lg font-medium transition-colors cursor-pointer shrink-0 flex items-center gap-1 ${
               selectedMediaType === 'spotify'
@@ -180,7 +180,7 @@ export const TimelineCorrelationsTab: React.FC<TimelineCorrelationsTabProps> = (
           >
             <Headphones className="w-3 h-3" /> Spotify ({stats.totalSpotify})
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setSelectedMediaType('youtube')}
             className={`px-2.5 py-1 rounded-lg font-medium transition-colors cursor-pointer shrink-0 flex items-center gap-1 ${
               selectedMediaType === 'youtube'
@@ -190,7 +190,7 @@ export const TimelineCorrelationsTab: React.FC<TimelineCorrelationsTabProps> = (
           >
             <Video className="w-3 h-3" /> YouTube ({stats.totalYouTube})
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setSelectedMediaType('browser')}
             className={`px-2.5 py-1 rounded-lg font-medium transition-colors cursor-pointer shrink-0 flex items-center gap-1 ${
               selectedMediaType === 'browser'
@@ -200,7 +200,7 @@ export const TimelineCorrelationsTab: React.FC<TimelineCorrelationsTabProps> = (
           >
             <Globe className="w-3 h-3" /> Browser ({stats.totalBrowser})
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setSelectedMediaType('photo')}
             className={`px-2.5 py-1 rounded-lg font-medium transition-colors cursor-pointer shrink-0 flex items-center gap-1 ${
               selectedMediaType === 'photo'
@@ -258,7 +258,7 @@ export const TimelineCorrelationsTab: React.FC<TimelineCorrelationsTabProps> = (
                   {/* Place Actions */}
                   <div className="flex items-center gap-1.5 shrink-0">
                     {onSelectPlace && (
-                      <button
+                      <button aria-label="Action"
                         onClick={() => {
                           onSelectPlace({
                             id: `corr_place_${summary.placeName}`,
@@ -280,7 +280,7 @@ export const TimelineCorrelationsTab: React.FC<TimelineCorrelationsTabProps> = (
                     )}
 
                     {onOpenMapModal && (
-                      <button
+                      <button aria-label="Action"
                         onClick={() => {
                           const dummy = { lat: summary.lat, lng: summary.lng, title: summary.placeName, subtitle: summary.address };
                           const embed = buildGoogleMapsEmbedUrl(dummy as any);
@@ -359,7 +359,7 @@ export const TimelineCorrelationsTab: React.FC<TimelineCorrelationsTabProps> = (
 
                   {/* Toggle more/less button */}
                   {remainingCount > 0 && (
-                    <button
+                    <button aria-label="Action"
                       onClick={() => toggleExpand(key)}
                       className="w-full py-1.5 text-[11px] font-semibold text-amber-700 dark:text-amber-300 hover:underline flex items-center justify-center gap-1 cursor-pointer"
                     >

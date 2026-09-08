@@ -74,7 +74,7 @@ export const TimelineHighlightsWidget: React.FC<TimelineHighlightsWidgetProps> =
           </div>
 
           {onNavigateView && (
-            <button
+            <button aria-label="Action"
               onClick={() => onNavigateView('timeline')}
               className="px-2 py-1 rounded-lg text-xs font-semibold text-purple-700 dark:text-purple-300 hover:bg-purple-500/10 transition-colors flex items-center gap-1 cursor-pointer"
             >
@@ -152,7 +152,7 @@ export const TimelineHighlightsWidget: React.FC<TimelineHighlightsWidgetProps> =
 
       {/* Footer navigation */}
       <div className="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5">
-        <button
+        <button aria-label="Action"
           onClick={() => onNavigateView && onNavigateView('timeline')}
           className="w-full py-1.5 px-3 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-purple-800 dark:text-purple-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
         >

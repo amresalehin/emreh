@@ -195,7 +195,7 @@ export const KeepImportModal: React.FC<KeepImportModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="p-2 rounded-xl text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition"
           >
@@ -205,7 +205,7 @@ export const KeepImportModal: React.FC<KeepImportModalProps> = ({
 
         {/* Tab Selector */}
         <div className="px-6 pt-4 pb-2 flex gap-2 border-b border-gray-100 dark:border-zinc-800/80 bg-gray-50/50 dark:bg-zinc-900/40">
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('upload')}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
               activeTab === 'upload'
@@ -216,7 +216,7 @@ export const KeepImportModal: React.FC<KeepImportModalProps> = ({
             <Upload className="w-3.5 h-3.5" />
             <span>Files & Archives (.zip, .json, .html)</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('paste')}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
               activeTab === 'paste'
@@ -333,13 +333,13 @@ export const KeepImportModal: React.FC<KeepImportModalProps> = ({
               </div>
 
               <div className="flex justify-end gap-2 pt-2">
-                <button
+                <button aria-label="Action"
                   onClick={onClose}
                   className="px-4 py-2 text-xs font-semibold rounded-xl text-gray-600 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 transition"
                 >
                   Cancel
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={handlePasteImport}
                   disabled={!pasteContent.trim()}
                   className="px-5 py-2 text-xs font-bold rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white shadow-md shadow-amber-500/20 transition"

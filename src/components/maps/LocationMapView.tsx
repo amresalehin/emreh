@@ -270,7 +270,7 @@ export const LocationMapView: React.FC<LocationMapViewProps> = ({
         <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 pointer-events-auto">
           {/* Layer Style Switcher */}
           <div className="flex items-center gap-0.5 p-1 bg-white/95 dark:bg-[#181818]/95 backdrop-blur-md rounded-xl border border-gray-200/90 dark:border-gray-800 shadow-md text-[11px] font-semibold">
-            <button
+            <button aria-label="Action"
               onClick={() => setMapTheme('roadmap')}
               className={`px-2 py-0.5 rounded-lg cursor-pointer transition-all ${
                 mapTheme === 'roadmap'
@@ -281,7 +281,7 @@ export const LocationMapView: React.FC<LocationMapViewProps> = ({
             >
               Map
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => setMapTheme('satellite')}
               className={`px-2 py-0.5 rounded-lg cursor-pointer transition-all ${
                 mapTheme === 'satellite'
@@ -292,7 +292,7 @@ export const LocationMapView: React.FC<LocationMapViewProps> = ({
             >
               Satellite
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => setMapTheme('dark')}
               className={`px-2 py-0.5 rounded-lg cursor-pointer transition-all ${
                 mapTheme === 'dark'

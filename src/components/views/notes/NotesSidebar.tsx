@@ -131,7 +131,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
             {/* Quick hover actions */}
             <div className="flex items-center gap-0.5 ml-1 opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity">
               {(note.type === 'diary' || note.dateKey || /^\d{4}-\d{2}-\d{2}$/.test(note.title)) && onNavigateToJournal && (
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -145,7 +145,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
                 </button>
               )}
               {onTogglePin && (
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -158,7 +158,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
                 </button>
               )}
               {onDeleteNote && (
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -232,7 +232,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
         </div>
 
         {/* Apple Notes style New Note Action */}
-        <button
+        <button aria-label="Action"
           type="button"
           onClick={() => onNewNote()}
           title="Create New Note (Enter)"
@@ -255,7 +255,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
             className="bg-transparent outline-none w-full text-xs text-stone-900 dark:text-stone-100 placeholder:text-stone-400"
           />
           {search && (
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setSearch('')}
               className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 p-0.5 cursor-pointer"
@@ -269,7 +269,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
       {/* Tag Filter Pills (if tags exist) */}
       {allTags.length > 0 && (
         <div className="px-3.5 pb-2 flex items-center gap-1.5 overflow-x-auto scrollbar-none shrink-0 text-[11px]">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => onSelectTagFilter?.(null)}
             className={`px-2 py-0.5 rounded-lg font-medium transition-colors cursor-pointer whitespace-nowrap ${
@@ -281,7 +281,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
             All
           </button>
           {allTags.map((tag) => (
-            <button
+            <button aria-label="Action"
               key={tag}
               type="button"
               onClick={() =>
@@ -326,7 +326,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
             <div className="px-3 py-8 text-center text-stone-400 text-xs">
               <FileText className="w-8 h-8 mx-auto mb-2 opacity-30" />
               <p>No notes found.</p>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onNewNote()}
                 className="mt-2 text-amber-600 dark:text-amber-400 font-semibold hover:underline"

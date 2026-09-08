@@ -473,7 +473,7 @@ export const KanbanMoodboardView: React.FC<KanbanMoodboardViewProps> = ({
             <span className="text-[11px] font-semibold text-gray-400 px-1.5 hidden sm:inline">
               Group by:
             </span>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => handleSetGroupBy('status')}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
@@ -484,7 +484,7 @@ export const KanbanMoodboardView: React.FC<KanbanMoodboardViewProps> = ({
             >
               Workflow
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => handleSetGroupBy('collection')}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
@@ -495,7 +495,7 @@ export const KanbanMoodboardView: React.FC<KanbanMoodboardViewProps> = ({
             >
               Folders
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => handleSetGroupBy('type')}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
@@ -506,7 +506,7 @@ export const KanbanMoodboardView: React.FC<KanbanMoodboardViewProps> = ({
             >
               Media
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => handleSetGroupBy('tag')}
               className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
@@ -553,7 +553,7 @@ export const KanbanMoodboardView: React.FC<KanbanMoodboardViewProps> = ({
 
           {/* Add Custom Column Button */}
           {groupBy === 'status' && (
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsAddingColumn(true)}
               className="px-2.5 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 text-xs font-bold flex items-center gap-1 transition-all cursor-pointer"
@@ -583,13 +583,13 @@ export const KanbanMoodboardView: React.FC<KanbanMoodboardViewProps> = ({
             placeholder="e.g., Ideas, Project Backlog, Inspiration"
             className="flex-1 px-3 py-1.5 bg-white dark:bg-[#18181b] border border-indigo-300 dark:border-indigo-700 rounded-xl text-xs text-gray-900 dark:text-white focus:outline-hidden"
           />
-          <button
+          <button aria-label="Action"
             type="submit"
             className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold cursor-pointer"
           >
             Create
           </button>
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setIsAddingColumn(false)}
             className="p-1.5 text-gray-500 hover:text-gray-700 dark:hover:text-white cursor-pointer"

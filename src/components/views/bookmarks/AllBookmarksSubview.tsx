@@ -293,7 +293,7 @@ export const AllBookmarksSubview: React.FC<AllBookmarksSubviewProps> = ({
             </span>
           </div>
           {onClearActiveFilter && (
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={onClearActiveFilter}
               className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer font-semibold"
@@ -530,7 +530,7 @@ export const AllBookmarksSubview: React.FC<AllBookmarksSubviewProps> = ({
 
               {filteredBookmarks.length > displayedBookmarks.length && (
                 <div className="flex items-center gap-2">
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => {
                       const current = parseInt(cardLimit, 10) || 24;
@@ -540,7 +540,7 @@ export const AllBookmarksSubview: React.FC<AllBookmarksSubviewProps> = ({
                   >
                     Show +24 More
                   </button>
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => setCardLimit('all')}
                     className="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 hover:bg-blue-100 font-bold transition-colors cursor-pointer"
@@ -567,7 +567,7 @@ export const AllBookmarksSubview: React.FC<AllBookmarksSubviewProps> = ({
             </p>
           </div>
           <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onOpenSyncModal('raindrop')}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-2 cursor-pointer"

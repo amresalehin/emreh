@@ -448,7 +448,7 @@ export const BrowserView: React.FC<BrowserViewProps> = ({
           Import your Chrome or browser history from Google Takeout to analyze your visited websites, domains, and timeline.
         </p>
         {onImportClick && (
-          <button
+          <button aria-label="Action"
             onClick={onImportClick}
             className="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 hover:from-sky-500 hover:to-blue-500 text-white px-5 py-2.5 rounded-2xl text-xs font-bold shadow-xl transition-all flex items-center gap-2 cursor-pointer active:scale-95"
           >
@@ -487,7 +487,7 @@ export const BrowserView: React.FC<BrowserViewProps> = ({
           <div className="flex items-center gap-1.5 flex-wrap">
             {/* Scope Switcher: Day vs All */}
             <div className="flex bg-[#1a1a1a]/5 dark:bg-white/5 p-0.5 rounded-md border border-[#1a1a1a]/10 dark:border-white/10 text-xs">
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewScope('day')}
                 className={`px-2 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   viewScope === 'day'
@@ -497,7 +497,7 @@ export const BrowserView: React.FC<BrowserViewProps> = ({
               >
                 Day
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewScope('all')}
                 className={`px-2 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   viewScope === 'all'
@@ -544,7 +544,7 @@ export const BrowserView: React.FC<BrowserViewProps> = ({
             />
 
             {/* Right Panel Toggle Button */}
-            <button
+            <button aria-label="Action"
               onClick={() => {
                 if (isRightPanelOpen) {
                   setIsRightPanelOpen(false);
@@ -586,7 +586,7 @@ export const BrowserView: React.FC<BrowserViewProps> = ({
               ))}
             </select>
             {filterDomain !== 'all' && (
-              <button
+              <button aria-label="Action"
                 onClick={() => setFilterDomain('all')}
                 className="text-sky-500 hover:text-sky-700 font-bold px-1 rounded-md hover:bg-sky-500/10 cursor-pointer"
                 title="Clear domain filter"

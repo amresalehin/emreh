@@ -157,7 +157,7 @@ export const BrowserBookmarksSubview: React.FC<BrowserBookmarksSubviewProps> = (
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 flex-wrap shrink-0">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => onOpenSyncModal('browser')}
             className="px-3.5 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
@@ -185,7 +185,7 @@ export const BrowserBookmarksSubview: React.FC<BrowserBookmarksSubviewProps> = (
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Folders filter pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setSelectedFolder('all')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
@@ -199,7 +199,7 @@ export const BrowserBookmarksSubview: React.FC<BrowserBookmarksSubviewProps> = (
             {folders.map(f => {
               const count = bookmarks.filter(b => b.category === f).length;
               return (
-                <button
+                <button aria-label="Action"
                   key={f}
                   type="button"
                   onClick={() => setSelectedFolder(f)}
@@ -219,7 +219,7 @@ export const BrowserBookmarksSubview: React.FC<BrowserBookmarksSubviewProps> = (
 
           {/* Layout mode switcher */}
           <div className="flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-xl shrink-0 self-end sm:self-auto">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('list')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -231,7 +231,7 @@ export const BrowserBookmarksSubview: React.FC<BrowserBookmarksSubviewProps> = (
             >
               <List className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('grid')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -243,7 +243,7 @@ export const BrowserBookmarksSubview: React.FC<BrowserBookmarksSubviewProps> = (
             >
               <Grid className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('table')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -393,7 +393,7 @@ export const BrowserBookmarksSubview: React.FC<BrowserBookmarksSubviewProps> = (
             </p>
           </div>
           <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onOpenSyncModal('browser')}
               className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-2 cursor-pointer"

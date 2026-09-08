@@ -91,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="flex items-center gap-2">
         {/* Sample Apps Dropdown */}
         <div className="relative">
-          <button
+          <button aria-label="Action"
             id="btn-sample-apps-dropdown"
             onClick={() => setSamplesOpen(!samplesOpen)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/60 text-xs font-medium text-slate-200 transition-colors"
@@ -112,7 +112,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   Pre-bundled Web Projects
                 </div>
                 {SAMPLE_APPS.map((sample) => (
-                  <button
+                  <button aria-label="Action"
                     key={sample.id}
                     id={`sample-${sample.id}`}
                     onClick={() => {
@@ -145,7 +145,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Upload ZIP Button */}
-        <button
+        <button aria-label="Action"
           id="btn-upload-zip-navbar"
           onClick={() => fileInputRef.current?.click()}
           disabled={isLoading}

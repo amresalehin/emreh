@@ -160,7 +160,7 @@ export const FileTree: React.FC<FileTreeProps> = ({
 
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           {isHtml && !isEntry && (
-            <button
+            <button aria-label="Action"
               onClick={(e) => {
                 e.stopPropagation();
                 onSetEntryPoint(node.path);
@@ -172,7 +172,7 @@ export const FileTree: React.FC<FileTreeProps> = ({
             </button>
           )}
 
-          <button
+          <button aria-label="Action"
             onClick={(e) => {
               e.stopPropagation();
               onDownloadFile(node.path);
@@ -183,7 +183,7 @@ export const FileTree: React.FC<FileTreeProps> = ({
             <Download className="w-3 h-3" />
           </button>
 
-          <button
+          <button aria-label="Action"
             onClick={(e) => {
               e.stopPropagation();
               onDeleteFile(node.path);
@@ -206,7 +206,7 @@ export const FileTree: React.FC<FileTreeProps> = ({
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
             Files & Explorer
           </span>
-          <button
+          <button aria-label="Action"
             onClick={() => setIsAddingFile(!isAddingFile)}
             className="p-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs flex items-center gap-1"
             title="New File"
@@ -238,7 +238,7 @@ export const FileTree: React.FC<FileTreeProps> = ({
               placeholder="e.g. styles/custom.css"
               className="flex-1 bg-slate-950 border border-cyan-500/50 rounded px-2 py-1 text-xs text-slate-200 outline-none"
             />
-            <button
+            <button aria-label="Action"
               type="submit"
               className="px-2 py-1 rounded bg-cyan-500 text-slate-950 text-xs font-bold"
             >

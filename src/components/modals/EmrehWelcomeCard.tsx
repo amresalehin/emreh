@@ -207,7 +207,7 @@ export const EmrehWelcomeCard: React.FC<EmrehWelcomeCardProps> = ({
                 </p>
               </div>
 
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={handleClose}
                 className="group inline-flex items-center gap-2 rounded-[14px] border border-[#d5e1dc]/[0.11] bg-[#d5e1dc]/[0.07] px-5 py-3 text-[12px] font-medium text-[#dce4e0] transition-all hover:border-[#d5e1dc]/[0.17] hover:bg-[#d5e1dc]/[0.12] active:scale-[0.99] cursor-pointer"

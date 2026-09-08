@@ -57,7 +57,7 @@ export const BrowserSortMenu: React.FC<BrowserSortMenuProps> = ({
   return (
     <div className={`relative inline-block text-left ${className}`} ref={dropdownRef}>
       {/* Trigger Button beside View button */}
-      <button
+      <button aria-label="Action"
         type="button"
         id="browser-sort-button"
         onClick={() => setIsOpen(prev => !prev)}
@@ -90,7 +90,7 @@ export const BrowserSortMenu: React.FC<BrowserSortMenuProps> = ({
               const Icon = option.icon;
               const isSelected = sortBy === option.id;
               return (
-                <button
+                <button aria-label="Action"
                   key={option.id}
                   type="button"
                   onClick={() => {

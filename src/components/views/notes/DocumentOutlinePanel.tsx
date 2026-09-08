@@ -71,7 +71,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
       {/* Panel Top Navigation Bar */}
       <div className="p-3 border-b border-stone-200/70 dark:border-stone-800/80 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-1">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setActiveTab('outline')}
             title="Document Outline"
@@ -85,7 +85,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
             <span>Outline</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setActiveTab('stats')}
             title="Word Count & Statistics"
@@ -99,7 +99,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
             <span>Stats</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setActiveTab('settings')}
             title="Document Layout & Typography"
@@ -113,7 +113,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
             <span>Layout</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setActiveTab('links')}
             title="Linked References"
@@ -160,7 +160,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
                   const isH1 = h.type === 'h1';
                   const isH2 = h.type === 'h2';
                   return (
-                    <button
+                    <button aria-label="Action"
                       key={h.id}
                       type="button"
                       onClick={() => onJumpToBlock(h.id)}
@@ -240,7 +240,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
             </div>
 
             <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-stone-200/60 dark:bg-stone-800/80">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onChangeViewSettings({ ...viewSettings, fontFamily: 'sans' })}
                 className={`py-1.5 px-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
@@ -251,7 +251,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
               >
                 Sans
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onChangeViewSettings({ ...viewSettings, fontFamily: 'serif' })}
                 className={`py-1.5 px-2 rounded-lg text-xs font-serif transition-all cursor-pointer ${
@@ -262,7 +262,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
               >
                 Serif
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onChangeViewSettings({ ...viewSettings, fontFamily: 'mono' })}
                 className={`py-1.5 px-2 rounded-lg text-xs font-mono transition-all cursor-pointer ${
@@ -280,7 +280,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
             </div>
 
             <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-stone-200/60 dark:bg-stone-800/80">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onChangeViewSettings({ ...viewSettings, pageWidth: 'normal' })}
                 className={`py-1.5 px-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
@@ -291,7 +291,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
               >
                 Standard
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onChangeViewSettings({ ...viewSettings, pageWidth: 'wide' })}
                 className={`py-1.5 px-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
@@ -302,7 +302,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
               >
                 Wide
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onChangeViewSettings({ ...viewSettings, pageWidth: 'full' })}
                 className={`py-1.5 px-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
@@ -321,7 +321,7 @@ export const DocumentOutlinePanel: React.FC<DocumentOutlinePanelProps> = ({
 
             <div className="flex items-center gap-1.5">
               {[90, 100, 110, 125].map((z) => (
-                <button
+                <button aria-label="Action"
                   key={z}
                   type="button"
                   onClick={() => onChangeViewSettings({ ...viewSettings, zoom: z })}

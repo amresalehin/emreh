@@ -191,7 +191,7 @@ export const PasteLinkModal: React.FC<PasteLinkModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={onClose}
             className="p-1.5 rounded-xl text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
@@ -206,7 +206,7 @@ export const PasteLinkModal: React.FC<PasteLinkModalProps> = ({
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center justify-between">
               <span>Web Address / URL *</span>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={handlePasteClipboard}
                 className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer"
@@ -314,7 +314,7 @@ export const PasteLinkModal: React.FC<PasteLinkModalProps> = ({
                     className="px-2 py-0.5 rounded-lg bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 text-[11px] font-medium flex items-center gap-1"
                   >
                     <span>#{t}</span>
-                    <button
+                    <button aria-label="Action"
                       type="button"
                       onClick={() => handleRemoveTag(t)}
                       className="hover:text-purple-900 cursor-pointer"
@@ -339,7 +339,7 @@ export const PasteLinkModal: React.FC<PasteLinkModalProps> = ({
                 placeholder="Add tag and press Enter..."
                 className="flex-1 px-3 py-1.5 bg-gray-50 dark:bg-black/40 rounded-xl border border-gray-200 dark:border-white/10 text-xs text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-purple-500"
               />
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={handleAddTag}
                 disabled={!tagInput.trim()}
@@ -352,7 +352,7 @@ export const PasteLinkModal: React.FC<PasteLinkModalProps> = ({
               <div className="flex flex-wrap gap-1 pt-1">
                 <span className="text-[10px] text-gray-400 self-center">Suggestions:</span>
                 {existingTags.slice(0, 5).map(t => (
-                  <button
+                  <button aria-label="Action"
                     key={t}
                     type="button"
                     onClick={() => setTagsList(prev => [...prev, t])}
@@ -381,14 +381,14 @@ export const PasteLinkModal: React.FC<PasteLinkModalProps> = ({
 
           {/* Form Actions */}
           <div className="pt-3 border-t border-gray-100 dark:border-white/10 flex items-center justify-between">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={onClose}
               className="px-4 py-2 text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white rounded-xl transition-colors cursor-pointer"
             >
               Cancel
             </button>
-            <button
+            <button aria-label="Action"
               type="submit"
               disabled={!urlInput.trim()}
               className="px-5 py-2 bg-blue-600 hover:bg-blue-700 active:scale-98 disabled:opacity-50 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md shadow-blue-500/20 transition-all cursor-pointer"

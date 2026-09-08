@@ -72,7 +72,7 @@ export const CloudStorageWidget: React.FC<CloudStorageWidgetProps> = ({
         <div className="grid grid-cols-2 gap-2">
           {onNavigateView && (
             <>
-              <button
+              <button aria-label="Action"
                 onClick={() => onNavigateView('gdrive')}
                 className="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-blue-500/30 transition-all text-left group cursor-pointer"
               >
@@ -84,7 +84,7 @@ export const CloudStorageWidget: React.FC<CloudStorageWidgetProps> = ({
                 <div className="text-[10px] text-gray-500 dark:text-gray-400">Sync & Files</div>
               </button>
 
-              <button
+              <button aria-label="Action"
                 onClick={() => onNavigateView('box')}
                 className="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-sky-500/30 transition-all text-left group cursor-pointer"
               >
@@ -103,7 +103,7 @@ export const CloudStorageWidget: React.FC<CloudStorageWidgetProps> = ({
       {/* Action Bar */}
       <div className="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center gap-2">
         {onTriggerBackupModal && (
-          <button
+          <button aria-label="Action"
             onClick={onTriggerBackupModal}
             className="flex-1 py-1.5 px-2 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 text-blue-800 dark:text-blue-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
           >
@@ -111,7 +111,7 @@ export const CloudStorageWidget: React.FC<CloudStorageWidgetProps> = ({
           </button>
         )}
         {onOpenImportedFiles && (
-          <button
+          <button aria-label="Action"
             onClick={onOpenImportedFiles}
             className="py-1.5 px-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-gray-700 dark:text-gray-300 text-xs font-medium transition-colors cursor-pointer"
           >

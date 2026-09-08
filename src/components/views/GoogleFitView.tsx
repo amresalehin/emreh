@@ -531,7 +531,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-              <button
+              <button aria-label="Action"
                 onClick={onImportClick}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white px-6 py-3.5 font-bold shadow-lg shadow-orange-500/20 transition-all cursor-pointer active:scale-98"
               >
@@ -539,7 +539,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
                 <span>Import Google Fit ZIP / Folder</span>
               </button>
 
-              <button
+              <button aria-label="Action"
                 onClick={handleLoadSample}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/15 text-gray-800 dark:text-white px-6 py-3.5 font-bold border border-gray-200/80 dark:border-white/10 transition-all cursor-pointer active:scale-98"
               >
@@ -620,7 +620,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
               return (
-                <button
+                <button aria-label="Action"
                   key={tab.id}
                   onClick={() => {
                     setActiveTab(tab.id);
@@ -672,7 +672,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
               Filter Activities
             </span>
             {hasActiveFilters && (
-              <button
+              <button aria-label="Action"
                 onClick={resetFilters}
                 className="text-[10px] text-orange-500 hover:underline font-bold cursor-pointer"
               >
@@ -692,7 +692,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
                 { id: 'walking', label: 'Walking' },
                 { id: 'gym', label: 'Strength / Gym' }
               ].map(f => (
-                <button
+                <button aria-label="Action"
                   key={f.id}
                   onClick={() => setSelectedActivityType(f.id)}
                   className={`px-2 py-1.5 rounded-lg text-left text-[11px] font-semibold transition-all cursor-pointer ${
@@ -729,7 +729,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
               Layout Mode
             </span>
             <div className="grid grid-cols-3 gap-1 p-1 bg-gray-100 dark:bg-white/5 rounded-xl border border-gray-200/80 dark:border-white/10 text-xs">
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewMode('split')}
                 className={`py-1.5 px-2 rounded-lg flex flex-col items-center gap-1 transition-all cursor-pointer font-semibold ${
                   viewMode === 'split'
@@ -740,7 +740,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
                 <Columns2 className="w-3.5 h-3.5" />
                 <span className="text-[10px]">Split</span>
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewMode('list')}
                 className={`py-1.5 px-2 rounded-lg flex flex-col items-center gap-1 transition-all cursor-pointer font-semibold ${
                   viewMode === 'list'
@@ -751,7 +751,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
                 <List className="w-3.5 h-3.5" />
                 <span className="text-[10px]">List</span>
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewMode('map')}
                 className={`py-1.5 px-2 rounded-lg flex flex-col items-center gap-1 transition-all cursor-pointer font-semibold ${
                   viewMode === 'map'
@@ -770,7 +770,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
             <span className="text-[10px] font-extrabold uppercase tracking-wider text-gray-400 dark:text-gray-500 block">
               Map Polylines
             </span>
-            <button
+            <button aria-label="Action"
               onClick={() => setShowRoutes(!showRoutes)}
               className="w-full px-3 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-semibold flex items-center justify-between transition-all cursor-pointer"
             >
@@ -925,7 +925,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
 
                             <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
                               {/* Details button: clicking this opens popup inspector */}
-                              <button
+                              <button aria-label="Action"
                                 type="button"
                                 onClick={(e) => {
                                   e.stopPropagation();
@@ -971,7 +971,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
                       className="w-full pl-9 pr-8 py-2 rounded-xl bg-black/[0.025] dark:bg-white/[0.05] border border-gray-200/80 dark:border-white/10 text-xs text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-orange-500"
                     />
                     {workoutSearchQuery && (
-                      <button
+                      <button aria-label="Action"
                         onClick={() => setWorkoutSearchQuery('')}
                         className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-white text-xs"
                       >
@@ -988,7 +988,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
                       { id: 'walking', label: 'Walking' },
                       { id: 'gym', label: 'Strength/Gym' }
                     ].map(f => (
-                      <button
+                      <button aria-label="Action"
                         key={f.id}
                         onClick={() => setSelectedActivityType(f.id)}
                         className={`px-2.5 py-1 rounded-lg whitespace-nowrap font-medium transition-all cursor-pointer ${
@@ -1002,7 +1002,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
                     ))}
 
                     {/* GPS Only Filter Button */}
-                    <button
+                    <button aria-label="Action"
                       type="button"
                       onClick={() => setGpsOnlyFilter(prev => !prev)}
                       className={`px-2.5 py-1 rounded-lg whitespace-nowrap font-medium transition-all cursor-pointer flex items-center gap-1 ${
@@ -1017,7 +1017,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
                     </button>
 
                     {hasActiveFilters && (
-                      <button
+                      <button aria-label="Action"
                         onClick={resetFilters}
                         className="text-[11px] text-orange-500 hover:underline font-bold px-1 whitespace-nowrap cursor-pointer ml-auto"
                       >
@@ -1090,7 +1090,7 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
 
                             <div className="flex items-center gap-1.5">
                               {/* Details button: only clicking this opens a pop up to show details */}
-                              <button
+                              <button aria-label="Action"
                                 type="button"
                                 onClick={(e) => {
                                   e.stopPropagation();

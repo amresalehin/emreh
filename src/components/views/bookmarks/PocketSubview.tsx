@@ -135,7 +135,7 @@ export const PocketSubview: React.FC<PocketSubviewProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 flex-wrap shrink-0">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => onOpenSyncModal('pocket')}
             className="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
@@ -161,7 +161,7 @@ export const PocketSubview: React.FC<PocketSubviewProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Read time pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setReadingTimeFilter('all')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
@@ -172,7 +172,7 @@ export const PocketSubview: React.FC<PocketSubviewProps> = ({
             >
               All Articles ({bookmarks.length})
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setReadingTimeFilter('quick')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1 transition-colors cursor-pointer ${
@@ -184,7 +184,7 @@ export const PocketSubview: React.FC<PocketSubviewProps> = ({
               <Clock className="w-3 h-3 text-rose-500" />
               <span>Quick Reads (&le; 5 min)</span>
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setReadingTimeFilter('medium')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1 transition-colors cursor-pointer ${
@@ -196,7 +196,7 @@ export const PocketSubview: React.FC<PocketSubviewProps> = ({
               <Clock className="w-3 h-3 text-amber-500" />
               <span>Medium (5-10 min)</span>
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setReadingTimeFilter('long')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1 transition-colors cursor-pointer ${
@@ -212,7 +212,7 @@ export const PocketSubview: React.FC<PocketSubviewProps> = ({
 
           {/* Layout mode switcher */}
           <div className="flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-xl shrink-0 self-end sm:self-auto">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('grid')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -224,7 +224,7 @@ export const PocketSubview: React.FC<PocketSubviewProps> = ({
             >
               <Grid className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('list')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -236,7 +236,7 @@ export const PocketSubview: React.FC<PocketSubviewProps> = ({
             >
               <List className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('table')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -388,7 +388,7 @@ export const PocketSubview: React.FC<PocketSubviewProps> = ({
             </p>
           </div>
           <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onOpenSyncModal('pocket')}
               className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-2 cursor-pointer"

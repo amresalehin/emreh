@@ -246,7 +246,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
       <div className="flex-1 overflow-y-auto px-2.5 py-3 space-y-4 no-scrollbar">
         {/* Core Views: All, Kanban, Moodboard */}
         <div className="space-y-0.5">
-          <button
+          <button aria-label="Action"
             type="button"
             id="bookmark-subview-tab-all"
             onClick={() => onSelect({ type: 'view', id: 'all' })}
@@ -265,7 +265,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
             </span>
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             id="bookmark-subview-tab-kanban"
             onClick={() => onSelect({ type: 'view', id: 'kanban' })}
@@ -284,7 +284,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
             </span>
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             id="bookmark-subview-tab-moodboard"
             onClick={() => onSelect({ type: 'view', id: 'moodboard' })}
@@ -307,7 +307,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
         {/* NESTED COLLECTION 1: LIVE SYNC SERVICES */}
         <div className="space-y-1">
           <div className="flex items-center justify-between px-2 py-1">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsLiveSyncOpen(prev => !prev)}
               className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer"
@@ -336,7 +336,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
                   currentSelection.type === 'live_service' && currentSelection.id === service.id;
 
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={service.id}
                     id={service.domId}
                     type="button"
@@ -377,7 +377,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
               })}
 
               {/* Add / Connect Service Button */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onOpenSyncModal()}
                 className="w-full px-2.5 py-1.5 rounded-xl text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 flex items-center gap-1.5 transition-colors cursor-pointer mt-1"
@@ -392,7 +392,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
         {/* NESTED COLLECTION 2: IMPORTS */}
         <div className="space-y-1">
           <div className="flex items-center justify-between px-2 py-1">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsImportsOpen(prev => !prev)}
               className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer"
@@ -421,7 +421,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
                   currentSelection.type === 'import' && currentSelection.id === source.id;
 
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={source.id}
                     id={source.domId}
                     type="button"
@@ -454,7 +454,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
               })}
 
               {/* Import Bookmarks File Button */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onOpenSyncModal('browser')}
                 className="w-full px-2.5 py-1.5 rounded-xl text-[11px] font-semibold text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30 flex items-center gap-1.5 transition-colors cursor-pointer mt-1"
@@ -470,7 +470,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
         {folders.length > 0 && (
           <div className="space-y-1">
             <div className="flex items-center justify-between px-2 py-1">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setIsFoldersOpen(prev => !prev)}
                 className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer"
@@ -495,7 +495,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
                     currentSelection.type === 'folder' && currentSelection.id === folder.name;
 
                   return (
-                    <button
+                    <button aria-label="Action"
                       key={folder.name}
                       type="button"
                       onClick={() =>
@@ -530,7 +530,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
         {tags.length > 0 && (
           <div className="space-y-1">
             <div className="flex items-center justify-between px-2 py-1">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setIsTagsOpen(prev => !prev)}
                 className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer"
@@ -555,7 +555,7 @@ export const BookmarksSidebar: React.FC<BookmarksSidebarProps> = ({
                     currentSelection.type === 'tag' && currentSelection.id === tag.name;
 
                   return (
-                    <button
+                    <button aria-label="Action"
                       key={tag.name}
                       type="button"
                       onClick={() =>

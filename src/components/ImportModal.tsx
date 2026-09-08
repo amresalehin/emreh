@@ -396,7 +396,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
             </div>
           </div>
           {!isLoading && (
-            <button
+            <button aria-label="Action"
               onClick={onClose}
               className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer shrink-0"
             >
@@ -470,7 +470,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
                 ))}
               </div>
               {mode === 'fit' && (
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={(e) => { e.stopPropagation(); folderInputRef.current?.click(); }}
                   className="mt-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-orange-300/70 dark:border-orange-500/30 bg-orange-500/5 hover:bg-orange-500/10 text-orange-600 dark:text-orange-300 text-[11px] font-bold transition-colors"
@@ -501,7 +501,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
                 </div>
               </div>
             </div>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onClose();

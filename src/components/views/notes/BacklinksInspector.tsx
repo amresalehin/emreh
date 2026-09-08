@@ -140,7 +140,7 @@ export const BacklinksInspector: React.FC<BacklinksInspectorProps> = ({
                   className="p-2.5 rounded-xl bg-white dark:bg-[#1c1c1e] border border-stone-200/70 dark:border-stone-800 space-y-1.5 shadow-2xs"
                 >
                   <div className="flex items-center justify-between text-xs font-semibold">
-                    <button
+                    <button aria-label="Action"
                       type="button"
                       onClick={() => onOpenNote(note.id)}
                       className="text-stone-900 dark:text-stone-100 hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer truncate"
@@ -148,7 +148,7 @@ export const BacklinksInspector: React.FC<BacklinksInspectorProps> = ({
                       {note.title}
                     </button>
                     {onLinkMention && (
-                      <button
+                      <button aria-label="Action"
                         type="button"
                         onClick={() => onLinkMention(note.id, currentNote.title)}
                         className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 text-[10px] font-semibold hover:bg-amber-500/20 cursor-pointer"

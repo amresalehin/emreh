@@ -1041,7 +1041,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
         <p className="text-xs text-gray-300 dark:text-gray-300 max-w-sm mb-6 leading-relaxed">
           Import your Spotify streaming history JSON to view listening habits, top tracks, artists, and statistics.
         </p>
-        <button
+        <button aria-label="Action"
           onClick={onImportClick}
           className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:from-emerald-500 hover:to-teal-500 text-white px-5 py-2.5 rounded-2xl text-xs font-bold shadow-xl transition-all flex items-center gap-2 cursor-pointer active:scale-95"
         >
@@ -1088,7 +1088,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
           <div className="flex items-center gap-1.5 flex-wrap">
             {/* Day vs All Scope Toggle */}
             <div className="flex bg-[#1a1a1a]/5 dark:bg-white/5 p-0.5 rounded-md border border-[#1a1a1a]/10 dark:border-white/10 text-xs">
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewScope('day')}
                 className={`px-2.5 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   viewScope === 'day'
@@ -1098,7 +1098,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
               >
                 Day
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewScope('all')}
                 className={`px-2.5 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   viewScope === 'all'
@@ -1112,7 +1112,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
 
             {/* Subview switcher */}
             <div className="flex bg-[#1a1a1a]/5 dark:bg-white/5 p-0.5 rounded-md border border-[#1a1a1a]/10 dark:border-white/10 text-xs">
-              <button
+              <button aria-label="Action"
                 onClick={() => setSubView('day')}
                 className={`px-2 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   subView === 'day'
@@ -1122,7 +1122,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
               >
                 Streams
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setSubView('top_artists')}
                 className={`px-2 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   subView === 'top_artists'
@@ -1132,7 +1132,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
               >
                 Artists
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setSubView('albums')}
                 className={`px-2 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   subView === 'albums'
@@ -1182,7 +1182,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
             />
 
             {/* Right Panel Toggle Button */}
-            <button
+            <button aria-label="Action"
               onClick={() => setIsRightPanelOpen(!isRightPanelOpen)}
               className={`px-2.5 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs ${
                 isRightPanelOpen
@@ -1215,7 +1215,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
               ))}
             </select>
             {filterArtist !== 'all' && (
-              <button
+              <button aria-label="Action"
                 onClick={() => setFilterArtist('all')}
                 className="text-emerald-500 hover:text-emerald-700 font-bold px-1 rounded-md hover:bg-emerald-500/10 cursor-pointer"
                 title="Clear artist filter"
@@ -1616,7 +1616,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                     {selectedTrackMetrics.title}
                   </h3>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <button
+                    <button aria-label="Action"
                       onClick={() => setActivePanelTab('artist')}
                       className="text-xs font-semibold text-emerald-500 hover:underline cursor-pointer flex items-center gap-1"
                     >
@@ -1631,7 +1631,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                   </div>
                 </div>
 
-                <button
+                <button aria-label="Action"
                   onClick={() => setIsRightPanelOpen(false)}
                   className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer shrink-0"
                   title="Close Inspector"
@@ -1688,7 +1688,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
 
                 {resolvedTrackId && (
                   <div className="flex items-center bg-gray-100 dark:bg-gray-800 p-0.5 rounded-xl text-[10px] font-bold">
-                    <button
+                    <button aria-label="Action"
                       onClick={() => handleSetPlayerSize('full')}
                       className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
                         playerSize === 'full'
@@ -1699,7 +1699,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                     >
                       Full (352px)
                     </button>
-                    <button
+                    <button aria-label="Action"
                       onClick={() => handleSetPlayerSize('compact')}
                       className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
                         playerSize === 'compact'
@@ -1804,7 +1804,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
 
               {/* Segmented Sub-Tabs */}
               <div className="flex bg-gray-100 dark:bg-gray-900 p-1 rounded-xl text-xs mt-3">
-                <button
+                <button aria-label="Action"
                   onClick={() => setActivePanelTab('analytics')}
                   className={`flex-1 py-1.5 px-2 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activePanelTab === 'analytics'
@@ -1815,7 +1815,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                   <BarChart2 className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Analytics</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={() => setActivePanelTab('artist')}
                   className={`flex-1 py-1.5 px-2 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activePanelTab === 'artist'
@@ -1826,7 +1826,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                   <User className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Artist</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={() => setActivePanelTab('info')}
                   className={`flex-1 py-1.5 px-2 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activePanelTab === 'info'
@@ -1837,7 +1837,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                   <Disc className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Track Info</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={() => setActivePanelTab('notes')}
                   className={`flex-1 py-1.5 px-2 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activePanelTab === 'notes'
@@ -2015,7 +2015,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                       <div className="flex items-center gap-1.5">
                         <span className="font-mono font-bold text-emerald-500">{resolvedTrackId || 'N/A'}</span>
                         {resolvedTrackId && (
-                          <button
+                          <button aria-label="Action"
                             onClick={() => {
                               navigator.clipboard.writeText(resolvedTrackId);
                               showToast('Track ID copied to clipboard');
@@ -2068,7 +2068,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                         <User className="w-4 h-4 text-emerald-500" />
                         {selectedArtistMetrics.artist}
                       </h4>
-                      <button
+                      <button aria-label="Action"
                         onClick={() => onShowArtistProfile(selectedArtistMetrics.artist)}
                         className="text-xs text-emerald-500 font-bold hover:underline cursor-pointer"
                       >
@@ -2168,7 +2168,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                         placeholder="Add tag (e.g. #workout, #focus)..."
                         className="flex-1 px-3 py-1.5 text-xs bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-gray-900 dark:text-white outline-none focus:border-emerald-500"
                       />
-                      <button
+                      <button aria-label="Action"
                         type="submit"
                         className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
                       >
@@ -2187,7 +2187,7 @@ export const SpotifyView: React.FC<SpotifyViewProps> = ({
                             className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-medium border border-emerald-500/20"
                           >
                             #{t}
-                            <button
+                            <button aria-label="Action"
                               type="button"
                               onClick={() => handleRemoveTag(t)}
                               className="hover:text-red-500 cursor-pointer ml-0.5"

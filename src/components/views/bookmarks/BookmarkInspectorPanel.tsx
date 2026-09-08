@@ -251,7 +251,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
         {/* Preview Tabs Switcher */}
         <div className="flex items-center justify-between gap-2 pt-1 border-t border-gray-100 dark:border-white/5 flex-wrap">
           <div className="flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-xl text-xs">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setPreviewTab('preview')}
               className={`px-3 py-1 font-semibold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -263,7 +263,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
               <Layers className="w-3.5 h-3.5 text-sky-500" />
               <span>Preview</span>
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setPreviewTab('frame')}
               className={`px-3 py-1 font-semibold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -275,7 +275,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
               <Monitor className="w-3.5 h-3.5 text-emerald-500" />
               <span>Live Frame</span>
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setPreviewTab('raw')}
               className={`px-3 py-1 font-semibold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -291,7 +291,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
 
           {previewTab === 'frame' && (
             <div className="flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-xl text-xs">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setViewportMode('desktop')}
                 className={`p-1.5 rounded-lg transition-all cursor-pointer ${
@@ -303,7 +303,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
               >
                 <Monitor className="w-3.5 h-3.5" />
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setViewportMode('tablet')}
                 className={`p-1.5 rounded-lg transition-all cursor-pointer ${
@@ -315,7 +315,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
               >
                 <Tablet className="w-3.5 h-3.5" />
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setViewportMode('mobile')}
                 className={`p-1.5 rounded-lg transition-all cursor-pointer ${
@@ -327,7 +327,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
               >
                 <Smartphone className="w-3.5 h-3.5" />
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   setIframeKey(k => k + 1);
@@ -546,7 +546,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
                 className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 text-xs font-medium border border-purple-200 dark:border-purple-800/40"
               >
                 #{t}
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => onRemoveTag(url, t)}
                   className="hover:text-rose-500 cursor-pointer ml-0.5"
@@ -563,7 +563,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
               .map(st => {
                 const clean = st.replace(/^#/, '');
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={clean}
                     type="button"
                     onClick={() => onAddTag(url, clean)}
@@ -586,7 +586,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
               placeholder="Add tag..."
               className="flex-1 px-3 py-1.5 bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/10 rounded-xl text-xs text-gray-900 dark:text-white focus:outline-hidden focus:border-purple-500 transition-colors"
             />
-            <button
+            <button aria-label="Action"
               type="submit"
               disabled={!newTagText.trim()}
               className="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white rounded-xl text-xs font-bold transition-all cursor-pointer"
@@ -634,7 +634,7 @@ export const BookmarkInspectorPanel: React.FC<BookmarkInspectorPanelProps> = ({
           {/* Delete Bookmark Action */}
           {onDeleteItem && (
             <div className="pt-3">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onDeleteItem(item.id);

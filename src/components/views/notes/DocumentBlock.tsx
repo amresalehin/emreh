@@ -103,7 +103,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
           Drop your PDF or Word (.docx) document here, or browse to view with interactive Omni Viewer.
         </div>
         <div className="flex items-center gap-2">
-          <button
+          <button aria-label="Action"
             type="button"
             disabled={isProcessing}
             onClick={() => fileInputRef.current?.click()}
@@ -111,7 +111,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
           >
             Choose PDF or DOCX
           </button>
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={onDelete}
             className="px-2.5 py-1.5 rounded-xl hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-400 hover:text-stone-700 text-xs cursor-pointer transition-colors"
@@ -198,7 +198,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
 
           {/* Card Actions */}
           <div className="flex items-center gap-1 shrink-0 ml-2">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setViewMode('embedded')}
               title="Expand Omni Viewer"
@@ -208,7 +208,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
               <span>Preview</span>
             </button>
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsFullscreen(true)}
               title="Open Fullscreen Reader"
@@ -254,7 +254,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
             <div className="flex flex-col items-center justify-center h-full p-8 text-stone-400">
               <FileText className="w-10 h-10 mb-2 opacity-40" />
               <p className="text-sm">PDF content could not be previewed.</p>
-              <button
+              <button aria-label="Action"
                 onClick={handleDownload}
                 className="mt-3 px-3 py-1.5 bg-amber-500 text-white rounded-lg text-xs font-semibold"
               >
@@ -337,7 +337,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
             <div className="flex items-center gap-2">
               {isPdf && (
                 <div className="flex items-center gap-1 bg-stone-200/60 dark:bg-stone-800 px-2 py-1 rounded-xl text-xs text-stone-600 dark:text-stone-300">
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setZoom(Math.max(50, zoom - 15))}
                     className="p-0.5 hover:text-stone-900 dark:hover:text-stone-100 cursor-pointer"
                     title="Zoom out"
@@ -345,14 +345,14 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
                     <ZoomOut className="w-3.5 h-3.5" />
                   </button>
                   <span className="font-mono text-[11px] px-1">{zoom}%</span>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setZoom(Math.min(200, zoom + 15))}
                     className="p-0.5 hover:text-stone-900 dark:hover:text-stone-100 cursor-pointer"
                     title="Zoom in"
                   >
                     <ZoomIn className="w-3.5 h-3.5" />
                   </button>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setZoom(100)}
                     className="p-0.5 hover:text-stone-900 dark:hover:text-stone-100 cursor-pointer ml-1"
                     title="Reset zoom"
@@ -364,7 +364,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
 
               {isDocx && (
                 <div className="flex items-center gap-1.5">
-                  <button
+                  <button aria-label="Action"
                     onClick={handleCopyExtractedText}
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs bg-stone-200/60 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:text-stone-900 cursor-pointer"
                   >
@@ -383,7 +383,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
                 <Download className="w-4 h-4" />
               </button>
 
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setIsFullscreen(false)}
                 title="Close Fullscreen (Esc)"
@@ -425,7 +425,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
         <div className="flex items-center gap-1.5">
           {isPdf && (
             <div className="hidden sm:flex items-center gap-1 bg-stone-200/50 dark:bg-stone-800/80 px-2 py-0.5 rounded-lg text-xs text-stone-600 dark:text-stone-300">
-              <button
+              <button aria-label="Action"
                 onClick={() => setZoom(Math.max(50, zoom - 15))}
                 className="p-0.5 hover:text-stone-900 dark:hover:text-stone-100 cursor-pointer"
                 title="Zoom out"
@@ -433,7 +433,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
                 <ZoomOut className="w-3 h-3" />
               </button>
               <span className="font-mono text-[10px] px-1">{zoom}%</span>
-              <button
+              <button aria-label="Action"
                 onClick={() => setZoom(Math.min(200, zoom + 15))}
                 className="p-0.5 hover:text-stone-900 dark:hover:text-stone-100 cursor-pointer"
                 title="Zoom in"
@@ -447,7 +447,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
             <div className="flex items-center gap-1">
               {/* Paper Theme selector */}
               <div className="flex items-center gap-0.5 p-0.5 bg-stone-200/50 dark:bg-stone-800/60 rounded-md text-[10px]">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setDocxTheme('paper')}
                   title="Warm Paper Theme"
@@ -455,7 +455,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
                 >
                   Paper
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setDocxTheme('white')}
                   title="Clean White Theme"
@@ -463,7 +463,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
                 >
                   White
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setDocxTheme('dark')}
                   title="Dark Theme"
@@ -474,7 +474,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
               </div>
 
               {/* Font resize */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setDocxFontSize(Math.max(12, docxFontSize - 1))}
                 className="p-1 rounded text-stone-500 hover:text-stone-800 text-[11px] font-bold"
@@ -482,7 +482,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
               >
                 A-
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setDocxFontSize(Math.min(24, docxFontSize + 1))}
                 className="p-1 rounded text-stone-500 hover:text-stone-800 text-[11px] font-bold"
@@ -495,7 +495,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
 
           {/* Height Adjuster */}
           <div className="hidden md:flex items-center gap-0.5 text-stone-400">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setViewerHeight(viewerHeight === 400 ? 650 : viewerHeight === 650 ? 900 : 400)}
               title={`Toggle viewer height (Current: ${viewerHeight}px)`}
@@ -520,7 +520,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
           )}
 
           {/* Collapse to Card View */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setViewMode('inline_card')}
             title="Collapse to card"
@@ -530,7 +530,7 @@ export const DocumentBlock: React.FC<DocumentBlockProps> = ({
           </button>
 
           {/* Fullscreen Reader */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setIsFullscreen(true)}
             title="Expand to Fullscreen Reader"

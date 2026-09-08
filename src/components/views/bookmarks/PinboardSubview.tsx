@@ -110,7 +110,7 @@ export const PinboardSubview: React.FC<PinboardSubviewProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 flex-wrap shrink-0">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => onOpenSyncModal('pinboard')}
             className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
@@ -140,7 +140,7 @@ export const PinboardSubview: React.FC<PinboardSubviewProps> = ({
               <span>Tag Cloud ({tagFrequencies.length} tags)</span>
             </div>
             {selectedTag !== 'all' && (
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setSelectedTag('all')}
                 className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
@@ -151,7 +151,7 @@ export const PinboardSubview: React.FC<PinboardSubviewProps> = ({
           </div>
 
           <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto pt-1">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setSelectedTag('all')}
               className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
@@ -165,7 +165,7 @@ export const PinboardSubview: React.FC<PinboardSubviewProps> = ({
             {tagFrequencies.map(([tag, count]) => {
               const isSelected = selectedTag === tag;
               return (
-                <button
+                <button aria-label="Action"
                   key={tag}
                   type="button"
                   onClick={() => setSelectedTag(isSelected ? 'all' : tag)}
@@ -212,7 +212,7 @@ export const PinboardSubview: React.FC<PinboardSubviewProps> = ({
           </div>
 
           <div className="flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-xl">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('list')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -224,7 +224,7 @@ export const PinboardSubview: React.FC<PinboardSubviewProps> = ({
             >
               <List className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('grid')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -236,7 +236,7 @@ export const PinboardSubview: React.FC<PinboardSubviewProps> = ({
             >
               <Grid className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('table')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -342,7 +342,7 @@ export const PinboardSubview: React.FC<PinboardSubviewProps> = ({
             </p>
           </div>
           <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onOpenSyncModal('pinboard')}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-2 cursor-pointer"

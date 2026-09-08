@@ -164,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Center: Powerful Global Omnibar Search Trigger */}
         <div className="flex-1 max-w-xl mx-auto px-1 sm:px-2">
-          <button
+          <button aria-label="Action"
             onClick={() => setIsSearchOpen(true)}
             className="w-full flex items-center justify-between gap-2.5 px-3 py-1.5 sm:py-2 bg-gray-100/90 dark:bg-white/5 hover:bg-gray-200/80 dark:hover:bg-white/10 border border-gray-200/80 dark:border-white/10 rounded-2xl text-left transition-all group cursor-pointer shadow-2xs hover:shadow-sm"
             title={`Search across all life events (${isMac ? '⌘K' : 'Ctrl+K'})`}

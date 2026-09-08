@@ -161,7 +161,7 @@ export const HealthModal: React.FC<HealthModalProps> = ({
             Health & Fitness
             <span className="text-[10px] font-medium text-gray-400 dark:text-gray-500">Google Fit</span>
           </h3>
-          <button onClick={onClose} className="w-7 h-7 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer">
+          <button aria-label="Action" onClick={onClose} className="w-7 h-7 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -180,7 +180,7 @@ export const HealthModal: React.FC<HealthModalProps> = ({
           <>
             <div className="px-4 pt-3 flex items-center gap-1 shrink-0 border-b border-gray-100 dark:border-gray-800">
               {(['overview', 'activities', 'weight'] as Tab[]).map(t => (
-                <button
+                <button aria-label="Action"
                   key={t}
                   onClick={() => setTab(t)}
                   className={`px-3 py-1.5 text-xs font-semibold rounded-t-lg capitalize transition-colors cursor-pointer ${
@@ -245,7 +245,7 @@ export const HealthModal: React.FC<HealthModalProps> = ({
                         ? a.dateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
                         : '';
                       return (
-                        <button
+                        <button aria-label="Action"
                           key={a.id}
                           onClick={() => a.dateObj && onJumpToDate && onJumpToDate(a.dateObj)}
                           className="w-full text-left bg-gray-50 dark:bg-gray-900/60 hover:bg-gray-100 dark:hover:bg-gray-900 p-3 rounded-2xl border border-gray-100 dark:border-gray-800 flex items-center justify-between gap-3 transition-colors cursor-pointer"

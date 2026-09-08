@@ -306,14 +306,14 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
                       className="px-2.5 py-1 text-xs font-bold rounded-lg border border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white outline-none focus:ring-1 focus:ring-blue-500"
                       autoFocus
                     />
-                    <button
+                    <button aria-label="Action"
                       type="submit"
                       disabled={!inlineName.trim()}
                       className="px-2 py-1 bg-[#1A73E8] text-white rounded-lg font-bold text-[11px] hover:bg-blue-600 transition-colors cursor-pointer"
                     >
                       Save
                     </button>
-                    <button
+                    <button aria-label="Action"
                       type="button"
                       onClick={() => setIsInlineEditing(false)}
                       className="px-2 py-1 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg font-bold text-[11px] hover:bg-gray-300 transition-colors cursor-pointer"
@@ -367,7 +367,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
                 Reverse geocode to find the venue name or assign a custom label
               </span>
             </div>
-            <button
+            <button aria-label="Action"
               onClick={handleTriggerAutoResolve}
               disabled={isResolving}
               className="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white rounded-lg font-bold text-[11px] shadow-2xs transition-all cursor-pointer flex items-center gap-1 shrink-0"
@@ -401,7 +401,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
           )}
 
           {/* Rename Modal Button */}
-          <button
+          <button aria-label="Action"
             onClick={() => (onOpenRenameModal ? onOpenRenameModal(item) : handleStartInlineEdit())}
             className="flex items-center gap-1 px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-[11px] transition-colors shadow-xs cursor-pointer"
             title="Custom rename and label place"
@@ -447,7 +447,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
 
         {/* Tab Navigation */}
         <div className="flex items-center gap-1 mt-4 p-1 bg-gray-100 dark:bg-gray-800/80 rounded-xl">
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('analytics')}
             className={`flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
               activeTab === 'analytics'
@@ -458,7 +458,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
             <BarChart2 className="w-3.5 h-3.5" />
             <span>Analytics</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('map')}
             className={`flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
               activeTab === 'map'
@@ -469,7 +469,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
             <MapPin className="w-3.5 h-3.5" />
             <span>Map Preview</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('category')}
             className={`flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
               activeTab === 'category'
@@ -480,7 +480,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
             <Sparkles className="w-3.5 h-3.5" />
             <span>Related</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('notes')}
             className={`flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
               activeTab === 'notes'
@@ -577,7 +577,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
                       <Tag className="w-3 h-3 text-[#1A73E8]" />
                       <span>Quick Label Preset</span>
                     </span>
-                    <button
+                    <button aria-label="Action"
                       onClick={() => (onOpenRenameModal ? onOpenRenameModal(item) : handleStartInlineEdit())}
                       className="text-[10px] font-bold text-[#1A73E8] hover:underline flex items-center gap-0.5 cursor-pointer"
                     >
@@ -597,7 +597,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
                       const IconC = preset.icon;
                       const isCurr = item.title === preset.name;
                       return (
-                        <button
+                        <button aria-label="Action"
                           key={preset.name}
                           type="button"
                           onClick={() => handleQuickPreset(preset.name, preset.cat)}
@@ -909,7 +909,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold text-[11px] border border-blue-500/20"
                   >
                     <span>#{tag}</span>
-                    <button
+                    <button aria-label="Action"
                       onClick={() => onRemovePlaceTag && onRemovePlaceTag(placeKey, tag)}
                       className="hover:text-red-500 cursor-pointer ml-0.5"
                     >
@@ -928,7 +928,7 @@ export const PlaceInspector: React.FC<PlaceInspectorProps> = ({
                   placeholder="Add a tag (e.g. coffee, wifi, cozy)..."
                   className="flex-1 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 text-gray-800 dark:text-gray-200 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
                 />
-                <button
+                <button aria-label="Action"
                   type="submit"
                   disabled={!tagInput.trim()}
                   className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl font-bold text-xs transition-colors cursor-pointer"

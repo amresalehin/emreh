@@ -158,7 +158,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
           className="w-full min-w-0 pl-9 pr-8 py-2 bg-white dark:bg-[#18181b] border border-gray-200/90 dark:border-white/10 rounded-xl text-xs text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-[#0089FF] dark:focus:border-[#0089FF] transition-all shadow-2xs"
         />
         {currentQuery ? (
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleQueryChange('')}
             className="absolute right-2.5 p-1 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-pointer shrink-0"
@@ -167,7 +167,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
             <X className="w-3.5 h-3.5" />
           </button>
         ) : (
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setIsFocused(prev => !prev)}
             className="absolute right-2.5 p-1 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors cursor-pointer shrink-0"
@@ -199,7 +199,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
 
               <div className="space-y-0.5">
                 {/* Tag */}
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleSelectSuggested('#')}
                   className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left group"
@@ -212,7 +212,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
                 </button>
 
                 {/* Notes */}
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleSelectSuggested('note:true')}
                   className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left group"
@@ -225,7 +225,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
                 </button>
 
                 {/* Type */}
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleSelectSuggested('type:')}
                   className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left group"
@@ -238,7 +238,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
                 </button>
 
                 {/* Date of creation */}
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleSelectSuggested('date:')}
                   className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left group"
@@ -251,7 +251,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
                 </button>
 
                 {/* In title/description */}
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleSelectSuggested('in:title ')}
                   className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left group"
@@ -264,7 +264,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
                 </button>
 
                 {/* In URL */}
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleSelectSuggested('in:url ')}
                   className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left group"
@@ -277,7 +277,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
                 </button>
 
                 {/* Without tags */}
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleSelectSuggested('notag:true')}
                   className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-left group"
@@ -299,7 +299,7 @@ export const RaindropSearchDropdown: React.FC<RaindropSearchDropdownProps> = ({
 
               <div className="space-y-0.5">
                 {searchOperators.map((op, idx) => (
-                  <button
+                  <button aria-label="Action"
                     key={idx}
                     type="button"
                     onClick={() => handleSelectSuggested(op.query)}

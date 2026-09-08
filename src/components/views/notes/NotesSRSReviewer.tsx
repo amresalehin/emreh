@@ -171,7 +171,7 @@ export const NotesSRSReviewer: React.FC<NotesSRSReviewerProps> = ({
             You successfully reviewed {cardsReviewedCount} spaced repetition cards today. Regular active recall builds durable long-term knowledge synthesis.
           </p>
           <div className="pt-4 flex items-center justify-center gap-3">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={handleRestart}
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold cursor-pointer shadow-sm transition-all"
@@ -223,7 +223,7 @@ export const NotesSRSReviewer: React.FC<NotesSRSReviewerProps> = ({
 
             <div className="flex items-center justify-between text-[10px] text-gray-400 pt-3 border-t border-gray-100 dark:border-white/5">
               <span>Interval: {currentCard.block.srsData?.interval || 1}d</span>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -239,7 +239,7 @@ export const NotesSRSReviewer: React.FC<NotesSRSReviewerProps> = ({
           {/* Spaced Repetition Grading Buttons */}
           {isFlipped && (
             <div className="grid grid-cols-4 gap-2 pt-2 animate-in fade-in duration-200">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => handleGrade('again')}
                 className="py-2.5 px-3 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-xs font-bold flex flex-col items-center gap-0.5 cursor-pointer transition-all active:scale-95"
@@ -247,7 +247,7 @@ export const NotesSRSReviewer: React.FC<NotesSRSReviewerProps> = ({
                 <span>Again</span>
                 <span className="text-[9px] font-normal opacity-75">&lt; 1 day</span>
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => handleGrade('hard')}
                 className="py-2.5 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-xs font-bold flex flex-col items-center gap-0.5 cursor-pointer transition-all active:scale-95"
@@ -255,7 +255,7 @@ export const NotesSRSReviewer: React.FC<NotesSRSReviewerProps> = ({
                 <span>Hard</span>
                 <span className="text-[9px] font-normal opacity-75">1 day</span>
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => handleGrade('good')}
                 className="py-2.5 px-3 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-500/30 text-xs font-bold flex flex-col items-center gap-0.5 cursor-pointer transition-all active:scale-95"
@@ -263,7 +263,7 @@ export const NotesSRSReviewer: React.FC<NotesSRSReviewerProps> = ({
                 <span>Good</span>
                 <span className="text-[9px] font-normal opacity-75">3 days</span>
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => handleGrade('easy')}
                 className="py-2.5 px-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-bold flex flex-col items-center gap-0.5 cursor-pointer transition-all active:scale-95"

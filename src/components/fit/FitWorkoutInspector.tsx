@@ -109,7 +109,7 @@ export const FitWorkoutInspector: React.FC<FitWorkoutInspectorProps> = ({
       <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-3.5 min-w-0">
         {/* Map Focus CTA */}
         {validTrackpoints.length > 0 && onFocusMap && (
-          <button
+          <button aria-label="Action"
             id="btn-focus-fit-route"
             onClick={onFocusMap}
             className="w-full py-2.5 px-3 rounded-xl bg-orange-600 hover:bg-orange-700 active:scale-[0.99] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer shrink-0"

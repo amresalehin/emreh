@@ -53,7 +53,7 @@ export const BookmarkSortMenu: React.FC<BookmarkSortMenuProps> = ({
   return (
     <div className={`relative inline-block text-left ${className}`} ref={dropdownRef}>
       {/* Trigger Button beside View button */}
-      <button
+      <button aria-label="Action"
         type="button"
         id="bookmark-sort-button"
         onClick={() => setIsOpen(prev => !prev)}
@@ -86,7 +86,7 @@ export const BookmarkSortMenu: React.FC<BookmarkSortMenuProps> = ({
               const Icon = option.icon;
               const isSelected = sortBy === option.id;
               return (
-                <button
+                <button aria-label="Action"
                   key={option.id}
                   type="button"
                   onClick={() => {

@@ -449,7 +449,7 @@ export const TimelineCalendarNavigator: React.FC<TimelineCalendarNavigatorProps>
 
               {/* Toggle View Mode between Month Grid and Week Strip */}
               <div className="flex bg-gray-100 dark:bg-white/5 p-0.5 rounded-lg border border-gray-200/60 dark:border-white/10 text-[10px]">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setViewMode('month')}
                   className={`px-1.5 py-0.5 rounded-md font-semibold transition-all cursor-pointer ${
@@ -461,7 +461,7 @@ export const TimelineCalendarNavigator: React.FC<TimelineCalendarNavigatorProps>
                 >
                   <CalendarDays className="w-3 h-3" />
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setViewMode('week')}
                   className={`px-1.5 py-0.5 rounded-md font-semibold transition-all cursor-pointer ${
@@ -505,7 +505,7 @@ export const TimelineCalendarNavigator: React.FC<TimelineCalendarNavigatorProps>
               {monthGridDays.map((cell) => {
                 const hasActivity = cell.activityCount > 0;
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={cell.dateKey}
                     type="button"
                     onClick={() => onSelectDate(cell.date)}
@@ -546,7 +546,7 @@ export const TimelineCalendarNavigator: React.FC<TimelineCalendarNavigatorProps>
               {weekStripDays.map((cell) => {
                 const hasActivity = cell.activityCount > 0;
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={cell.dateKey}
                     type="button"
                     onClick={() => onSelectDate(cell.date)}

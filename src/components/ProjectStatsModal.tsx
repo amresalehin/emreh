@@ -44,7 +44,7 @@ export const ProjectStatsModal: React.FC<ProjectStatsModalProps> = ({ project, o
             <FolderArchive className="w-5 h-5" />
             <h3 className="font-bold text-slate-100 text-sm">ZIP Project Metadata</h3>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="p-1 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
           >
@@ -134,7 +134,7 @@ export const ProjectStatsModal: React.FC<ProjectStatsModalProps> = ({ project, o
 
         {/* Footer */}
         <div className="p-4 border-t border-slate-800 bg-slate-950/50 flex justify-end">
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors"
           >

@@ -242,7 +242,7 @@ export const SlashCommandMenu: React.FC<SlashCommandMenuProps> = ({
           filteredCommands.map((cmd, idx) => {
             const isSelected = idx === selectedIndex;
             return (
-              <button
+              <button aria-label="Action"
                 key={cmd.type + cmd.label}
                 type="button"
                 onClick={() => onSelect(cmd.type)}

@@ -207,7 +207,7 @@ export const RaindropSubview: React.FC<RaindropSubviewProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 flex-wrap shrink-0">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => onOpenSyncModal('raindrop')}
             className="px-3.5 py-2 bg-[#0089FF] hover:bg-[#0072d6] text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
@@ -233,7 +233,7 @@ export const RaindropSubview: React.FC<RaindropSubviewProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Collection Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setSelectedCollection('all')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
@@ -247,7 +247,7 @@ export const RaindropSubview: React.FC<RaindropSubviewProps> = ({
             {collections.map(c => {
               const count = bookmarks.filter(b => b.category === c).length;
               return (
-                <button
+                <button aria-label="Action"
                   key={c}
                   type="button"
                   onClick={() => setSelectedCollection(c)}
@@ -446,7 +446,7 @@ export const RaindropSubview: React.FC<RaindropSubviewProps> = ({
             </p>
           </div>
           <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onOpenSyncModal('raindrop')}
               className="px-4 py-2 bg-[#0089FF] hover:bg-[#0072d6] text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-2 cursor-pointer"

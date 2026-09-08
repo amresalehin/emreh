@@ -1110,7 +1110,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
       <div className="h-12 px-4 border-b border-stone-200/70 dark:border-stone-800/80 flex items-center justify-between gap-3 bg-[#fdfcf9]/90 dark:bg-[#151517]/90 backdrop-blur-md shrink-0">
         {/* Left: Document Metadata & Clickable Word Count Dialog */}
         <div className="flex items-center gap-2 min-w-0">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setIsWordCountModalOpen(true)}
             title="Word count & detailed statistics"
@@ -1123,7 +1123,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
           </button>
 
           {(note.dateKey || note.type === 'diary' || /^\d{4}-\d{2}-\d{2}$/.test(note.title)) && (
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 const dKey = note.dateKey || (note.title.match(/\d{4}-\d{2}-\d{2}/)?.[0]) || '';
@@ -1214,7 +1214,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
           </div>
 
           {/* Pin note toggle */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() =>
               onUpdateNote({
@@ -1283,7 +1283,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
           </button>
 
           {/* Zen Focus Mode */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setIsZenMode(!isZenMode)}
             title={isZenMode ? 'Exit Focus Mode' : 'Enter Focus Mode'}
@@ -1293,7 +1293,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
           </button>
 
           {/* Delete Note */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               onDeleteNote(note.id);
@@ -1320,7 +1320,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <Undo2 className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={handleRedo}
             disabled={historyIndex >= history.length - 1}
@@ -1331,7 +1331,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
           </button>
 
           {/* Print Button (window.print) */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => window.print()}
             title="Print Document (⌘P)"
@@ -1341,7 +1341,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
           </button>
 
           {/* Find & Replace Button */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setIsFindReplaceOpen(!isFindReplaceOpen)}
             title="Find & Replace (⌘F)"
@@ -1372,7 +1372,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
 
           {/* Google Docs Styles Dropdown */}
           <div className="relative">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsStylesMenuOpen(!isStylesMenuOpen)}
               title="Styles (Heading / Paragraph)"
@@ -1384,28 +1384,28 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
 
             {isStylesMenuOpen && (
               <div className="absolute left-0 top-full mt-1 w-44 rounded-xl bg-white/95 dark:bg-[#1e1e20]/95 backdrop-blur-xl border border-stone-200/80 dark:border-stone-800 shadow-2xl py-1 text-xs text-stone-800 dark:text-stone-200 z-50">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleQuickFormat('paragraph')}
                   className="w-full text-left px-3 py-1.5 hover:bg-amber-500 hover:text-white transition-colors cursor-pointer"
                 >
                   Normal text
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleQuickFormat('h1')}
                   className="w-full text-left px-3 py-1.5 hover:bg-amber-500 hover:text-white transition-colors cursor-pointer font-bold text-sm"
                 >
                   Title (H1)
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleQuickFormat('h2')}
                   className="w-full text-left px-3 py-1.5 hover:bg-amber-500 hover:text-white transition-colors cursor-pointer font-semibold"
                 >
                   Heading 1 (H2)
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleQuickFormat('h3')}
                   className="w-full text-left px-3 py-1.5 hover:bg-amber-500 hover:text-white transition-colors cursor-pointer font-medium"
@@ -1413,35 +1413,35 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
                   Heading 2 (H3)
                 </button>
                 <div className="h-px bg-stone-200/80 dark:bg-stone-800 my-1" />
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleQuickFormat('todo')}
                   className="w-full text-left px-3 py-1.5 hover:bg-amber-500 hover:text-white transition-colors cursor-pointer flex items-center gap-2"
                 >
                   <CheckSquare className="w-3.5 h-3.5 text-amber-500" /> Checklist
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleQuickFormat('bullet')}
                   className="w-full text-left px-3 py-1.5 hover:bg-amber-500 hover:text-white transition-colors cursor-pointer flex items-center gap-2"
                 >
                   <List className="w-3.5 h-3.5" /> Bullet list
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleQuickFormat('numbered')}
                   className="w-full text-left px-3 py-1.5 hover:bg-amber-500 hover:text-white transition-colors cursor-pointer flex items-center gap-2"
                 >
                   <ListOrdered className="w-3.5 h-3.5" /> Numbered list
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleQuickFormat('quote')}
                   className="w-full text-left px-3 py-1.5 hover:bg-amber-500 hover:text-white transition-colors cursor-pointer flex items-center gap-2"
                 >
                   <Quote className="w-3.5 h-3.5" /> Quote
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => handleQuickFormat('code')}
                   className="w-full text-left px-3 py-1.5 hover:bg-amber-500 hover:text-white transition-colors cursor-pointer flex items-center gap-2"
@@ -1455,7 +1455,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
           <span className="w-px h-3.5 bg-stone-300 dark:bg-stone-700 mx-0.5" />
 
           {/* Inline Text Formatting Buttons (Bold, Italic, Underline, Strikethrough, Highlight, Code, Clear) */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleApplyInlineFormat('bold')}
             title="Bold (⌘B)"
@@ -1464,7 +1464,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <Bold className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleApplyInlineFormat('italic')}
             title="Italic (⌘I)"
@@ -1473,7 +1473,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <Italic className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleApplyInlineFormat('underline')}
             title="Underline (⌘U)"
@@ -1482,7 +1482,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <Underline className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleApplyInlineFormat('strike')}
             title="Strikethrough"
@@ -1491,7 +1491,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <Strikethrough className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleApplyInlineFormat('highlight')}
             title="Highlight Text"
@@ -1500,7 +1500,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <Highlighter className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleApplyInlineFormat('code')}
             title="Inline Code Snippet"
@@ -1509,7 +1509,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <Code className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleApplyInlineFormat('clear')}
             title="Clear Formatting"
@@ -1521,7 +1521,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
           <span className="w-px h-3.5 bg-stone-300 dark:bg-stone-700 mx-0.5" />
 
           {/* Text Alignment (Left, Center, Right) */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleAlignBlock(focusedBlockIndex ?? 0, 'left')}
             title="Align Left"
@@ -1530,7 +1530,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <AlignLeft className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleAlignBlock(focusedBlockIndex ?? 0, 'center')}
             title="Align Center"
@@ -1539,7 +1539,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <AlignCenter className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleAlignBlock(focusedBlockIndex ?? 0, 'right')}
             title="Align Right"
@@ -1551,7 +1551,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
           <span className="w-px h-3.5 bg-stone-300 dark:bg-stone-700 mx-0.5" />
 
           {/* Quick Block Inserts */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleInsertTable()}
             title="Insert Table"
@@ -1560,7 +1560,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <TableIcon className="w-3.5 h-3.5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => handleQuickFormat('divider')}
             title="Insert Page Divider"
@@ -1579,7 +1579,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <span className="text-[11px]">[[ Link ]]</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => imageUploadInputRef.current?.click()}
             title="Insert Image"
@@ -1589,7 +1589,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
             <span className="hidden sm:inline text-[11px]">Image</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => fileUploadInputRef.current?.click()}
             title="Attach Document (PDF, DOCX Omni Viewer)"
@@ -1774,7 +1774,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
 
           {/* Linked References Section */}
           <div className="mt-12 pt-6 border-t border-stone-200/60 dark:border-stone-800/80">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setShowBacklinks(!showBacklinks)}
               className="flex items-center gap-2 text-xs font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 mb-3 cursor-pointer select-none"
@@ -1885,7 +1885,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
 
             <div className="flex items-center justify-between pt-1 text-[11px]">
               <span className="text-stone-400">Inserting at cursor block</span>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={toggleVoiceDictation}
                 className="px-3 py-1 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold shadow-xs cursor-pointer"

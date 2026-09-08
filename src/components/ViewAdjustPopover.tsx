@@ -83,7 +83,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
   return (
     <div className={`relative inline-block text-left ${className}`} ref={popoverRef}>
       {/* Trigger Button */}
-      <button
+      <button aria-label="Action"
         onClick={() => setIsOpen(!isOpen)}
         className={`px-2.5 py-1 sm:py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs border active:scale-95 ${
           isOpen
@@ -107,7 +107,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
               <span className="font-bold text-gray-900 dark:text-white tracking-tight">View Adjustments</span>
             </div>
             {onOpenSettingsModal && (
-              <button
+              <button aria-label="Action"
                 onClick={() => {
                   setIsOpen(false);
                   onOpenSettingsModal();
@@ -128,7 +128,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
             </div>
             <div className="grid grid-cols-3 gap-1 bg-gray-100 dark:bg-gray-900/90 p-1 rounded-xl border border-gray-200/70 dark:border-gray-800">
               {(['compact', 'comfortable', 'spacious'] as LayoutDensity[]).map(d => (
-                <button
+                <button aria-label="Action"
                   key={d}
                   onClick={() => onUpdateSettings({ density: d })}
                   className={`py-1 px-1.5 rounded-lg font-semibold text-center transition-all cursor-pointer capitalize flex items-center justify-center gap-1 ${
@@ -155,7 +155,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
               </div>
               <div className="grid grid-cols-4 gap-1 bg-gray-100 dark:bg-gray-900/90 p-1 rounded-xl border border-gray-200/70 dark:border-gray-800">
                 {(['auto', '2', '3', '4'] as GridColumnsOption[]).map(cols => (
-                  <button
+                  <button aria-label="Action"
                     key={cols}
                     onClick={() => onUpdateSettings({ gridColumns: cols })}
                     className={`py-1 px-1.5 rounded-lg font-semibold text-center transition-all cursor-pointer ${
@@ -178,7 +178,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
             </div>
             <div className="grid grid-cols-2 gap-1.5">
               {/* Thumbnails */}
-              <button
+              <button aria-label="Action"
                 onClick={() => onUpdateSettings({ showThumbnails: !settings.showThumbnails })}
                 className={`px-2.5 py-1.5 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                   settings.showThumbnails
@@ -193,7 +193,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
               </button>
 
               {/* Timestamps */}
-              <button
+              <button aria-label="Action"
                 onClick={() => onUpdateSettings({ showTimestamps: !settings.showTimestamps })}
                 className={`px-2.5 py-1.5 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                   settings.showTimestamps
@@ -208,7 +208,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
               </button>
 
               {/* Tags */}
-              <button
+              <button aria-label="Action"
                 onClick={() => onUpdateSettings({ showTags: !settings.showTags })}
                 className={`px-2.5 py-1.5 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                   settings.showTags
@@ -223,7 +223,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
               </button>
 
               {/* Synopsis */}
-              <button
+              <button aria-label="Action"
                 onClick={() => onUpdateSettings({ showSynopsis: !settings.showSynopsis })}
                 className={`px-2.5 py-1.5 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                   settings.showSynopsis
@@ -239,7 +239,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
 
               {/* Audio Radars (Spotify) */}
               {showAudioControl && (
-                <button
+                <button aria-label="Action"
                   onClick={() => onUpdateSettings({ showAudioRadars: !settings.showAudioRadars })}
                   className={`px-2.5 py-1.5 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                     settings.showAudioRadars
@@ -256,7 +256,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
 
               {/* Video Chapters (YouTube) */}
               {showVideoControl && (
-                <button
+                <button aria-label="Action"
                   onClick={() => onUpdateSettings({ showVideoChapters: !settings.showVideoChapters })}
                   className={`px-2.5 py-1.5 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                     settings.showVideoChapters
@@ -299,7 +299,7 @@ export const ViewAdjustPopover: React.FC<ViewAdjustPopoverProps> = ({
               </label>
               <div className="flex bg-gray-100 dark:bg-gray-900 p-0.5 rounded-lg border border-gray-200 dark:border-gray-800">
                 {(['sm', 'md', 'lg'] as FontSizeOption[]).map(sz => (
-                  <button
+                  <button aria-label="Action"
                     key={sz}
                     onClick={() => onUpdateSettings({ fontSize: sz })}
                     className={`flex-1 py-0.5 rounded font-semibold text-center text-[10px] uppercase transition-all cursor-pointer ${

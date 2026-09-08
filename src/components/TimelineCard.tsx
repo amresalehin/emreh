@@ -44,7 +44,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
     const loc = item.correlatedLocation;
     if (!loc) return null;
     return (
-      <button
+      <button aria-label="Action"
         type="button"
         onClick={(e) => {
           e.stopPropagation();
@@ -96,7 +96,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
           </div>
           <div className="flex items-center gap-1">
             <span className="text-[11px] font-mono font-medium text-gray-700 dark:text-gray-300">{timeStr}</span>
-            <button
+            <button aria-label="Action"
               onClick={(e) => {
                 e.stopPropagation();
                 onSelectBrowser && onSelectBrowser(item);
@@ -106,7 +106,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
             >
               <Eye className="w-3 h-3" /> Preview
             </button>
-            <button
+            <button aria-label="Action"
               onClick={(e) => {
                 e.stopPropagation();
                 onShowDomainProfile && onShowDomainProfile(domain);
@@ -130,7 +130,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
         </div>
 
         <div className="flex items-start gap-2.5">
-          <img
+          <img alt="Image"
             src={favicon}
             className="w-5 h-5 rounded mt-0.5 shrink-0 bg-gray-100 dark:bg-gray-800 object-contain p-0.5"
             onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
@@ -177,7 +177,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
           <div className="flex items-center gap-1">
             <span className="text-[11px] font-mono font-medium text-gray-700 dark:text-gray-300">{timeStr}</span>
             {trackId && (
-              <button
+              <button aria-label="Action"
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowEmbed(!showEmbed);
@@ -193,7 +193,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
                 {shouldShowPlayer ? 'Close' : 'Play'}
               </button>
             )}
-            <button
+            <button aria-label="Action"
               onClick={(e) => {
                 e.stopPropagation();
                 onShowTrackProfile && onShowTrackProfile(item.title, item.subtitle);
@@ -237,7 +237,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
         </div>
         {trackId && shouldShowPlayer && (
           <div className="rounded-lg overflow-hidden border border-black/10 dark:border-gray-800 bg-black animate-in fade-in duration-200">
-            <iframe
+            <iframe title="Content"
               src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator`}
               width="100%"
               height="80"
@@ -273,7 +273,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
           </div>
           <div className="flex items-center gap-1">
             <span className="text-[11px] font-mono font-medium text-gray-700 dark:text-gray-300">{timeStr}</span>
-            <button
+            <button aria-label="Action"
               onClick={(e) => {
                 e.stopPropagation();
                 onSelectYouTube && onSelectYouTube(item);
@@ -283,7 +283,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
             >
               <Eye className="w-3 h-3" /> Inspect
             </button>
-            <button
+            <button aria-label="Action"
               onClick={(e) => {
                 e.stopPropagation();
                 onShowVideoProfile && onShowVideoProfile(item.title, item.subtitle);
@@ -309,7 +309,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
         </div>
         <div className="flex gap-2.5 items-start">
           {thumbUrl ? (
-            <img
+            <img alt="Image"
               src={thumbUrl}
               onClick={(e) => {
                 e.stopPropagation();
@@ -369,7 +369,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
           </span>
           <div className="flex items-center gap-1">
             <span className="text-[11px] font-mono font-medium text-gray-700 dark:text-gray-300">{timeStr}</span>
-            <button
+            <button aria-label="Action"
               onClick={() => onOpenMapModal && onOpenMapModal(item.title, item.subtitle, gmapsEmbedUrl, gmapsUrl)}
               className="px-2 py-0.5 bg-blue-500/15 hover:bg-blue-500/25 text-blue-800 dark:text-blue-300 rounded-md text-[10px] font-bold transition-colors flex items-center gap-1 cursor-pointer"
               title="Preview on Google Maps"
@@ -393,7 +393,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
               {item.title}
             </span>
             {isGeneric && item.lat != null && item.lng != null && onResolveGeo && (
-              <button
+              <button aria-label="Action"
                 onClick={() => onResolveGeo(item.lat!, item.lng!)}
                 className="text-[9px] bg-amber-500/20 hover:bg-amber-500/30 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded font-bold cursor-pointer"
               >
@@ -441,7 +441,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
               <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
             )}
             {item.lat != null && item.lng != null && onOpenMapModal && (
-              <button
+              <button aria-label="Action"
                 onClick={(e) => {
                   e.stopPropagation();
                   const embed = buildGoogleMapsEmbedUrl(item);

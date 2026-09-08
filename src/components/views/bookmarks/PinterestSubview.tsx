@@ -134,7 +134,7 @@ export const PinterestSubview: React.FC<PinterestSubviewProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 flex-wrap shrink-0">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => onOpenSyncModal('pinterest')}
             className="px-3.5 py-2 bg-[#E60023] hover:bg-[#c9001f] text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
@@ -160,7 +160,7 @@ export const PinterestSubview: React.FC<PinterestSubviewProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Boards Filter */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setSelectedBoard('all')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
@@ -174,7 +174,7 @@ export const PinterestSubview: React.FC<PinterestSubviewProps> = ({
             {boards.map(b => {
               const count = bookmarks.filter(item => item.category === b).length;
               return (
-                <button
+                <button aria-label="Action"
                   key={b}
                   type="button"
                   onClick={() => setSelectedBoard(b)}
@@ -194,7 +194,7 @@ export const PinterestSubview: React.FC<PinterestSubviewProps> = ({
 
           {/* View mode toggle */}
           <div className="flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-xl shrink-0 self-end sm:self-auto">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('pinterest')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -206,7 +206,7 @@ export const PinterestSubview: React.FC<PinterestSubviewProps> = ({
             >
               <LayoutGrid className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('list')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -218,7 +218,7 @@ export const PinterestSubview: React.FC<PinterestSubviewProps> = ({
             >
               <List className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setLayoutMode('table')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -372,7 +372,7 @@ export const PinterestSubview: React.FC<PinterestSubviewProps> = ({
             </p>
           </div>
           <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onOpenSyncModal('pinterest')}
               className="px-4 py-2 bg-[#E60023] hover:bg-[#c9001f] text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-2 cursor-pointer"

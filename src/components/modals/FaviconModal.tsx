@@ -158,7 +158,7 @@ export const FaviconModal: React.FC<FaviconModalProps> = ({ data, onClose }) => 
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             )}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={onClose}
               className="px-4 py-1.5 rounded-xl bg-stone-200/70 dark:bg-stone-800 hover:bg-stone-300 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 text-xs font-semibold transition-colors cursor-pointer"

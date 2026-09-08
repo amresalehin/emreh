@@ -1014,7 +1014,7 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
 
       {/* Top-Right: Clean Map Style Switcher */}
       <div className="absolute top-3 right-3 z-20 flex items-center gap-1 p-1 bg-white/95 dark:bg-[#181818]/95 backdrop-blur-md rounded-xl border border-gray-200/90 dark:border-gray-800 shadow-md text-[11px] font-semibold">
-        <button
+        <button aria-label="Action"
           onClick={() => setMapLayerTheme('google_roadmap')}
           className={`px-2.5 py-1 rounded-lg cursor-pointer transition-all ${
             mapLayerTheme === 'google_roadmap'
@@ -1025,7 +1025,7 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
         >
           Map
         </button>
-        <button
+        <button aria-label="Action"
           onClick={() => setMapLayerTheme('google_satellite')}
           className={`px-2.5 py-1 rounded-lg cursor-pointer transition-all ${
             mapLayerTheme === 'google_satellite'
@@ -1036,7 +1036,7 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
         >
           Satellite
         </button>
-        <button
+        <button aria-label="Action"
           onClick={() => setMapLayerTheme('dark')}
           className={`px-2.5 py-1 rounded-lg cursor-pointer transition-all ${
             mapLayerTheme === 'dark'

@@ -132,7 +132,7 @@ export const FindReplaceBar: React.FC<FindReplaceBarProps> = ({
             placeholder="Find in note..."
             className="w-full bg-transparent outline-none text-xs text-stone-900 dark:text-stone-100 placeholder:text-stone-400"
           />
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setMatchCase(!matchCase)}
             title="Match Case"
@@ -197,7 +197,7 @@ export const FindReplaceBar: React.FC<FindReplaceBarProps> = ({
           />
         </div>
 
-        <button
+        <button aria-label="Action"
           type="button"
           onClick={handleReplaceSingle}
           disabled={matches.length === 0}
@@ -206,7 +206,7 @@ export const FindReplaceBar: React.FC<FindReplaceBarProps> = ({
           Replace
         </button>
 
-        <button
+        <button aria-label="Action"
           type="button"
           onClick={handleReplaceAllClick}
           disabled={matches.length === 0}

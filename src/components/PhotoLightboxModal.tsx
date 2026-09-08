@@ -145,7 +145,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
         {/* Action Controls */}
         <div className="flex items-center gap-1 sm:gap-2">
           {photo.lat != null && photo.lng != null && onJumpToMap && (
-            <button
+            <button aria-label="Action"
               onClick={() => {
                 onJumpToMap(photo.lat!, photo.lng!);
                 onClose();
@@ -158,7 +158,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
           )}
 
           {onJumpToJournal && (
-            <button
+            <button aria-label="Action"
               onClick={() => {
                 onJumpToJournal(photo.dateObj);
                 onClose();
@@ -171,7 +171,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
           )}
 
           {onToggleFavorite && (
-            <button
+            <button aria-label="Action"
               onClick={() => onToggleFavorite(photo.id)}
               className={`p-2 rounded-full transition-colors ${
                 photo.favorite ? 'text-amber-400 hover:bg-amber-400/20' : 'text-white/80 hover:text-white hover:bg-white/10'
@@ -182,7 +182,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
             </button>
           )}
 
-          <button
+          <button aria-label="Action"
             onClick={() => setZoomLevel(prev => (prev >= 2 ? 1 : prev + 0.5))}
             className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors"
             title="Toggle Zoom"
@@ -198,7 +198,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
             <Download className="w-5 h-5" />
           </button>
 
-          <button
+          <button aria-label="Action"
             onClick={() => setShowInfo(prev => !prev)}
             className={`p-2 rounded-full transition-colors ${
               showInfo ? 'text-blue-400 bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/10'
@@ -227,7 +227,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
       >
         {/* Navigation Arrows */}
         {hasPrev && (
-          <button
+          <button aria-label="Action"
             onClick={e => {
               e.stopPropagation();
               handlePrev();
@@ -240,7 +240,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
         )}
 
         {hasNext && (
-          <button
+          <button aria-label="Action"
             onClick={e => {
               e.stopPropagation();
               handleNext();
@@ -277,7 +277,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between pb-3 border-b border-white/10">
             <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">Photo Details</h3>
-            <button
+            <button aria-label="Action"
               onClick={() => setShowInfo(false)}
               className="text-zinc-400 hover:text-white text-xs"
             >
@@ -290,7 +290,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
             <label className="text-xs font-semibold text-zinc-400 flex items-center justify-between">
               <span>Description</span>
               {onUpdateDescription && !isEditingDesc && (
-                <button
+                <button aria-label="Action"
                   onClick={() => setIsEditingDesc(true)}
                   className="text-blue-400 hover:underline text-[11px]"
                 >
@@ -307,13 +307,13 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
                   placeholder="Add a description or note..."
                 />
                 <div className="flex justify-end gap-2">
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setIsEditingDesc(false)}
                     className="px-2 py-1 text-xs text-zinc-400 hover:text-white"
                   >
                     Cancel
                   </button>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => {
                       if (onUpdateDescription) {
                         onUpdateDescription(photo.id, descText);
@@ -380,7 +380,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
                 <p className="text-xs text-zinc-400">{photo.address}</p>
               )}
               {onJumpToMap && (
-                <button
+                <button aria-label="Action"
                   onClick={() => {
                     onJumpToMap(photo.lat!, photo.lng!);
                     onClose();

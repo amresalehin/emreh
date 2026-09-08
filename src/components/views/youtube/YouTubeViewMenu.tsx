@@ -123,7 +123,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       {/* Trigger Button */}
-      <button
+      <button aria-label="Action"
         type="button"
         id="youtube-view-menu-trigger"
         onClick={() => setIsOpen(prev => !prev)}
@@ -155,7 +155,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
 
             <div className="grid grid-cols-2 gap-1">
               {/* Cards / Grid */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onChangeMode('grid');
@@ -171,7 +171,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
               </button>
 
               {/* Feed */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onChangeMode('feed');
@@ -187,7 +187,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
               </button>
 
               {/* Compact List */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onChangeMode('compact');
@@ -203,7 +203,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
               </button>
 
               {/* Table */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onChangeMode('table');
@@ -219,7 +219,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
               </button>
 
               {/* Week */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onChangeMode('week');
@@ -235,7 +235,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
               </button>
 
               {/* Month */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onChangeMode('month');
@@ -267,7 +267,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
                 </div>
                 <div className="flex items-center gap-1 bg-neutral-850 p-1 rounded-xl border border-neutral-750">
                   {['24', '48', '96', '200', 'all'].map(num => (
-                    <button
+                    <button aria-label="Action"
                       key={num}
                       type="button"
                       onClick={() => onChangeCardLimit(num)}
@@ -296,7 +296,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
                 </div>
                 <div className="flex items-center gap-1 bg-neutral-850 p-1 rounded-xl border border-neutral-750">
                   {['auto', '2', '3', '4', '5', '6'].map(cols => (
-                    <button
+                    <button aria-label="Action"
                       key={cols}
                       type="button"
                       onClick={() => onChangeGridDensity(cols)}
@@ -438,7 +438,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
                   { id: 'channel', label: 'Channel' }
                 ] as const
               ).map(opt => (
-                <button
+                <button aria-label="Action"
                   key={opt.id}
                   type="button"
                   onClick={() => onChangeGroupBy(opt.id)}
@@ -471,7 +471,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
                   { id: 'channel_asc', label: 'Channel (A-Z)' }
                 ] as const
               ).map(opt => (
-                <button
+                <button aria-label="Action"
                   key={opt.id}
                   type="button"
                   onClick={() => onChangeSortBy(opt.id)}
@@ -490,7 +490,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
           {/* Section: Footer with Reset & Done */}
           <div className="border-t border-neutral-700/80 pt-2.5 mt-2.5 flex items-center justify-between">
             {onResetDefaults && (
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={onResetDefaults}
                 className="flex items-center gap-1 text-[11px] text-gray-400 hover:text-red-400 transition-colors cursor-pointer px-1 py-0.5 rounded"
@@ -499,7 +499,7 @@ export const YouTubeViewMenu: React.FC<YouTubeViewMenuProps> = ({
                 <span>Reset Defaults</span>
               </button>
             )}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsOpen(false)}
               className="ml-auto px-3 py-1 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer shadow-2xs"

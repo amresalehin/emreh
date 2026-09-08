@@ -57,7 +57,7 @@ export const AppZoomControls: React.FC<AppZoomControlsProps> = ({
           {ZOOM_PRESETS.map((preset) => {
             const isActive = Math.abs(zoom - preset.value) < 0.03;
             return (
-              <button
+              <button aria-label="Action"
                 key={preset.value}
                 onClick={() => onSetZoom(preset.value)}
                 className={`py-1.5 px-2 rounded-xl text-xs font-medium transition-all text-center flex flex-col items-center justify-center cursor-pointer ${
@@ -75,20 +75,20 @@ export const AppZoomControls: React.FC<AppZoomControlsProps> = ({
 
         {/* Manual Stepper */}
         <div className="flex items-center justify-between pt-1">
-          <button
+          <button aria-label="Action"
             onClick={onZoomOut}
             disabled={zoom <= 0.65}
             className="px-3 py-1.5 rounded-lg bg-white/60 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 text-xs font-bold flex items-center gap-1.5 transition-colors disabled:opacity-30 cursor-pointer"
           >
             <ZoomOut className="w-3.5 h-3.5" /> Smaller
           </button>
-          <button
+          <button aria-label="Action"
             onClick={onResetZoom}
             className="px-2.5 py-1.5 rounded-lg text-xs text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center gap-1 transition-colors cursor-pointer"
           >
             <RotateCcw className="w-3 h-3" /> Reset (100%)
           </button>
-          <button
+          <button aria-label="Action"
             onClick={onZoomIn}
             disabled={zoom >= 1.5}
             className="px-3 py-1.5 rounded-lg bg-white/60 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 text-xs font-bold flex items-center gap-1.5 transition-colors disabled:opacity-30 cursor-pointer"
@@ -112,7 +112,7 @@ export const AppZoomControls: React.FC<AppZoomControlsProps> = ({
           <ZoomOut className="w-3.5 h-3.5" />
         </button>
 
-        <button
+        <button aria-label="Action"
           onClick={() => setIsOpen(!isOpen)}
           title="Change View Scale"
           className="px-1.5 py-0.5 text-[11px] font-mono font-bold text-gray-700 dark:text-gray-200 hover:text-amber-500 flex items-center gap-1 cursor-pointer transition-colors"
@@ -121,7 +121,7 @@ export const AppZoomControls: React.FC<AppZoomControlsProps> = ({
           <ChevronDown className="w-2.5 h-2.5 opacity-60" />
         </button>
 
-        <button
+        <button aria-label="Action"
           onClick={onZoomIn}
           disabled={zoom >= 1.5}
           title="Zoom In (Ctrl +)"
@@ -139,7 +139,7 @@ export const AppZoomControls: React.FC<AppZoomControlsProps> = ({
           {ZOOM_PRESETS.map((p) => {
             const isActive = Math.abs(zoom - p.value) < 0.03;
             return (
-              <button
+              <button aria-label="Action"
                 key={p.value}
                 onClick={() => {
                   onSetZoom(p.value);
@@ -158,7 +158,7 @@ export const AppZoomControls: React.FC<AppZoomControlsProps> = ({
           })}
           {zoom !== 1.0 && (
             <div className="pt-1 mt-1 border-t border-black/5 dark:border-white/5">
-              <button
+              <button aria-label="Action"
                 onClick={() => {
                   onResetZoom();
                   setIsOpen(false);

@@ -159,7 +159,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       {/* Trigger Button */}
-      <button
+      <button aria-label="Action"
         type="button"
         id="raindrop-view-menu-trigger"
         onClick={() => setIsOpen(prev => !prev)}
@@ -191,7 +191,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
 
             <div className="grid grid-cols-2 gap-1.5">
               {/* Moodboard */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 id="bookmarks-view-mode-moodboard"
                 onClick={() => onChangeLayoutMode('moodboard')}
@@ -206,7 +206,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
               </button>
 
               {/* Table */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 id="bookmarks-view-mode-table"
                 onClick={() => onChangeLayoutMode('table')}
@@ -238,7 +238,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
                     { id: 'title', label: 'Title (A-Z)' },
                     { id: 'domain', label: 'Site / Domain' }
                   ].map(opt => (
-                    <button
+                    <button aria-label="Action"
                       key={opt.id}
                       type="button"
                       onClick={() => onChangeSortBy(opt.id as any)}
@@ -272,7 +272,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
                 </div>
                 <div className="flex items-center gap-1 bg-neutral-850 p-1 rounded-xl border border-neutral-750">
                   {['12', '24', '48', '96', 'all'].map(num => (
-                    <button
+                    <button aria-label="Action"
                       key={num}
                       type="button"
                       onClick={() => onChangeCardLimit(num)}
@@ -301,7 +301,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
                 </div>
                 <div className="flex items-center gap-1 bg-neutral-850 p-1 rounded-xl border border-neutral-750">
                   {['auto', '2', '3', '4', '5', '6'].map(cols => (
-                    <button
+                    <button aria-label="Action"
                       key={cols}
                       type="button"
                       onClick={() => onChangeGridDensity(cols)}
@@ -427,7 +427,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
                   <span className="text-[10px] text-indigo-400">Kanban</span>
                 </div>
                 <div className="grid grid-cols-2 gap-1 text-[11px]">
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => onChangeKanbanGroupBy('status')}
                     className={`px-2 py-1 rounded-lg text-left transition-colors cursor-pointer ${
@@ -438,7 +438,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
                   >
                     Workflow Status
                   </button>
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => onChangeKanbanGroupBy('collection')}
                     className={`px-2 py-1 rounded-lg text-left transition-colors cursor-pointer ${
@@ -449,7 +449,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
                   >
                     Folders
                   </button>
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => onChangeKanbanGroupBy('type')}
                     className={`px-2 py-1 rounded-lg text-left transition-colors cursor-pointer ${
@@ -460,7 +460,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
                   >
                     Media Type
                   </button>
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => onChangeKanbanGroupBy('tag')}
                     className={`px-2 py-1 rounded-lg text-left transition-colors cursor-pointer ${
@@ -487,7 +487,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
                 </div>
                 <div className="flex items-center gap-1 bg-neutral-800 p-0.5 rounded-lg text-[10px]">
                   {(['compact', 'standard', 'wide', 'fluid'] as const).map(w => (
-                    <button
+                    <button aria-label="Action"
                       key={w}
                       type="button"
                       onClick={() => onChangeColumnWidth(w)}
@@ -507,7 +507,7 @@ export const RaindropViewMenu: React.FC<RaindropViewMenuProps> = ({
 
           {/* Save as Default button */}
           <div className="mt-3 pt-2.5 border-t border-neutral-700/60">
-            <button
+            <button aria-label="Action"
               type="button"
               id="bookmarks-save-default-button"
               onClick={handleSaveAsDefault}

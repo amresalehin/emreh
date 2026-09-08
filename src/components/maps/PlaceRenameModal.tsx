@@ -167,7 +167,7 @@ export const PlaceRenameModal: React.FC<PlaceRenameModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="p-1.5 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
           >
@@ -212,7 +212,7 @@ export const PlaceRenameModal: React.FC<PlaceRenameModalProps> = ({
                 const IconComponent = preset.icon;
                 const isSelected = name === preset.label;
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={preset.label}
                     type="button"
                     onClick={() => handleSelectPreset(preset)}
@@ -241,7 +241,7 @@ export const PlaceRenameModal: React.FC<PlaceRenameModalProps> = ({
                 Automatically fetches the building name, business, and street address from satellite and location databases
               </p>
             </div>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={handleAutoResolve}
               disabled={isResolving || targetItem.lat == null || targetItem.lng == null}
@@ -335,14 +335,14 @@ export const PlaceRenameModal: React.FC<PlaceRenameModalProps> = ({
 
           {/* Footer Actions */}
           <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={onClose}
               className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl font-bold transition-colors cursor-pointer"
             >
               Cancel
             </button>
-            <button
+            <button aria-label="Action"
               type="submit"
               disabled={!name.trim()}
               className="px-5 py-2 bg-[#1A73E8] hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl font-bold shadow-md transition-all cursor-pointer flex items-center gap-1.5"

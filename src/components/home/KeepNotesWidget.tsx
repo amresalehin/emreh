@@ -73,7 +73,7 @@ export const KeepNotesWidget: React.FC<KeepNotesWidgetProps> = ({
           </div>
 
           {onNavigateView && (
-            <button
+            <button aria-label="Action"
               onClick={() => onNavigateView('notes')}
               className="px-2 py-1 rounded-lg text-xs font-semibold text-amber-700 dark:text-amber-300 hover:bg-amber-500/10 transition-colors flex items-center gap-1 cursor-pointer"
             >
@@ -148,7 +148,7 @@ export const KeepNotesWidget: React.FC<KeepNotesWidgetProps> = ({
 
       {onOpenKeepImport && (
         <div className="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5">
-          <button
+          <button aria-label="Action"
             onClick={onOpenKeepImport}
             className="w-full py-1.5 px-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-900 dark:text-amber-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
           >

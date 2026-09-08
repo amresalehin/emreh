@@ -321,7 +321,7 @@ export const TimelinePlacesTab: React.FC<TimelinePlacesTabProps> = ({
       <div className="space-y-4 pb-12 animate-in fade-in duration-150">
         {/* Drilldown Top Bar */}
         <div className="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-800">
-          <button
+          <button aria-label="Action"
             onClick={() => handleSelectCategory(null)}
             className="flex items-center gap-1.5 text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-[#1A73E8] cursor-pointer"
           >
@@ -421,7 +421,7 @@ export const TimelinePlacesTab: React.FC<TimelinePlacesTabProps> = ({
                   <div className="flex items-center gap-1.5 shrink-0 flex-wrap justify-end">
                     {/* If generic/unresolved coordinate */}
                     {isGenericPlaceName(item.title) && item.lat != null && item.lng != null && (
-                      <button
+                      <button aria-label="Action"
                         onClick={e => handleSingleResolve(e, item)}
                         disabled={resolvingPlaceKey === (item.title || item.address || `loc_${item.lat}_${item.lng}`)}
                         className="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-lg text-[11px] font-bold transition-all cursor-pointer flex items-center gap-1 shadow-2xs"
@@ -437,7 +437,7 @@ export const TimelinePlacesTab: React.FC<TimelinePlacesTabProps> = ({
                     )}
 
                     {/* Rename / Label Trigger */}
-                    <button
+                    <button aria-label="Action"
                       onClick={e => handleSingleRename(e, item)}
                       className="px-2 py-1 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-[#1A73E8] dark:text-blue-400 border border-blue-200 dark:border-blue-900/60 rounded-lg text-[11px] font-bold transition-colors cursor-pointer flex items-center gap-1"
                       title="Rename or assign custom label"
@@ -446,7 +446,7 @@ export const TimelinePlacesTab: React.FC<TimelinePlacesTabProps> = ({
                       <span>Label</span>
                     </button>
 
-                    <button
+                    <button aria-label="Action"
                       onClick={e => {
                         e.stopPropagation();
                         onOpenInspector(item);
@@ -456,7 +456,7 @@ export const TimelinePlacesTab: React.FC<TimelinePlacesTabProps> = ({
                     >
                       <BarChart2 className="w-4 h-4" />
                     </button>
-                    <button
+                    <button aria-label="Action"
                       onClick={e => {
                         e.stopPropagation();
                         if (onOpenMapModal) {
@@ -497,7 +497,7 @@ export const TimelinePlacesTab: React.FC<TimelinePlacesTabProps> = ({
 
         {/* Global Batch Auto-Resolve Button */}
         {unresolvedCount > 0 && (
-          <button
+          <button aria-label="Action"
             onClick={handleTriggerBatchResolve}
             disabled={isBatchResolving}
             className="px-3 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 disabled:opacity-50 text-white rounded-xl font-bold text-xs shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
@@ -524,7 +524,7 @@ export const TimelinePlacesTab: React.FC<TimelinePlacesTabProps> = ({
               </span>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={handleTriggerBatchResolve}
             disabled={isBatchResolving}
             className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white rounded-xl font-bold text-xs shadow-xs transition-colors cursor-pointer shrink-0 flex items-center gap-1"

@@ -107,7 +107,7 @@ export const LinkdingSubview: React.FC<LinkdingSubviewProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 flex-wrap shrink-0">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => onOpenSyncModal('linkding')}
             className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
@@ -165,7 +165,7 @@ export const LinkdingSubview: React.FC<LinkdingSubviewProps> = ({
             </div>
 
             <div className="flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-xl">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setLayoutMode('list')}
                 className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -177,7 +177,7 @@ export const LinkdingSubview: React.FC<LinkdingSubviewProps> = ({
               >
                 <List className="w-4 h-4" />
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setLayoutMode('grid')}
                 className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -189,7 +189,7 @@ export const LinkdingSubview: React.FC<LinkdingSubviewProps> = ({
               >
                 <Grid className="w-4 h-4" />
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setLayoutMode('table')}
                 className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -296,7 +296,7 @@ export const LinkdingSubview: React.FC<LinkdingSubviewProps> = ({
             </p>
           </div>
           <div className="flex items-center justify-center gap-3 pt-2 flex-wrap">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onOpenSyncModal('linkding')}
               className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-2 cursor-pointer"

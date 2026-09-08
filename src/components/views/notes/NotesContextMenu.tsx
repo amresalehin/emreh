@@ -139,7 +139,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
         <>
           {/* Cut / Copy / Paste / Duplicate */}
           <div className="px-1 py-0.5 space-y-0.5">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onCut?.(blockIdx);
@@ -153,7 +153,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
               <span className="text-[10px] text-stone-400 group-hover:text-amber-100">⌘X</span>
             </button>
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onCopy?.(blockIdx);
@@ -167,7 +167,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
               <span className="text-[10px] text-stone-400 group-hover:text-amber-100">⌘C</span>
             </button>
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onPaste?.(blockIdx);
@@ -181,7 +181,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
               <span className="text-[10px] text-stone-400 group-hover:text-amber-100">⌘V</span>
             </button>
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onDuplicate?.(blockIdx);
@@ -214,7 +214,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
             {/* Submenu for types */}
             {activeSubmenu === 'turnInto' && (
               <div className="absolute left-full -top-1 ml-1 w-48 rounded-xl bg-white/95 dark:bg-[#1e1e20]/95 backdrop-blur-xl border border-stone-200/80 dark:border-stone-800 shadow-2xl py-1 text-xs text-stone-800 dark:text-stone-200">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onTransformType?.(blockIdx, 'paragraph');
@@ -224,7 +224,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   Normal text
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onTransformType?.(blockIdx, 'h1');
@@ -234,7 +234,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   <Heading1 className="w-3.5 h-3.5" /> Title (H1)
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onTransformType?.(blockIdx, 'h2');
@@ -244,7 +244,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   <Heading2 className="w-3.5 h-3.5" /> Heading (H2)
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onTransformType?.(blockIdx, 'h3');
@@ -254,7 +254,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   <Heading3 className="w-3.5 h-3.5" /> Subheading (H3)
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onTransformType?.(blockIdx, 'todo');
@@ -264,7 +264,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   <CheckSquare className="w-3.5 h-3.5 text-amber-500" /> Checklist
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onTransformType?.(blockIdx, 'bullet');
@@ -274,7 +274,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   <List className="w-3.5 h-3.5" /> Bullet list
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onTransformType?.(blockIdx, 'numbered');
@@ -284,7 +284,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   <ListOrdered className="w-3.5 h-3.5" /> Numbered list
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onTransformType?.(blockIdx, 'quote');
@@ -294,7 +294,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   <Quote className="w-3.5 h-3.5" /> Quote
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onTransformType?.(blockIdx, 'code');
@@ -323,7 +323,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
 
             {activeSubmenu === 'align' && (
               <div className="absolute left-full -top-1 ml-1 w-36 rounded-xl bg-white/95 dark:bg-[#1e1e20]/95 backdrop-blur-xl border border-stone-200/80 dark:border-stone-800 shadow-2xl py-1 text-xs text-stone-800 dark:text-stone-200">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onAlign?.(blockIdx, 'left');
@@ -333,7 +333,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   <AlignLeft className="w-3.5 h-3.5" /> Left
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onAlign?.(blockIdx, 'center');
@@ -343,7 +343,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
                 >
                   <AlignCenter className="w-3.5 h-3.5" /> Center
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onAlign?.(blockIdx, 'right');
@@ -361,7 +361,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
 
           {/* Quick Insert Actions */}
           <div className="px-1 py-0.5 space-y-0.5">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onInsertAbove?.(blockIdx, 'paragraph');
@@ -372,7 +372,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
               <ArrowUp className="w-3.5 h-3.5 text-stone-400" /> Insert line above
             </button>
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onInsertBelow?.(blockIdx, 'paragraph');
@@ -383,7 +383,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
               <ArrowDown className="w-3.5 h-3.5 text-stone-400" /> Insert line below
             </button>
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onInsertBelow?.(blockIdx, 'divider');
@@ -394,7 +394,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
               <Minus className="w-3.5 h-3.5 text-stone-400" /> Insert divider
             </button>
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onInsertBelow?.(blockIdx, 'table');
@@ -410,7 +410,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
 
           {/* Delete action */}
           <div className="px-1 py-0.5">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 onDelete?.(blockIdx);
@@ -428,7 +428,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
       ) : (
         /* Canvas empty area right-click menu */
         <div className="px-1 py-0.5 space-y-0.5">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               onInsertBelow?.(-1, 'paragraph');
@@ -439,7 +439,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
             Insert new paragraph
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               onInsertBelow?.(-1, 'h2');
@@ -450,7 +450,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
             <Heading2 className="w-3.5 h-3.5" /> Insert heading
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               onInsertBelow?.(-1, 'image');
@@ -461,7 +461,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
             <ImageIcon className="w-3.5 h-3.5" /> Insert image
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               onInsertBelow?.(-1, 'table');
@@ -472,7 +472,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
             <TableIcon className="w-3.5 h-3.5" /> Insert table
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               onInsertBelow?.(-1, 'divider');
@@ -485,7 +485,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
 
           <div className="h-px bg-stone-200/80 dark:bg-stone-800 my-1" />
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               onOpenFindReplace?.();
@@ -499,7 +499,7 @@ export const NotesContextMenu: React.FC<NotesContextMenuProps> = ({
             <span className="text-[10px] text-stone-400">⌘F</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               onPrint?.();

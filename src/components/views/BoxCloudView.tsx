@@ -523,7 +523,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
 
         {/* Right: Actions */}
         <div className="flex items-center gap-2">
-          <button
+          <button aria-label="Action"
             onClick={() => setIsConnectModalOpen(true)}
             className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold text-blue-700 dark:text-blue-300 bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/30 backdrop-blur-xl transition-all cursor-pointer shadow-2xs"
             title="Configure Box Connection"
@@ -532,7 +532,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
             <span>{config.isConnected ? 'Box Settings' : 'Connect Box'}</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             onClick={() => fileInputRef.current?.click()}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-white bg-[#0061D5] hover:bg-[#0052b4] transition-all cursor-pointer shadow-sm active:scale-95"
             title="Upload Files to Box"
@@ -541,7 +541,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
             <span className="hidden sm:inline">Upload</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             onClick={() => setIsNewFolderModalOpen(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-800 dark:text-gray-200 bg-white/60 dark:bg-white/8 hover:bg-white/85 dark:hover:bg-white/15 border border-black/10 dark:border-white/15 backdrop-blur-xl transition-all cursor-pointer shadow-2xs"
             title="Create New Folder"
@@ -550,7 +550,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
             <span className="hidden sm:inline">New Folder</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             onClick={() => refreshFolder()}
             disabled={isLoading}
             className="p-2 rounded-xl text-gray-700 dark:text-gray-300 bg-white/60 dark:bg-white/8 hover:bg-white/85 dark:hover:bg-white/15 border border-black/10 dark:border-white/15 backdrop-blur-xl transition-all cursor-pointer shadow-2xs disabled:opacity-50"
@@ -563,7 +563,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
 
           {/* View Mode Toggle */}
           <div className="flex items-center p-0.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10">
-            <button
+            <button aria-label="Action"
               onClick={() => setViewMode('grid')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                 viewMode === 'grid'
@@ -574,7 +574,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
             >
               <Grid className="w-3.5 h-3.5" />
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => setViewMode('list')}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                 viewMode === 'list'
@@ -610,7 +610,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
             )}
             <span>{statusNotification.message}</span>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={() => setStatusNotification(null)}
             className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded-md transition-colors"
           >
@@ -680,7 +680,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <button
+                <button aria-label="Action"
                   onClick={() => setIsConnectModalOpen(true)}
                   className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#0061D5] hover:bg-[#0052b4] transition-all cursor-pointer shadow-sm flex items-center gap-2"
                 >
@@ -701,7 +701,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
               return (
                 <React.Fragment key={crumb.id || idx}>
                   {idx > 0 && <ChevronRight className="w-3.5 h-3.5 text-gray-400 shrink-0" />}
-                  <button
+                  <button aria-label="Action"
                     onClick={() => handleNavigateToFolder(crumb.id)}
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-lg font-semibold transition-colors shrink-0 cursor-pointer ${
                       isLast
@@ -730,7 +730,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                 className="w-full pl-8 pr-7 py-1.5 bg-white/60 dark:bg-white/8 hover:bg-white/80 dark:hover:bg-white/12 focus:bg-white dark:focus:bg-[#18181b] backdrop-blur-xl border border-black/10 dark:border-white/15 rounded-xl text-xs font-medium text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-gray-400"
               />
               {searchQuery && (
-                <button
+                <button aria-label="Action"
                   onClick={() => setSearchQuery('')}
                   className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-0.5"
                 >
@@ -765,7 +765,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
               <option value="size">Sort by Size</option>
             </select>
 
-            <button
+            <button aria-label="Action"
               onClick={() => setSortAsc(!sortAsc)}
               className="p-1.5 rounded-xl bg-white/60 dark:bg-white/8 border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-300 hover:bg-white/85 cursor-pointer backdrop-blur-xl"
               title={sortAsc ? 'Ascending' : 'Descending'}
@@ -835,7 +835,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                     </span>
                     <div className="flex items-center gap-1" onClick={e => e.stopPropagation()}>
                       {!isFolder && onImportTimelineItems && (
-                        <button
+                        <button aria-label="Action"
                           onClick={() => handleIngestToTimeline(item)}
                           className="p-1 rounded-lg hover:bg-blue-500/15 text-blue-600 dark:text-blue-400"
                           title="Import to Life Timeline"
@@ -843,14 +843,14 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                           <Plus className="w-3.5 h-3.5" />
                         </button>
                       )}
-                      <button
+                      <button aria-label="Action"
                         onClick={() => setPreviewItem(item)}
                         className="p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 text-gray-600 dark:text-gray-400"
                         title="Quick Look"
                       >
                         <Eye className="w-3.5 h-3.5" />
                       </button>
-                      <button
+                      <button aria-label="Action"
                         onClick={() => handleDeleteItem(item)}
                         className="p-1 rounded-lg hover:bg-rose-500/15 text-rose-600 dark:text-rose-400"
                         title="Delete Item"
@@ -909,7 +909,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                       <td className="py-2.5 px-4 text-right" onClick={e => e.stopPropagation()}>
                         <div className="flex items-center justify-end gap-1">
                           {!isFolder && onImportTimelineItems && (
-                            <button
+                            <button aria-label="Action"
                               onClick={() => handleIngestToTimeline(item)}
                               className="p-1 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-500/15"
                               title="Import to Timeline"
@@ -917,14 +917,14 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                               <Plus className="w-3.5 h-3.5" />
                             </button>
                           )}
-                          <button
+                          <button aria-label="Action"
                             onClick={() => setPreviewItem(item)}
                             className="p-1 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-black/5"
                             title="Inspect Item"
                           >
                             <Eye className="w-3.5 h-3.5" />
                           </button>
-                          <button
+                          <button aria-label="Action"
                             onClick={() => handleDeleteItem(item)}
                             className="p-1 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-500/15"
                             title="Delete"
@@ -954,14 +954,14 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                   Connect your Box account via OAuth 2.0 to access your real Box files and timeline backups, or upload local files.
                 </p>
                 <div className="mt-5 flex items-center gap-3">
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setIsConnectModalOpen(true)}
                     className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#0061D5] hover:bg-[#0052b4] transition-all cursor-pointer shadow-sm flex items-center gap-2"
                   >
                     <Link2 className="w-3.5 h-3.5" />
                     Connect Box Account
                   </button>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => fileInputRef.current?.click()}
                     className="px-4 py-2 rounded-xl text-xs font-semibold text-gray-700 dark:text-gray-300 bg-white/60 dark:bg-white/10 hover:bg-white/80 transition-all border border-black/10 cursor-pointer flex items-center gap-1.5"
                   >
@@ -980,14 +980,14 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                   No files or folders found in this directory. Upload files or create a new folder to organize your Box Cloud storage.
                 </p>
                 <div className="mt-4 flex items-center gap-2">
-                  <button
+                  <button aria-label="Action"
                     onClick={() => fileInputRef.current?.click()}
                     className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-[#0061D5] hover:bg-[#0052b4] transition-all cursor-pointer shadow-sm flex items-center gap-1.5"
                   >
                     <Upload className="w-3.5 h-3.5" />
                     Upload to Box
                   </button>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setIsNewFolderModalOpen(true)}
                     className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-gray-700 dark:text-gray-300 bg-white/60 dark:bg-white/10 hover:bg-white/80 transition-all border border-black/10 cursor-pointer flex items-center gap-1.5"
                   >
@@ -1018,7 +1018,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                   </p>
                 </div>
               </div>
-              <button
+              <button aria-label="Action"
                 onClick={() => setIsConnectModalOpen(false)}
                 className="p-1.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 text-gray-400 hover:text-gray-900 transition-colors"
               >
@@ -1055,7 +1055,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                   <span className="truncate font-mono">
                     Redirect URI: {window.location.origin}/box-oauth-callback.html
                   </span>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => {
                       navigator.clipboard.writeText(`${window.location.origin}/box-oauth-callback.html`);
                       setCopiedId('redirect_uri');
@@ -1087,7 +1087,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                   </div>
                 )}
 
-                <button
+                <button aria-label="Action"
                   onClick={handleLaunchOAuth}
                   className="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-[#0061D5] hover:bg-[#0052b4] transition-all cursor-pointer shadow-md flex items-center justify-center gap-2"
                 >
@@ -1113,7 +1113,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                     onChange={e => setConfig(prev => ({ ...prev, accessToken: e.target.value }))}
                     className="flex-1 px-3 py-1.5 bg-white dark:bg-black/30 border border-black/10 dark:border-white/10 rounded-xl text-xs text-gray-900 dark:text-white outline-none"
                   />
-                  <button
+                  <button aria-label="Action"
                     onClick={async () => {
                       if (!config.accessToken) {
                         setStatusNotification({ type: 'error', message: 'Please paste a Box Developer Token' });
@@ -1150,7 +1150,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
               {/* Reset / Disconnect */}
               {config.isConnected && (
                 <div className="flex items-center justify-end pt-2 border-t border-black/10 dark:border-white/10">
-                  <button
+                  <button aria-label="Action"
                     onClick={() => {
                       clearBoxConfig();
                       setConfig({ isConnected: false, authMode: 'oauth', user: null });
@@ -1179,7 +1179,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                 <FolderPlus className="w-4 h-4 text-blue-600" />
                 New Folder in Box
               </h3>
-              <button onClick={() => setIsNewFolderModalOpen(false)} className="text-gray-400 hover:text-gray-700 cursor-pointer">
+              <button aria-label="Action" onClick={() => setIsNewFolderModalOpen(false)} className="text-gray-400 hover:text-gray-700 cursor-pointer">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -1193,13 +1193,13 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
               className="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl text-xs text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-blue-500"
             />
             <div className="flex items-center justify-end gap-2">
-              <button
+              <button aria-label="Action"
                 onClick={() => setIsNewFolderModalOpen(false)}
                 className="px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-black/5 cursor-pointer"
               >
                 Cancel
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={handleCreateFolder}
                 disabled={!newFolderName.trim() || isLoading}
                 className="px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-[#0061D5] hover:bg-[#0052b4] disabled:opacity-50 transition-all cursor-pointer shadow-sm"
@@ -1228,7 +1228,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                   </p>
                 </div>
               </div>
-              <button onClick={() => setPreviewItem(null)} className="text-gray-400 hover:text-gray-700 p-1 cursor-pointer">
+              <button aria-label="Action" onClick={() => setPreviewItem(null)} className="text-gray-400 hover:text-gray-700 p-1 cursor-pointer">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -1269,7 +1269,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
 
             {/* Actions */}
             <div className="flex items-center justify-between pt-2 border-t border-black/10 dark:border-white/10">
-              <button
+              <button aria-label="Action"
                 onClick={() => handleDeleteItem(previewItem)}
                 className="px-3 py-1.5 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-500/10 cursor-pointer flex items-center gap-1.5"
               >
@@ -1278,7 +1278,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
               </button>
               <div className="flex items-center gap-2">
                 {onImportTimelineItems && (
-                  <button
+                  <button aria-label="Action"
                     onClick={() => {
                       handleIngestToTimeline(previewItem);
                       setPreviewItem(null);
@@ -1289,7 +1289,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({
                     Add to Timeline
                   </button>
                 )}
-                <button
+                <button aria-label="Action"
                   onClick={() => setPreviewItem(null)}
                   className="px-4 py-1.5 rounded-xl text-xs font-semibold text-white bg-gray-900 dark:bg-white dark:text-black hover:opacity-90 cursor-pointer"
                 >

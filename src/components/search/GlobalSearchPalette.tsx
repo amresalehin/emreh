@@ -747,7 +747,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
               className="w-full bg-transparent text-base sm:text-lg font-bold text-gray-900 dark:text-white placeholder-gray-400 outline-none pr-8 tracking-tight"
             />
             {query && (
-              <button
+              <button aria-label="Action"
                 onClick={() => {
                   setQuery('');
                   inputRef.current?.focus();
@@ -759,7 +759,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
             )}
           </div>
 
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
           >
@@ -786,7 +786,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
               const isActive = activeCategory === cat.id;
 
               return (
-                <button
+                <button aria-label="Action"
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
                   className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap text-xs ${
@@ -855,7 +855,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       <Clock className="w-3.5 h-3.5" />
                       <span>Recent Searches</span>
                     </div>
-                    <button
+                    <button aria-label="Action"
                       onClick={clearAllRecentSearches}
                       className="text-[10px] text-gray-400 hover:text-red-500 transition-colors cursor-pointer lowercase"
                     >
@@ -874,7 +874,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       >
                         <Search className="w-3 h-3 text-gray-400" />
                         <span>{term}</span>
-                        <button
+                        <button aria-label="Action"
                           onClick={e => removeRecentSearch(term, e)}
                           className="opacity-0 group-hover:opacity-100 p-0.5 hover:text-red-500 transition-opacity"
                         >
@@ -903,7 +903,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {topSuggestions.artists.map(art => (
-                          <button
+                          <button aria-label="Action"
                             key={art}
                             onClick={() => {
                               setQuery(`artist:${art}`);
@@ -927,7 +927,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {topSuggestions.channels.map(ch => (
-                          <button
+                          <button aria-label="Action"
                             key={ch}
                             onClick={() => {
                               setQuery(`channel:${ch}`);
@@ -951,7 +951,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {topSuggestions.places.map(pl => (
-                          <button
+                          <button aria-label="Action"
                             key={pl}
                             onClick={() => {
                               setQuery(`place:${pl}`);
@@ -975,7 +975,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {topSuggestions.domains.map(dom => (
-                          <button
+                          <button aria-label="Action"
                             key={dom}
                             onClick={() => {
                               setQuery(`domain:${dom}`);
@@ -1007,7 +1007,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                     { label: 'type:notes', desc: 'Diary entries' },
                     { label: 'date:2024-05', desc: 'By month/date' }
                   ].map(op => (
-                    <button
+                    <button aria-label="Action"
                       key={op.label}
                       onClick={() => {
                         setQuery(prev => `${prev} ${op.label}`.trim());
@@ -1132,7 +1132,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                     <div className="flex items-center gap-1 shrink-0 self-end sm:self-center opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                       {/* Open Profile Modal */}
                       {onOpenMetricsModal && item.sourceType === 'spotify' && item.rawItem && (
-                        <button
+                        <button aria-label="Action"
                           onClick={e => {
                             e.stopPropagation();
                             onClose();
@@ -1151,7 +1151,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       )}
 
                       {onOpenMetricsModal && item.sourceType === 'youtube' && item.rawItem && (
-                        <button
+                        <button aria-label="Action"
                           onClick={e => {
                             e.stopPropagation();
                             onClose();
@@ -1170,7 +1170,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       )}
 
                       {onOpenMetricsModal && item.sourceType === 'maps' && item.rawItem && (
-                        <button
+                        <button aria-label="Action"
                           onClick={e => {
                             e.stopPropagation();
                             onClose();
@@ -1189,7 +1189,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       )}
 
                       {/* Copy Title / Link */}
-                      <button
+                      <button aria-label="Action"
                         onClick={e => handleCopyText(item.id, item.url || item.title, e)}
                         className="p-1.5 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer"
                         title="Copy to clipboard"
@@ -1216,7 +1216,7 @@ export const GlobalSearchPalette: React.FC<GlobalSearchPaletteProps> = ({
                       )}
 
                       {/* Jump / Select Enter Arrow */}
-                      <button
+                      <button aria-label="Action"
                         onClick={() => handleSelectResult(item)}
                         className="p-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-xs transition-colors cursor-pointer flex items-center gap-1 text-xs font-bold px-2.5"
                       >

@@ -35,7 +35,7 @@ export const ImportedFilesModal: React.FC<ImportedFilesModalProps> = ({
             <FolderArchive className="w-4 h-4 text-emerald-500" />
             Imported Files History
           </h3>
-          <button onClick={onClose} className="w-7 h-7 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer">
+          <button aria-label="Action" onClick={onClose} className="w-7 h-7 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -70,7 +70,7 @@ export const ImportedFilesModal: React.FC<ImportedFilesModalProps> = ({
                             {(file.count || file.recordCount || 0).toLocaleString()} items
                           </span>
                           {onDeleteFile && (
-                            <button
+                            <button aria-label="Action"
                               onClick={() => onDeleteFile(file.id || itemKey)}
                               className="p-1 text-gray-400 hover:text-red-500 rounded transition-colors cursor-pointer"
                               title="Remove File Record"
@@ -84,7 +84,7 @@ export const ImportedFilesModal: React.FC<ImportedFilesModalProps> = ({
                   );
                 })}
               </div>
-              <button
+              <button aria-label="Action"
                 onClick={handleClear}
                 className="w-full mt-3 py-2 bg-red-500/10 text-red-500 rounded-xl text-xs font-semibold hover:bg-red-500/20 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
               >

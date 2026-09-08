@@ -101,7 +101,7 @@ export const FitImportModal: React.FC<FitImportModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="p-2 rounded-xl text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition"
           >

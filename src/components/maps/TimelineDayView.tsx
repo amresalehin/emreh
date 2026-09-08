@@ -203,7 +203,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
           Google Maps Timeline records your visited places and travel routes. Import your Google Takeout Location History JSON to visualize your day.
         </p>
         {onImportClick && (
-          <button
+          <button aria-label="Action"
             onClick={onImportClick}
             className="mt-4 px-4 py-2 bg-[#1A73E8] hover:bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm transition-colors cursor-pointer flex items-center gap-1.5"
           >
@@ -312,7 +312,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
                     {/* Expandable Raw GPS Track Points */}
                     {hasGpsPoints && (
                       <div className="mt-2 pt-2 border-t border-black/5 dark:border-white/5">
-                        <button
+                        <button aria-label="Action"
                           onClick={e => {
                             e.stopPropagation();
                             setExpandedRouteId(isExpanded ? null : item.id);
@@ -417,7 +417,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
                     </div>
 
                     {/* Inspect Button */}
-                    <button
+                    <button aria-label="Action"
                       onClick={e => {
                         e.stopPropagation();
                         onOpenInspector(item);
@@ -440,7 +440,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
                   <div className="flex items-center gap-1.5 mt-2.5 pt-2 border-t border-black/5 dark:border-white/5 text-[11px] font-bold flex-wrap">
                     {/* Auto Resolve Pill for Unresolved / Generic Places */}
                     {isGenericPlaceName(item.title) && item.lat != null && item.lng != null && (
-                      <button
+                      <button aria-label="Action"
                         onClick={e => handleAutoResolveClick(e, item)}
                         disabled={resolvingId === item.id}
                         className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl transition-all cursor-pointer flex items-center gap-1 shadow-2xs"
@@ -452,7 +452,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
                     )}
 
                     {/* Rename / Label Pill */}
-                    <button
+                    <button aria-label="Action"
                       onClick={e => handleRenameClick(e, item)}
                       className="px-2.5 py-1 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-[#1A73E8] dark:text-blue-400 border border-blue-200 dark:border-blue-900/60 rounded-xl transition-colors cursor-pointer flex items-center gap-1"
                       title="Rename or assign custom label"
@@ -462,7 +462,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
                     </button>
 
                     {/* View on Map Modal */}
-                    <button
+                    <button aria-label="Action"
                       onClick={e => handleOpenMap(e, item)}
                       className="px-2.5 py-1 bg-black/5 dark:bg-white/5 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-gray-700 dark:text-gray-300 hover:text-[#1A73E8] rounded-xl transition-colors cursor-pointer flex items-center gap-1"
                     >
@@ -472,7 +472,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
 
                     {/* Copy Coordinates */}
                     {item.lat != null && item.lng != null && (
-                      <button
+                      <button aria-label="Action"
                         onClick={e => handleCopyCoord(e, item)}
                         className="px-2 py-1 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-gray-500 rounded-xl transition-colors cursor-pointer flex items-center gap-1"
                         title="Copy GPS coordinates"
@@ -485,7 +485,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
                     )}
 
                     {/* Highlight on Map Trigger */}
-                    <button
+                    <button aria-label="Action"
                       onClick={e => {
                         e.stopPropagation();
                         onSelectItem(item);

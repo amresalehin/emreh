@@ -156,7 +156,7 @@ export const FitHealthView: React.FC<FitHealthViewProps> = ({
           />
 
           {/* Import Button */}
-          <button
+          <button aria-label="Action"
             id="fit-import-takeout-btn"
             onClick={() => setIsImportModalOpen(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-semibold text-xs border border-emerald-500/30 transition shadow-sm"
@@ -166,7 +166,7 @@ export const FitHealthView: React.FC<FitHealthViewProps> = ({
           </button>
 
           {/* Manual Log Button */}
-          <button
+          <button aria-label="Action"
             id="fit-log-activity-btn"
             onClick={() => setIsLogModalOpen(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-sm transition cursor-pointer"
@@ -188,7 +188,7 @@ export const FitHealthView: React.FC<FitHealthViewProps> = ({
           )}
 
           {onJumpToMap && (
-            <button
+            <button aria-label="Action"
               onClick={onJumpToMap}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-zinc-800 text-xs font-semibold text-gray-700 dark:text-zinc-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition"
             >
@@ -217,14 +217,14 @@ export const FitHealthView: React.FC<FitHealthViewProps> = ({
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <button
+              <button aria-label="Action"
                 onClick={() => setIsImportModalOpen(true)}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition"
               >
                 <Upload className="w-4 h-4" />
                 <span>Import Google Fit (ZIP / CSV)</span>
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setIsLogModalOpen(true)}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 text-gray-800 dark:text-zinc-200 font-semibold text-xs border border-gray-200 dark:border-zinc-700 transition"
               >
@@ -451,7 +451,7 @@ export const FitHealthView: React.FC<FitHealthViewProps> = ({
                     Synchronized telemetry from wearable and GPS timeline
                   </p>
                 </div>
-                <button
+                <button aria-label="Action"
                   onClick={() => setIsLogModalOpen(true)}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 text-xs font-semibold text-gray-700 dark:text-zinc-300 transition"
                 >

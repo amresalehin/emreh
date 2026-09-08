@@ -103,7 +103,7 @@ export const MapDataExportModal: React.FC<MapDataExportModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
           >
@@ -148,7 +148,7 @@ export const MapDataExportModal: React.FC<MapDataExportModalProps> = ({
                 const Icon = f.icon;
                 const isSelected = format === f.id;
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={f.id}
                     type="button"
                     onClick={() => setFormat(f.id as any)}
@@ -184,7 +184,7 @@ export const MapDataExportModal: React.FC<MapDataExportModalProps> = ({
                 const Icon = s.icon;
                 const isSelected = exportScope === s.id;
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={s.id}
                     type="button"
                     onClick={() => setExportScope(s.id as any)}
@@ -221,7 +221,7 @@ export const MapDataExportModal: React.FC<MapDataExportModalProps> = ({
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/30 flex items-center justify-between">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={onClose}
             className="px-4 py-2 text-xs font-bold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-xl transition-colors cursor-pointer"
@@ -229,7 +229,7 @@ export const MapDataExportModal: React.FC<MapDataExportModalProps> = ({
             Cancel
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={handleDownload}
             disabled={filteredItems.length === 0}

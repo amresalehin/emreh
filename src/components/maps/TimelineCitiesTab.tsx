@@ -142,7 +142,7 @@ export const TimelineCitiesTab: React.FC<TimelineCitiesTabProps> = ({
     return (
       <div className="space-y-4 pb-12 animate-in fade-in duration-150">
         <div className="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-800">
-          <button
+          <button aria-label="Action"
             onClick={() => handleSelectCity(null)}
             className="flex items-center gap-1.5 text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-[#1A73E8] cursor-pointer"
           >
@@ -183,7 +183,7 @@ export const TimelineCitiesTab: React.FC<TimelineCitiesTabProps> = ({
             className="w-full pl-8 pr-8 py-1.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-xs outline-none focus:border-blue-500 text-gray-900 dark:text-white"
           />
           {cityPlaceSearch && (
-            <button
+            <button aria-label="Action"
               onClick={() => setCityPlaceSearch('')}
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
             >
@@ -224,7 +224,7 @@ export const TimelineCitiesTab: React.FC<TimelineCitiesTabProps> = ({
                   </div>
                 </div>
 
-                <button
+                <button aria-label="Action"
                   onClick={e => {
                     e.stopPropagation();
                     onOpenInspector(place);
@@ -264,7 +264,7 @@ export const TimelineCitiesTab: React.FC<TimelineCitiesTabProps> = ({
           className="w-full pl-8 pr-8 py-1.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-xs outline-none focus:border-blue-500 text-gray-900 dark:text-white"
         />
         {searchQuery && (
-          <button
+          <button aria-label="Action"
             onClick={() => setSearchQuery('')}
             className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
           >

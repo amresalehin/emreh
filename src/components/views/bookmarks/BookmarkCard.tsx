@@ -369,7 +369,7 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({
             {allTags.length > 0 && (
               <div className="flex flex-wrap gap-1 pt-1">
                 {allTags.slice(0, 4).map(t => (
-                  <button
+                  <button aria-label="Action"
                     key={t}
                     type="button"
                     onClick={(e) => {
@@ -398,7 +398,7 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({
               >
                 {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -494,7 +494,7 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({
             >
               {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
@@ -581,7 +581,7 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({
               {allTags.length > 0 && (
                 <div className="flex items-center gap-1">
                   {allTags.map(t => (
-                    <button
+                    <button aria-label="Action"
                       key={t}
                       type="button"
                       onClick={(e) => {
@@ -613,7 +613,7 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({
             {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
           </button>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={(e) => {
               e.stopPropagation();
@@ -704,14 +704,14 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({
         </td>
         <td className="py-3 px-4 text-right">
           <div className="flex items-center justify-end gap-1">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={handleCopy}
               className="p-1 text-gray-400 hover:text-gray-700 dark:hover:text-white cursor-pointer"
             >
               {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
@@ -949,7 +949,7 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({
               </button>
 
               {/* Edit Details button */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();

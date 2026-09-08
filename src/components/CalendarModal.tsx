@@ -508,7 +508,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="w-7 h-7 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
           >
@@ -518,7 +518,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
 
         {/* Tab Switcher: Single Day vs Date Range */}
         <div className="flex bg-gray-100 dark:bg-[#1f1f1f] p-1 rounded-2xl border border-gray-200/80 dark:border-gray-800">
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('single')}
             className={`flex-1 py-1.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'single'
@@ -529,7 +529,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
             <Calendar className="w-3.5 h-3.5" />
             <span>Single Day</span>
           </button>
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('range')}
             className={`flex-1 py-1.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'range'
@@ -552,7 +552,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
               <CalendarRange className="w-3.5 h-3.5 text-blue-500 shrink-0" />
               Filter by date range instead?
             </span>
-            <button
+            <button aria-label="Action"
               onClick={() => setActiveTab('range')}
               className={`font-bold text-xs ${modeConfig.badgeText} hover:underline flex items-center gap-1 cursor-pointer`}
             >
@@ -590,7 +590,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
               ].map(p => {
                 const isActive = activePreset === p.id;
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={p.id}
                     onClick={() => applyPreset(p.id as any)}
                     className={`px-2 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer text-center ${
@@ -642,27 +642,27 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
         {/* Month Navigator */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-1">
-            <button
+            <button aria-label="Action"
               onClick={handlePrevMonth}
               className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl text-gray-600 dark:text-gray-300 transition-colors cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => setIsGoToOpen(!isGoToOpen)}
               className="flex items-center gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 px-2 py-1 rounded-xl transition-colors cursor-pointer"
             >
               <span className="text-xs font-bold text-gray-900 dark:text-white tracking-tight">{monthTitle}</span>
               <ChevronDown className="w-3 h-3 text-gray-400" />
             </button>
-            <button
+            <button aria-label="Action"
               onClick={handleNextMonth}
               className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl text-gray-600 dark:text-gray-300 transition-colors cursor-pointer"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={handleGoToday}
             className={`px-2.5 py-1 ${modeConfig.accentBgSoft} ${modeConfig.badgeText} rounded-lg text-[11px] font-semibold transition-colors cursor-pointer`}
           >
@@ -725,7 +725,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
                 }}
                 className="w-full pl-8 pr-7 py-1.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-xs text-gray-800 dark:text-gray-200 outline-none placeholder:text-gray-400"
               />
-              <button type="submit" className="absolute right-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-0.5 cursor-pointer">
+              <button aria-label="Action" type="submit" className="absolute right-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-0.5 cursor-pointer">
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </form>
@@ -761,7 +761,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
                 : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-800 dark:text-gray-200';
 
               return (
-                <button
+                <button aria-label="Action"
                   key={day}
                   onClick={() => handleDayClick(dObj, dateKey)}
                   className={`h-8 rounded-lg flex flex-col items-center justify-center relative transition-all cursor-pointer ${btnClass}`}
@@ -792,7 +792,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
               }
 
               return (
-                <button
+                <button aria-label="Action"
                   key={day}
                   onClick={() => handleDayClick(dObj, dateKey)}
                   onMouseEnter={() => setHoverDateKey(dateKey)}
@@ -813,14 +813,14 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
         {/* Date Range Action Bottom Bar */}
         {activeTab === 'range' && (
           <div className="pt-2 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
-            <button
+            <button aria-label="Action"
               onClick={handleClearRange}
               className="px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center gap-1 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset Single Day</span>
             </button>
-            <button
+            <button aria-label="Action"
               onClick={handleApplyRange}
               disabled={!rangeStart || !rangeEnd}
               className={`px-4 py-1.5 ${modeConfig.accentBg} hover:opacity-90 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer`}
@@ -840,7 +840,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
             </div>
             <div className="flex flex-wrap gap-1.5">
               {recentActiveDays.map(item => (
-                <button
+                <button aria-label="Action"
                   key={item.dateKey}
                   onClick={() => {
                     onSelectDate(item.date);

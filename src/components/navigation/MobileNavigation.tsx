@@ -123,7 +123,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
         {primaryTabs.map((tab) => {
           const isActive = currentView === tab.id;
           return (
-            <button
+            <button aria-label="Action"
               key={tab.id}
               onClick={() => handleSelectView(tab.id)}
               className={`flex-1 py-1 flex flex-col items-center justify-center gap-0.5 rounded-xl transition-all cursor-pointer ${
@@ -141,7 +141,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
         })}
 
         {/* More Button to trigger full drawer */}
-        <button
+        <button aria-label="Action"
           onClick={() => setIsDrawerOpen(true)}
           className={`flex-1 py-1 flex flex-col items-center justify-center gap-0.5 rounded-xl transition-all cursor-pointer ${
             isDrawerOpen || !['home', 'timeline', 'maptimeline', 'spotify'].includes(currentView)
@@ -169,7 +169,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
                 <h3 className="text-sm font-bold text-gray-900 dark:text-white">All Companion Views</h3>
                 <p className="text-[11px] text-gray-500 dark:text-gray-400">Switch to specialized modules</p>
               </div>
-              <button
+              <button aria-label="Action"
                 onClick={() => setIsDrawerOpen(false)}
                 className="p-1.5 rounded-xl text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
               >
@@ -182,7 +182,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
               {secondaryViews.map((item) => {
                 const isActive = currentView === item.id;
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={item.id}
                     onClick={() => handleSelectView(item.id)}
                     className={`p-3 rounded-2xl flex flex-col items-center justify-center gap-1.5 text-center transition-all cursor-pointer ${

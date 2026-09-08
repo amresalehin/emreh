@@ -66,7 +66,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
       )}
 
       {variant === 'full' && (
-        <button
+        <button aria-label="Action"
           type="button"
           onClick={handleAction}
           className={`w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-bold rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 hover:from-amber-400 hover:to-amber-500 transition-all shadow-md active:scale-98 cursor-pointer ${className}`}
@@ -80,7 +80,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
       {showGuide && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
           <div className="w-full max-w-sm bg-white dark:bg-[#18181b] border border-black/10 dark:border-white/10 rounded-2xl shadow-2xl p-5 relative text-left">
-            <button
+            <button aria-label="Action"
               onClick={() => setShowGuide(false)}
               className="absolute top-3 right-3 p-1.5 rounded-lg text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
             >
@@ -135,7 +135,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
               </div>
             )}
 
-            <button
+            <button aria-label="Action"
               onClick={() => setShowGuide(false)}
               className="mt-4 w-full py-2 text-xs font-semibold rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/15 text-gray-900 dark:text-white transition-colors"
             >

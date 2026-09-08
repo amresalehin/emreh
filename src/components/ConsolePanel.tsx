@@ -88,7 +88,7 @@ export const ConsolePanel: React.FC<ConsolePanelProps> = ({ logs, onClearLogs })
           </span>
 
           <div className="flex items-center gap-1 ml-2">
-            <button
+            <button aria-label="Action"
               onClick={() => setFilterType('all')}
               className={`px-2 py-0.5 rounded text-[11px] font-sans ${
                 filterType === 'all' ? 'bg-slate-700 text-white font-semibold' : 'text-slate-400 hover:text-slate-200'
@@ -96,7 +96,7 @@ export const ConsolePanel: React.FC<ConsolePanelProps> = ({ logs, onClearLogs })
             >
               All ({logs.length})
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => setFilterType('error')}
               className={`px-2 py-0.5 rounded text-[11px] font-sans flex items-center gap-1 ${
                 filterType === 'error' ? 'bg-rose-500/30 text-rose-300 font-semibold' : 'text-slate-400 hover:text-rose-400'
@@ -105,7 +105,7 @@ export const ConsolePanel: React.FC<ConsolePanelProps> = ({ logs, onClearLogs })
               <AlertCircle className="w-3 h-3 text-rose-400" />
               <span>{errorCount}</span>
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => setFilterType('warn')}
               className={`px-2 py-0.5 rounded text-[11px] font-sans flex items-center gap-1 ${
                 filterType === 'warn' ? 'bg-amber-500/30 text-amber-300 font-semibold' : 'text-slate-400 hover:text-amber-400'

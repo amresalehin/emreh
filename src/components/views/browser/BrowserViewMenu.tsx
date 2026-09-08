@@ -135,7 +135,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       {/* Trigger Button matching YouTube / Bookmarks style */}
-      <button
+      <button aria-label="Action"
         type="button"
         id="browser-view-menu-trigger"
         onClick={() => setIsOpen(prev => !prev)}
@@ -167,7 +167,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
 
             <div className="grid grid-cols-2 gap-1.5">
               {/* Moodboard */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 id="browser-view-mode-moodboard"
                 onClick={() => onChangeMode('moodboard')}
@@ -182,7 +182,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
               </button>
 
               {/* Table */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 id="browser-view-mode-table"
                 onClick={() => onChangeMode('table')}
@@ -211,7 +211,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
               </div>
               <div className="grid grid-cols-5 gap-1">
                 {['12', '24', '48', '96', 'all'].map(limit => (
-                  <button
+                  <button aria-label="Action"
                     key={limit}
                     type="button"
                     onClick={() => onChangeCardLimit(limit)}
@@ -239,7 +239,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
               </div>
               <div className="grid grid-cols-6 gap-1">
                 {['2', '3', '4', '5', '6', 'auto'].map(cols => (
-                  <button
+                  <button aria-label="Action"
                     key={cols}
                     type="button"
                     onClick={() => onChangeGridDensity(cols)}
@@ -265,7 +265,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
               </span>
             </div>
             <div className="grid grid-cols-3 gap-1">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onChangeGroupBy('none')}
                 className={`px-2 py-1 rounded-lg text-center text-[11px] font-medium transition-colors cursor-pointer ${
@@ -276,7 +276,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
               >
                 None
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onChangeGroupBy('time_of_day')}
                 className={`px-2 py-1 rounded-lg text-center text-[11px] font-medium transition-colors cursor-pointer ${
@@ -287,7 +287,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
               >
                 Time of Day
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onChangeGroupBy('domain')}
                 className={`px-2 py-1 rounded-lg text-center text-[11px] font-medium transition-colors cursor-pointer ${
@@ -318,7 +318,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
                 { id: 'title_asc', label: 'Title (A-Z)' },
                 { id: 'domain_asc', label: 'Domain (A-Z)' }
               ].map(opt => (
-                <button
+                <button aria-label="Action"
                   key={opt.id}
                   type="button"
                   onClick={() => onChangeSortBy(opt.id as BrowserSortOption)}
@@ -354,7 +354,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
               ].map(opt => {
                 const isChecked = displayOptions[opt.key as keyof BrowserDisplayOptions];
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={opt.key}
                     type="button"
                     onClick={() => onToggleDisplayOption(opt.key as keyof BrowserDisplayOptions)}
@@ -378,7 +378,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
 
           {/* Save as Default Button */}
           <div className="pt-2.5 mt-2 border-t border-neutral-700/60">
-            <button
+            <button aria-label="Action"
               type="button"
               id="browser-save-default-button"
               onClick={handleSaveAsDefault}
@@ -401,7 +401,7 @@ export const BrowserViewMenu: React.FC<BrowserViewMenuProps> = ({
           {/* Reset Defaults */}
           {onResetDefaults && (
             <div className="pt-2 border-t border-neutral-700/60 flex justify-end">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onResetDefaults();

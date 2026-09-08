@@ -566,7 +566,7 @@ export const MapTimelineView: React.FC<MapTimelineViewProps> = ({
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
               return (
-                <button
+                <button aria-label="Action"
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-2.5 py-1 rounded-md transition-all flex items-center gap-1.5 cursor-pointer font-medium whitespace-nowrap ${
@@ -589,7 +589,7 @@ export const MapTimelineView: React.FC<MapTimelineViewProps> = ({
             Layout Mode
           </span>
           <div className="grid grid-cols-3 gap-1 p-1 bg-gray-100 dark:bg-white/5 rounded-xl border border-gray-200/80 dark:border-white/10 text-xs">
-            <button
+            <button aria-label="Action"
               onClick={() => setViewMode('split')}
               className={`py-1.5 px-2 rounded-lg flex flex-col items-center gap-1 transition-all cursor-pointer font-semibold ${
                 viewMode === 'split'
@@ -600,7 +600,7 @@ export const MapTimelineView: React.FC<MapTimelineViewProps> = ({
               <Columns2 className="w-3.5 h-3.5" />
               <span className="text-[10px]">Split</span>
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => setViewMode('list')}
               className={`py-1.5 px-2 rounded-lg flex flex-col items-center gap-1 transition-all cursor-pointer font-semibold ${
                 viewMode === 'list'
@@ -611,7 +611,7 @@ export const MapTimelineView: React.FC<MapTimelineViewProps> = ({
               <List className="w-3.5 h-3.5" />
               <span className="text-[10px]">List</span>
             </button>
-            <button
+            <button aria-label="Action"
               onClick={() => setViewMode('map')}
               className={`py-1.5 px-2 rounded-lg flex flex-col items-center gap-1 transition-all cursor-pointer font-semibold ${
                 viewMode === 'map'
@@ -632,7 +632,7 @@ export const MapTimelineView: React.FC<MapTimelineViewProps> = ({
           </span>
           <div className="flex flex-col gap-1.5">
             {onImportClick && (
-              <button
+              <button aria-label="Action"
                 onClick={onImportClick}
                 className="w-full px-3 py-2 bg-[#1A73E8] hover:bg-blue-600 text-white rounded-xl text-xs font-semibold flex items-center justify-between shadow-xs transition-all cursor-pointer active:scale-98"
               >
@@ -644,7 +644,7 @@ export const MapTimelineView: React.FC<MapTimelineViewProps> = ({
               </button>
             )}
 
-            <button
+            <button aria-label="Action"
               onClick={() => setIsExportModalOpen(true)}
               className="w-full px-3 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-semibold flex items-center justify-between transition-all cursor-pointer"
             >
@@ -655,7 +655,7 @@ export const MapTimelineView: React.FC<MapTimelineViewProps> = ({
               <span className="text-[10px] text-gray-400 font-mono">GeoJSON / CSV</span>
             </button>
 
-            <button
+            <button aria-label="Action"
               onClick={() => setIsPlacesLogOpen(true)}
               className="w-full px-3 py-2 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 rounded-xl text-xs font-semibold flex items-center justify-between border border-emerald-200/60 dark:border-emerald-800/40 transition-all cursor-pointer"
             >

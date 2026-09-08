@@ -525,7 +525,7 @@ export const NotesKnowledgeGraph: React.FC<NotesKnowledgeGraphProps> = ({
             <option value="note">Notes</option>
           </select>
 
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setShowTags(!showTags)}
             className={`px-2 py-1 rounded-lg text-xs font-semibold cursor-pointer transition-colors ${
@@ -552,7 +552,7 @@ export const NotesKnowledgeGraph: React.FC<NotesKnowledgeGraphProps> = ({
 
           {/* Zoom & Reset Controls */}
           <div className="flex items-center gap-1 bg-white/90 dark:bg-[#18181b]/90 backdrop-blur-md p-1 rounded-xl border border-gray-200/80 dark:border-white/10 shadow-lg">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 cameraRef.current.zoom = Math.min(3, cameraRef.current.zoom * 1.2);
@@ -563,7 +563,7 @@ export const NotesKnowledgeGraph: React.FC<NotesKnowledgeGraphProps> = ({
             >
               <ZoomIn className="w-3.5 h-3.5" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 cameraRef.current.zoom = Math.max(0.2, cameraRef.current.zoom * 0.8);
@@ -574,7 +574,7 @@ export const NotesKnowledgeGraph: React.FC<NotesKnowledgeGraphProps> = ({
             >
               <ZoomOut className="w-3.5 h-3.5" />
             </button>
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => {
                 resetCamera();

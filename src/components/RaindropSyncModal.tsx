@@ -341,7 +341,7 @@ export const RaindropSyncModal: React.FC<RaindropSyncModalProps> = ({
           </div>
 
           {!isSyncing && (
-            <button
+            <button aria-label="Action"
               onClick={onClose}
               className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 flex items-center justify-center transition-colors cursor-pointer"
             >
@@ -352,7 +352,7 @@ export const RaindropSyncModal: React.FC<RaindropSyncModalProps> = ({
 
         {/* Tab Selector */}
         <div className="px-6 pt-3 pb-2 flex gap-2 border-b border-gray-100 dark:border-white/5 bg-gray-50/40 dark:bg-[#121212]">
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('sync')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
               activeTab === 'sync'
@@ -364,7 +364,7 @@ export const RaindropSyncModal: React.FC<RaindropSyncModalProps> = ({
             <span>API Sync (One-Time Setup)</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             onClick={() => setActiveTab('file')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
               activeTab === 'file'
@@ -406,7 +406,7 @@ export const RaindropSyncModal: React.FC<RaindropSyncModalProps> = ({
                     <span className="text-[10px] text-gray-400 font-normal">(Personal Access Token)</span>
                   </label>
 
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => setShowInstructions(!showInstructions)}
                     className="text-[11px] font-semibold text-[#0089FF] hover:underline flex items-center gap-1 cursor-pointer"
@@ -462,7 +462,7 @@ export const RaindropSyncModal: React.FC<RaindropSyncModalProps> = ({
                     className="w-full pl-3 pr-24 py-2.5 bg-white dark:bg-[#121212] border border-gray-200 dark:border-white/10 rounded-xl text-xs font-mono text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-[#0089FF] transition-all"
                   />
                   <div className="absolute right-2 flex items-center gap-1">
-                    <button
+                    <button aria-label="Action"
                       type="button"
                       onClick={() => setShowToken(!showToken)}
                       className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 cursor-pointer"
@@ -470,7 +470,7 @@ export const RaindropSyncModal: React.FC<RaindropSyncModalProps> = ({
                     >
                       {showToken ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                     </button>
-                    <button
+                    <button aria-label="Action"
                       type="button"
                       disabled={isTesting || !apiToken.trim()}
                       onClick={handleTestConnection}
@@ -487,7 +487,7 @@ export const RaindropSyncModal: React.FC<RaindropSyncModalProps> = ({
                       Logged in as <strong className="text-gray-800 dark:text-white">{userName}</strong>
                       {userEmail && <span> ({userEmail})</span>}
                     </div>
-                    <button
+                    <button aria-label="Action"
                       onClick={handleDisconnect}
                       className="text-[10px] text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 flex items-center gap-1 cursor-pointer"
                     >
@@ -581,7 +581,7 @@ export const RaindropSyncModal: React.FC<RaindropSyncModalProps> = ({
               )}
 
               {/* Primary Sync Action Button */}
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={handleStartSync}
                 disabled={isSyncing || !apiToken.trim()}
@@ -713,7 +713,7 @@ export const RaindropSyncModal: React.FC<RaindropSyncModalProps> = ({
                     </div>
                   </div>
 
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={handleConfirmFileImport}
                     className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"

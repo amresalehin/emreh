@@ -229,7 +229,7 @@ export const GooglePhotosConnectModal: React.FC<GooglePhotosConnectModalProps> =
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="p-2 rounded-xl text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
           >
@@ -303,7 +303,7 @@ export const GooglePhotosConnectModal: React.FC<GooglePhotosConnectModalProps> =
                   </div>
                 </div>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={handleDisconnect}
                   className="px-3 py-1.5 rounded-lg border border-rose-500/20 bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
@@ -319,7 +319,7 @@ export const GooglePhotosConnectModal: React.FC<GooglePhotosConnectModalProps> =
                   <span>Batch Sync Size:</span>
                   <div className="flex items-center gap-1">
                     {[50, 100, 250].map(count => (
-                      <button
+                      <button aria-label="Action"
                         key={count}
                         type="button"
                         onClick={() => setSyncCountTarget(count)}
@@ -335,7 +335,7 @@ export const GooglePhotosConnectModal: React.FC<GooglePhotosConnectModalProps> =
                   </div>
                 </div>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   disabled={isSyncing}
                   onClick={() =>
@@ -369,7 +369,7 @@ export const GooglePhotosConnectModal: React.FC<GooglePhotosConnectModalProps> =
                 </div>
 
                 {/* Primary Google Sign-In Button */}
-                <button
+                <button aria-label="Action"
                   type="button"
                   disabled={isAuthenticating || isSyncing}
                   onClick={handleGoogleSignIn}
@@ -393,7 +393,7 @@ export const GooglePhotosConnectModal: React.FC<GooglePhotosConnectModalProps> =
 
           {/* Advanced Credentials Toggle */}
           <div className="pt-2 border-t border-stone-200 dark:border-stone-800">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsAdvancedOpen(!isAdvancedOpen)}
               className="w-full flex items-center justify-between text-xs font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 py-1 cursor-pointer"
@@ -448,7 +448,7 @@ export const GooglePhotosConnectModal: React.FC<GooglePhotosConnectModalProps> =
                       placeholder="ya29.a0AfH6S..."
                       className="flex-1 px-3 py-2 text-xs bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-lg text-stone-900 dark:text-stone-100 font-mono focus:outline-hidden focus:ring-1 focus:ring-blue-500"
                     />
-                    <button
+                    <button aria-label="Action"
                       type="button"
                       onClick={handleApplyManualToken}
                       className="px-3 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 dark:bg-stone-700 dark:hover:bg-stone-600 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
@@ -469,7 +469,7 @@ export const GooglePhotosConnectModal: React.FC<GooglePhotosConnectModalProps> =
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             <span>Zero demo data • Clean direct sync</span>
           </div>
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={onClose}
             className="px-4 py-2 rounded-xl bg-stone-200 dark:bg-stone-800 hover:bg-stone-300 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 text-xs font-semibold transition-colors cursor-pointer"

@@ -40,19 +40,19 @@ export const SAMPLE_APPS: SampleApp[] = [
     <!-- Mobile Touch Controls -->
     <div id="touch-controls">
       <div class="touch-group left">
-        <button id="btn-left" class="t-btn">◀</button>
-        <button id="btn-right" class="t-btn">▶</button>
+        <button aria-label="Action" id="btn-left" class="t-btn">◀</button>
+        <button aria-label="Action" id="btn-right" class="t-btn">▶</button>
       </div>
       <div class="touch-group right">
-        <button id="btn-thrust" class="t-btn">▲</button>
-        <button id="btn-fire" class="t-btn action">⚡</button>
+        <button aria-label="Action" id="btn-thrust" class="t-btn">▲</button>
+        <button aria-label="Action" id="btn-fire" class="t-btn action">⚡</button>
       </div>
     </div>
 
     <div id="overlay" class="overlay">
       <h1 class="title">NEON ASTEROIDS</h1>
       <p class="subtitle">VECTOR WARFARE 2088</p>
-      <button id="btn-start" class="btn-glow">LAUNCH MISSION</button>
+      <button aria-label="Action" id="btn-start" class="btn-glow">LAUNCH MISSION</button>
     </div>
   </div>
 
@@ -752,7 +752,7 @@ window.particleSystem = new ParticleSystem();`,
       </select>
     </div>
 
-    <button id="btn-pulse" class="action-btn">TRIGGER GRAVITY PULSE</button>
+    <button aria-label="Action" id="btn-pulse" class="action-btn">TRIGGER GRAVITY PULSE</button>
   </div>
 
   <script src="js/nebula.js"></script>
@@ -1047,35 +1047,35 @@ document.getElementById('btn-pulse').addEventListener('click', () => {
 
     <!-- 8 Drum/Synth Pads -->
     <div class="pad-grid">
-      <button class="pad" data-sound="kick" data-key="1">
+      <button aria-label="Action" class="pad" data-sound="kick" data-key="1">
         <span class="pad-label">KICK 808</span>
         <span class="pad-key">[1]</span>
       </button>
-      <button class="pad" data-sound="snare" data-key="2">
+      <button aria-label="Action" class="pad" data-sound="snare" data-key="2">
         <span class="pad-label">NEON SNARE</span>
         <span class="pad-key">[2]</span>
       </button>
-      <button class="pad" data-sound="hihat" data-key="3">
+      <button aria-label="Action" class="pad" data-sound="hihat" data-key="3">
         <span class="pad-label">HI-HAT</span>
         <span class="pad-key">[3]</span>
       </button>
-      <button class="pad" data-sound="clap" data-key="4">
+      <button aria-label="Action" class="pad" data-sound="clap" data-key="4">
         <span class="pad-label">CYBER CLAP</span>
         <span class="pad-key">[4]</span>
       </button>
-      <button class="pad" data-sound="tom" data-key="Q">
+      <button aria-label="Action" class="pad" data-sound="tom" data-key="Q">
         <span class="pad-label">HEX TOM</span>
         <span class="pad-key">[Q]</span>
       </button>
-      <button class="pad" data-sound="laser" data-key="W">
+      <button aria-label="Action" class="pad" data-sound="laser" data-key="W">
         <span class="pad-label">ZAP LEAD</span>
         <span class="pad-key">[W]</span>
       </button>
-      <button class="pad" data-sound="bass" data-key="E">
+      <button aria-label="Action" class="pad" data-sound="bass" data-key="E">
         <span class="pad-label">SUB BASS</span>
         <span class="pad-key">[E]</span>
       </button>
-      <button class="pad" data-sound="chime" data-key="R">
+      <button aria-label="Action" class="pad" data-sound="chime" data-key="R">
         <span class="pad-label">CRYSTAL CHIME</span>
         <span class="pad-key">[R]</span>
       </button>
@@ -1083,7 +1083,7 @@ document.getElementById('btn-pulse').addEventListener('click', () => {
 
     <div class="footer-bar">
       <span>Play with Mouse Click or Keyboard [1-4, Q-R]</span>
-      <button id="btn-demo-beat" class="btn-primary">▶ AUTO BEAT LOOP</button>
+      <button aria-label="Action" id="btn-demo-beat" class="btn-primary">▶ AUTO BEAT LOOP</button>
     </div>
   </div>
 
@@ -1541,7 +1541,7 @@ body {
       <div class="editor-side">
         <div class="pane-header">
           <span>SOURCE (MARKDOWN)</span>
-          <button id="btn-insert-table" class="tiny-btn">+ Table</button>
+          <button aria-label="Action" id="btn-insert-table" class="tiny-btn">+ Table</button>
         </div>
         <textarea id="markdown-input" spellcheck="false" placeholder="Write markdown here..."></textarea>
       </div>
@@ -1549,7 +1549,7 @@ body {
       <div class="preview-side">
         <div class="pane-header">
           <span>LIVE PREVIEW</span>
-          <button id="btn-copy-html" class="tiny-btn">Copy HTML</button>
+          <button aria-label="Action" id="btn-copy-html" class="tiny-btn">Copy HTML</button>
         </div>
         <div id="preview-output" class="markdown-body"></div>
       </div>

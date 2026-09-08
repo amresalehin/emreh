@@ -73,7 +73,7 @@ export const MetricsModal: React.FC<MetricsModalProps> = ({
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onClick={onClose} />
         <div className="bg-white dark:bg-[#151515] rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] relative z-10 overflow-hidden flex flex-col border border-gray-200 dark:border-gray-800">
           <div className="absolute top-4 right-4 z-20">
-            <button onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
+            <button aria-label="Action" onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -96,7 +96,7 @@ export const MetricsModal: React.FC<MetricsModalProps> = ({
 
             {trackId && (
               <div className="mb-4 rounded-2xl overflow-hidden shadow-md border border-gray-200 dark:border-gray-800 bg-black">
-                <iframe
+                <iframe title="Content"
                   src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator`}
                   width="100%"
                   height="152"
@@ -179,7 +179,7 @@ export const MetricsModal: React.FC<MetricsModalProps> = ({
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onClick={onClose} />
         <div className="bg-white dark:bg-[#151515] rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] relative z-10 overflow-hidden flex flex-col border border-gray-200 dark:border-gray-800">
           <div className="absolute top-4 right-4 z-20">
-            <button onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
+            <button aria-label="Action" onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -261,7 +261,7 @@ export const MetricsModal: React.FC<MetricsModalProps> = ({
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onClick={onClose} />
         <div className="bg-white dark:bg-[#151515] rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] relative z-10 overflow-hidden flex flex-col border border-gray-200 dark:border-gray-800">
           <div className="absolute top-4 right-4 z-20">
-            <button onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
+            <button aria-label="Action" onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -284,7 +284,7 @@ export const MetricsModal: React.FC<MetricsModalProps> = ({
 
             {videoId && (
               <div className="mb-4 rounded-2xl overflow-hidden shadow-md border border-gray-200 dark:border-gray-800 bg-black aspect-video">
-                <iframe
+                <iframe title="Content"
                   src={`https://www.youtube.com/embed/${videoId}`}
                   width="100%"
                   height="100%"
@@ -370,7 +370,7 @@ export const MetricsModal: React.FC<MetricsModalProps> = ({
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onClick={onClose} />
         <div className="bg-white dark:bg-[#151515] rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] relative z-10 overflow-hidden flex flex-col border border-gray-200 dark:border-gray-800">
           <div className="absolute top-4 right-4 z-20">
-            <button onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
+            <button aria-label="Action" onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -462,14 +462,14 @@ export const MetricsModal: React.FC<MetricsModalProps> = ({
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onClick={onClose} />
         <div className="bg-white dark:bg-[#151515] rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] relative z-10 overflow-hidden flex flex-col border border-gray-200 dark:border-gray-800">
           <div className="absolute top-4 right-4 z-20">
-            <button onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
+            <button aria-label="Action" onClick={onClose} className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer">
               <X className="w-4 h-4" />
             </button>
           </div>
           <div className="p-6 overflow-y-auto flex-1 space-y-4">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-14 h-14 rounded-2xl bg-sky-500/10 text-sky-500 flex items-center justify-center shrink-0 shadow-sm p-3">
-                <img src={favicon} className="w-8 h-8 rounded object-contain" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
+                <img alt="Image" src={favicon} className="w-8 h-8 rounded object-contain" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
               </div>
               <div className="min-w-0 flex-1 pr-6">
                 <span className="bg-sky-500/10 text-sky-600 dark:text-sky-400 text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">Domain Analytics</span>
@@ -509,7 +509,7 @@ export const MetricsModal: React.FC<MetricsModalProps> = ({
                     return (
                       <div key={url} className="flex flex-col py-1.5 border-b border-gray-100 dark:border-gray-800/60 last:border-0">
                         <div className="flex justify-between items-start text-xs mb-1 gap-2">
-                          <button
+                          <button aria-label="Action"
                             onClick={() => {
                               onClose();
                               handleSelectBrowserUrl(url, pageTitle, domainName);
@@ -574,7 +574,7 @@ export const MetricsModal: React.FC<MetricsModalProps> = ({
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onClick={onClose} />
         <div className="bg-white dark:bg-[#151515] rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] relative z-10 overflow-hidden flex flex-col border border-gray-200 dark:border-gray-800">
           <div className="absolute top-4 right-4 z-20">
-            <button
+            <button aria-label="Action"
               onClick={onClose}
               className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer"
             >

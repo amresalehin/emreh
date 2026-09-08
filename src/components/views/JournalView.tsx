@@ -388,7 +388,7 @@ export const JournalView: React.FC<JournalViewProps> = ({
             {!q && (
               <div className="mt-5 flex items-center justify-center gap-2.5 flex-wrap">
                 {onImportClick && (
-                  <button
+                  <button aria-label="Action"
                     onClick={onImportClick}
                     className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-2xs transition-colors cursor-pointer active:scale-95"
                   >
@@ -396,7 +396,7 @@ export const JournalView: React.FC<JournalViewProps> = ({
                   </button>
                 )}
                 {onLoadDemoData && (
-                  <button
+                  <button aria-label="Action"
                     onClick={onLoadDemoData}
                     className="px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 border border-stone-300 dark:border-stone-700 rounded-xl text-xs font-semibold shadow-2xs transition-colors cursor-pointer active:scale-95 flex items-center gap-1.5"
                   >
@@ -470,7 +470,7 @@ export const JournalView: React.FC<JournalViewProps> = ({
       {/* Floating Smooth Scroll to Top / Jump to Today Controls */}
       {showScrollTop && (
         <div className="fixed bottom-6 right-6 z-30 flex flex-col gap-2">
-          <button
+          <button aria-label="Action"
             onClick={() => {
               if (onSetToday) onSetToday();
               smoothScrollToDate(todayKey);

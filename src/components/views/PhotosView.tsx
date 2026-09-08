@@ -305,7 +305,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
         rightActions={
           <div className="flex items-center gap-2">
             {/* Google Photos Client-Side OAuth Trigger */}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => setIsGPhotosModalOpen(true)}
               className="h-8 px-2.5 rounded-xl border border-stone-200/80 dark:border-stone-800 bg-white/70 dark:bg-white/[0.04] hover:bg-white dark:hover:bg-white/10 text-xs font-semibold flex items-center gap-2 shadow-2xs hover:shadow-xs transition-all cursor-pointer"
@@ -334,7 +334,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
         leftActions={
           <div className="flex items-center gap-1.5 flex-wrap">
             <div className="flex bg-rose-500/10 dark:bg-rose-500/15 p-0.5 rounded-lg border border-rose-500/20 text-xs">
-              <button
+              <button aria-label="Action"
                 onClick={() => setFilterMode('all')}
                 className={`px-2 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   filterMode === 'all'
@@ -344,7 +344,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
               >
                 All ({photos.length})
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setFilterMode('geo')}
                 className={`px-2 py-0.5 font-medium rounded flex items-center gap-1 transition-all cursor-pointer ${
                   filterMode === 'geo'
@@ -355,7 +355,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
                 <MapPin className="w-3 h-3" />
                 <span>Places ({geoCount})</span>
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setFilterMode('favorites')}
                 className={`px-2 py-0.5 font-medium rounded flex items-center gap-1 transition-all cursor-pointer ${
                   filterMode === 'favorites'
@@ -367,7 +367,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
                 <span>Favorites ({favCount})</span>
               </button>
               {allPeople.length > 0 && (
-                <button
+                <button aria-label="Action"
                   onClick={() => setFilterMode('people')}
                   className={`px-2 py-0.5 font-medium rounded flex items-center gap-1 transition-all cursor-pointer ${
                     filterMode === 'people'
@@ -383,7 +383,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
 
             {/* Density toggles */}
             <div className="flex bg-rose-500/10 dark:bg-rose-500/15 p-0.5 rounded-lg border border-rose-500/20 text-xs">
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewDensity('timeline')}
                 className={`p-1 rounded transition-colors cursor-pointer ${
                   viewDensity === 'timeline'
@@ -394,7 +394,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
               >
                 <Calendar className="w-3.5 h-3.5" />
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewDensity('grid')}
                 className={`p-1 rounded transition-colors cursor-pointer ${
                   viewDensity === 'grid'
@@ -415,7 +415,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
             Source & Actions
           </span>
           <div className="flex flex-col gap-1.5">
-            <button
+            <button aria-label="Action"
               onClick={() => setIsGPhotosModalOpen(true)}
               className="w-full px-3 py-2 bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 border border-stone-200 dark:border-stone-800 text-stone-800 dark:text-stone-100 rounded-xl text-xs font-semibold flex items-center justify-between shadow-xs transition-all cursor-pointer"
             >
@@ -434,7 +434,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
               </span>
             </button>
 
-            <button
+            <button aria-label="Action"
               onClick={handleMountDirectoryClick}
               className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold flex items-center justify-between shadow-xs transition-all cursor-pointer"
             >
@@ -445,7 +445,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
               <span className="text-[10px] bg-blue-700/60 px-1.5 py-0.5 rounded font-mono">FS API</span>
             </button>
 
-            <button
+            <button aria-label="Action"
               onClick={() => fileInputRef.current?.click()}
               className="w-full px-3 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-semibold flex items-center justify-between transition-all cursor-pointer"
             >
@@ -456,7 +456,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
             </button>
 
             {photos.length > 0 && (
-              <button
+              <button aria-label="Action"
                 onClick={onClearPhotos}
                 className="w-full px-3 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
               >
@@ -472,7 +472,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
       {filterMode === 'people' && allPeople.length > 0 && (
         <div className="shrink-0 px-6 py-2 bg-purple-500/5 border-b border-purple-500/10 flex items-center gap-2 overflow-x-auto">
           <span className="text-xs font-semibold text-purple-600 dark:text-purple-400 shrink-0">Filter Person:</span>
-          <button
+          <button aria-label="Action"
             onClick={() => setSelectedPerson(null)}
             className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all ${
               selectedPerson === null
@@ -483,7 +483,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
             Everyone
           </button>
           {allPeople.map(p => (
-            <button
+            <button aria-label="Action"
               key={p}
               onClick={() => setSelectedPerson(p)}
               className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all ${
@@ -517,7 +517,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
             </div>
             {photos.length === 0 && (
               <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full justify-center pt-2">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setIsGPhotosModalOpen(true)}
                   className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 border border-stone-300 dark:border-stone-700 text-stone-900 dark:text-stone-100 text-xs font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all cursor-pointer"
@@ -526,7 +526,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
                   <span>Sign in with Google Photos</span>
                 </button>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={handleMountDirectoryClick}
                   className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
@@ -535,7 +535,7 @@ export const PhotosView: React.FC<PhotosViewProps> = ({
                   <span>Mount Local Folder</span>
                 </button>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-stone-100 dark:bg-white/5 hover:bg-stone-200 dark:hover:bg-white/10 text-stone-700 dark:text-stone-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all border border-stone-200 dark:border-stone-800 cursor-pointer"
@@ -627,7 +627,7 @@ const PhotoCard: React.FC<PhotoCardProps> = ({ photo, onClick, onToggleFavorite 
         />
 
         {/* Favorite Star Button */}
-        <button
+        <button aria-label="Action"
           onClick={e => {
             e.stopPropagation();
             onToggleFavorite();

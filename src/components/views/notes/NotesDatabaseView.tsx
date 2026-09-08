@@ -164,7 +164,7 @@ export const NotesDatabaseView: React.FC<NotesDatabaseViewProps> = ({
 
         <div className="flex items-center gap-2">
           {/* Sort Switcher */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => setSortAsc(!sortAsc)}
             className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white dark:bg-[#18181b] border border-gray-200/80 dark:border-white/10 text-xs text-gray-700 dark:text-gray-300 cursor-pointer shadow-2xs hover:bg-gray-50"
@@ -174,7 +174,7 @@ export const NotesDatabaseView: React.FC<NotesDatabaseViewProps> = ({
           </button>
 
           {/* Add New Object Button */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => onNewNote()}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm cursor-pointer transition-all active:scale-95"
@@ -233,7 +233,7 @@ export const NotesDatabaseView: React.FC<NotesDatabaseViewProps> = ({
 
                   {/* Status (Interactive pill) */}
                   <td className="p-3">
-                    <button
+                    <button aria-label="Action"
                       type="button"
                       onClick={(e) => cycleStatus(note, e)}
                       title="Click to cycle status"
@@ -247,7 +247,7 @@ export const NotesDatabaseView: React.FC<NotesDatabaseViewProps> = ({
 
                   {/* Priority (Interactive pill) */}
                   <td className="p-3">
-                    <button
+                    <button aria-label="Action"
                       type="button"
                       onClick={(e) => cyclePriority(note, e)}
                       title="Click to cycle priority"
@@ -290,7 +290,7 @@ export const NotesDatabaseView: React.FC<NotesDatabaseViewProps> = ({
                   {/* Actions */}
                   <td className="p-3 pr-4 text-right">
                     <div className="flex items-center justify-end gap-1.5">
-                      <button
+                      <button aria-label="Action"
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -301,7 +301,7 @@ export const NotesDatabaseView: React.FC<NotesDatabaseViewProps> = ({
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
                       </button>
-                      <button
+                      <button aria-label="Action"
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();

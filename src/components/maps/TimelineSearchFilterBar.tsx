@@ -96,7 +96,7 @@ export const TimelineSearchFilterBar: React.FC<TimelineSearchFilterBarProps> = (
             className="w-full pl-9 pr-8 py-1.5 bg-white/60 dark:bg-white/8 hover:bg-white/80 dark:hover:bg-white/12 focus:bg-white dark:focus:bg-[#18181b] backdrop-blur-xl border border-black/10 dark:border-white/15 rounded-xl text-xs font-medium text-gray-950 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 shadow-2xs"
           />
           {filterState.searchQuery && (
-            <button
+            <button aria-label="Action"
               onClick={() => onFilterChange({ searchQuery: '' })}
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-0.5 rounded-full hover:bg-gray-200/60 dark:hover:bg-gray-700/60 transition-colors"
               title="Clear search"
@@ -167,7 +167,7 @@ export const TimelineSearchFilterBar: React.FC<TimelineSearchFilterBarProps> = (
           )}
 
           {/* Toggle More Filters Button */}
-          <button
+          <button aria-label="Action"
             onClick={() => setIsExpanded(!isExpanded)}
             className={`px-2.5 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5 transition-all cursor-pointer backdrop-blur-sm ${
               isExpanded || activeFilterCount > 0
@@ -248,7 +248,7 @@ export const TimelineSearchFilterBar: React.FC<TimelineSearchFilterBarProps> = (
               </label>
               <div className="flex items-center gap-2">
                 {activeTab === 'places' && (
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() =>
                       onFilterChange({ showRoutesInPlaces: !filterState.showRoutesInPlaces })
@@ -269,7 +269,7 @@ export const TimelineSearchFilterBar: React.FC<TimelineSearchFilterBarProps> = (
                 )}
 
                 {activeTab === 'cities' && (
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() =>
                       onFilterChange({ showRoutesInCities: !filterState.showRoutesInCities })
@@ -372,7 +372,7 @@ export const TimelineSearchFilterBar: React.FC<TimelineSearchFilterBarProps> = (
               Showing <strong className="text-gray-900 dark:text-white">{filteredCount}</strong> of{' '}
               {totalCount} events
             </span>
-            <button
+            <button aria-label="Action"
               onClick={onResetFilters}
               className="text-[#1A73E8] font-bold hover:underline cursor-pointer ml-1"
             >

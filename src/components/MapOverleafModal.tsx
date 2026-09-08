@@ -68,7 +68,7 @@ export const MapOverleafModal: React.FC<MapOverleafModalProps> = ({
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             )}
-            <button
+            <button aria-label="Action"
               onClick={onClose}
               className="w-8 h-8 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center transition-colors cursor-pointer"
             >

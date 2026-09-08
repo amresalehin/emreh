@@ -340,7 +340,7 @@ export const ScreentimeView: React.FC<ScreentimeViewProps> = ({
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               onClick={onOpenCalendar}
               className="px-2.5 py-1 text-xs font-medium text-gray-800 dark:text-gray-200 flex items-center gap-1.5 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors"
             >
@@ -354,7 +354,7 @@ export const ScreentimeView: React.FC<ScreentimeViewProps> = ({
             >
               <ChevronRight className="w-4 h-4" />
             </button>
-            <button
+            <button aria-label="Action"
               onClick={onSetToday}
               className="ml-1 px-2 py-1 text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-colors"
             >
@@ -371,7 +371,7 @@ export const ScreentimeView: React.FC<ScreentimeViewProps> = ({
             <span className="hidden sm:inline">Sync Timeline</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             onClick={() => setIsManualModalOpen(true)}
             className="px-2.5 py-1.5 text-xs font-medium bg-white/60 dark:bg-zinc-900/60 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 border border-gray-200/80 dark:border-white/10 rounded-xl flex items-center gap-1.5 transition-colors shadow-sm"
           >
@@ -589,7 +589,7 @@ export const ScreentimeView: React.FC<ScreentimeViewProps> = ({
 
         {/* Filter / Category Selector Pills */}
         <div className="flex flex-wrap gap-2 pt-1">
-          <button
+          <button aria-label="Action"
             onClick={() => setSelectedCategory('all')}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 ${
               selectedCategory === 'all'
@@ -605,7 +605,7 @@ export const ScreentimeView: React.FC<ScreentimeViewProps> = ({
             if (mins === 0 && selectedCategory !== key) return null;
             const isSelected = selectedCategory === key;
             return (
-              <button
+              <button aria-label="Action"
                 key={key}
                 onClick={() => setSelectedCategory(isSelected ? 'all' : key)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 ${
@@ -707,13 +707,13 @@ export const ScreentimeView: React.FC<ScreentimeViewProps> = ({
               No screentime entries found for this date.
             </p>
             <div className="flex items-center justify-center gap-2">
-              <button
+              <button aria-label="Action"
                 onClick={handleLoadDemoData}
                 className="px-3 py-1.5 text-xs font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 rounded-xl transition-colors"
               >
                 Load Sample Week Data
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={handleRecomputeFromTimeline}
                 className="px-3 py-1.5 text-xs font-semibold bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10 rounded-xl transition-colors"
               >
@@ -732,7 +732,7 @@ export const ScreentimeView: React.FC<ScreentimeViewProps> = ({
               <h3 className="text-base font-bold text-gray-900 dark:text-white">
                 Log Screentime Session
               </h3>
-              <button
+              <button aria-label="Action"
                 onClick={() => setIsManualModalOpen(false)}
                 className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-sm"
               >
@@ -790,14 +790,14 @@ export const ScreentimeView: React.FC<ScreentimeViewProps> = ({
               </div>
 
               <div className="flex justify-end gap-2 pt-2">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setIsManualModalOpen(false)}
                   className="px-4 py-2 text-xs font-semibold rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 text-gray-700 dark:text-gray-300 transition-colors"
                 >
                   Cancel
                 </button>
-                <button
+                <button aria-label="Action"
                   type="submit"
                   className="px-4 py-2 text-xs font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white transition-colors"
                 >

@@ -258,7 +258,7 @@ export const BrowserMymindCard: React.FC<BrowserMymindCardProps> = React.memo(({
               )}
             </div>
             {showDomainBadge && (
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();

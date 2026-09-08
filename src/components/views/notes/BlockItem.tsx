@@ -200,7 +200,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               title.toLowerCase().startsWith('journal •');
 
             return (
-              <button
+              <button aria-label="Action"
                 key={i}
                 type="button"
                 onClick={(e) => {
@@ -328,7 +328,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
           isHovered ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <button
+        <button aria-label="Action"
           type="button"
           onClick={() => onInsertBelow()}
           title="Add block below (or type /)"
@@ -338,7 +338,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
         </button>
 
         <div className="relative">
-          <button
+          <button aria-label="Action"
             type="button"
             draggable={true}
             onDragStart={(e) => {
@@ -361,7 +361,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               <div className="px-2 py-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                 Turn Into
               </div>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onUpdate({ ...block, type: 'paragraph' });
@@ -371,7 +371,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               >
                 <span className="font-serif">P</span> Text
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onUpdate({ ...block, type: 'h1' });
@@ -381,7 +381,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               >
                 <Heading1 className="w-3.5 h-3.5" /> Heading 1
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onUpdate({ ...block, type: 'h2' });
@@ -391,7 +391,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               >
                 <Heading2 className="w-3.5 h-3.5" /> Heading 2
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onUpdate({ ...block, type: 'todo', checked: false });
@@ -401,7 +401,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               >
                 <CheckSquare className="w-3.5 h-3.5" /> To-do List
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onUpdate({ ...block, type: 'callout', calloutType: 'tip' });
@@ -411,7 +411,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               >
                 <AlertCircle className="w-3.5 h-3.5" /> Callout
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onUpdate({ ...block, type: 'flashcard', flashcardAnswer: '' });
@@ -421,7 +421,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Flashcard (SRS)
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onUpdate({ ...block, type: 'image' });
@@ -435,7 +435,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               <div className="border-t border-gray-100 dark:border-gray-800 my-1" />
 
               {onDuplicate && (
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onDuplicate();
@@ -448,7 +448,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               )}
 
               {onMoveUp && (
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onMoveUp();
@@ -460,7 +460,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
                 </button>
               )}
               {onMoveDown && (
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => {
                     onMoveDown();
@@ -472,7 +472,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
                 </button>
               )}
 
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   onDelete();
@@ -534,7 +534,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
         {/* To-Do Block with Checkbox */}
         {block.type === 'todo' && (
           <div className="flex items-start gap-2.5">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onUpdate({ ...block, checked: !block.checked })}
               className={`mt-0.5 w-4.5 h-4.5 rounded-full border flex items-center justify-center transition-all cursor-pointer shrink-0 ${
@@ -623,7 +623,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
         {block.type === 'toggle' && (
           <div className="space-y-1">
             <div className="flex items-start gap-1.5">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onUpdate({ ...block, collapsed: !block.collapsed })}
                 className="p-0.5 mt-1 rounded text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-black/5 cursor-pointer"
@@ -710,7 +710,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
                 className="bg-transparent uppercase tracking-wider outline-none w-28 text-gray-400 hover:text-white"
                 placeholder="LANG"
               />
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => {
                   navigator.clipboard.writeText(block.content);
@@ -766,14 +766,14 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               </tbody>
             </table>
             <div className="flex items-center gap-2 p-1.5 bg-gray-50 dark:bg-gray-900/40 border-t border-gray-100 dark:border-gray-800 text-[10px] text-gray-500">
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={handleAddTableRow}
                 className="px-2 py-0.5 rounded hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer font-medium"
               >
                 + Add Row
               </button>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={handleAddTableCol}
                 className="px-2 py-0.5 rounded hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer font-medium"
@@ -798,7 +798,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
               <span className="flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" /> Spaced Repetition Card
               </span>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => setRevealAnswer(!revealAnswer)}
                 className="text-amber-700 dark:text-amber-300 underline cursor-pointer"

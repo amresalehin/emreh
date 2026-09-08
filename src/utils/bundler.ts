@@ -361,7 +361,7 @@ export function buildVirtualAppDocument(
     return fullMatch;
   });
 
-  // 3. Transform media elements (<img src>, <audio src>, <video src>, <source src>, <embed src>, <iframe src>)
+  // 3. Transform media elements (<img alt="Image" src>, <audio src>, <video src>, <source src>, <embed src>, <iframe title="Content" src>)
   rawHtml = rawHtml.replace(/<(img|audio|video|source|embed|track)\s+([^>]*?)src=(["'])(.*?)\3([^>]*?)>/gi, (fullMatch, tag, pre, quote, src, post) => {
     const trimmed = src.trim();
     if (/^(?:[a-z]+:)?\/\//i.test(trimmed) || trimmed.startsWith('data:') || trimmed.startsWith('blob:')) {

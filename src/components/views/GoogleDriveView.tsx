@@ -1238,7 +1238,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                   activeDriveId;
 
                 return (
-                  <button
+                  <button aria-label="Action"
                     key={
                       drive.id
                     }
@@ -1472,7 +1472,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
 
           <div className="flex items-center gap-2">
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() =>
                 void loadItems(
@@ -1500,7 +1500,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
               </span>
             </button>
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() =>
                 setIsConnectModalOpen(
@@ -1542,7 +1542,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
           {/* Breadcrumb */}
           <div className="flex items-center gap-1 text-xs overflow-x-auto scrollbar-none py-1">
 
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() =>
                 handleNavigateBreadcrumb(
@@ -1578,7 +1578,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                 >
                   <ChevronRight className="w-3.5 h-3.5 text-stone-400 shrink-0" />
 
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() =>
                       handleNavigateBreadcrumb(
@@ -1647,7 +1647,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
               />
 
               {searchQuery && (
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() =>
                     setSearchQuery(
@@ -1662,7 +1662,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
             </div>
 
             {/* New Folder */}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() =>
                 setIsNewFolderModalOpen(
@@ -1701,7 +1701,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
             </button>
 
             {/* Upload */}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() =>
                 fileInputRef.current?.click()
@@ -1733,7 +1733,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
               shrink-0
             ">
 
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() =>
                   setViewMode(
@@ -1759,7 +1759,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                 <Grid className="w-3.5 h-3.5" />
               </button>
 
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() =>
                   setViewMode(
@@ -1857,7 +1857,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                   : GOOGLE_COLORS.blue;
 
               return (
-                <button
+                <button aria-label="Action"
                   key={
                     category.id
                   }
@@ -1951,7 +1951,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                   Upload a document, create a new folder, or switch to another category filter.
                 </p>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() =>
                     fileInputRef.current?.click()
@@ -2016,7 +2016,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                       {/* Card controls */}
                       <div className="flex items-center justify-between mb-2">
 
-                        <button
+                        <button aria-label="Action"
                           type="button"
                           onClick={event => {
                             event.stopPropagation();
@@ -2039,7 +2039,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
 
                           {!item.isFolder && (
-                            <button
+                            <button aria-label="Action"
                               type="button"
                               onClick={event => {
                                 event.stopPropagation();
@@ -2055,7 +2055,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                             </button>
                           )}
 
-                          <button
+                          <button aria-label="Action"
                             type="button"
                             onClick={event => {
                               event.stopPropagation();
@@ -2236,7 +2236,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
 
                         <div className="col-span-6 md:col-span-5 flex items-center gap-2.5 min-w-0">
 
-                          <button
+                          <button aria-label="Action"
                             type="button"
                             onClick={event => {
                               event.stopPropagation();
@@ -2304,7 +2304,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                         <div className="col-span-1 flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
 
                           {!item.isFolder && (
-                            <button
+                            <button aria-label="Action"
                               type="button"
                               onClick={event => {
                                 event.stopPropagation();
@@ -2320,7 +2320,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                             </button>
                           )}
 
-                          <button
+                          <button aria-label="Action"
                             type="button"
                             onClick={event => {
                               event.stopPropagation();
@@ -2395,7 +2395,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
 
                 <div className="flex items-center gap-1.5">
 
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() =>
                       void handleImportToNotes(
@@ -2417,7 +2417,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                     </span>
                   </button>
 
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() =>
                       setPreviewItem(
@@ -2484,7 +2484,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                   )
                 </span>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() =>
                     setPreviewItem(
@@ -2523,7 +2523,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                   }
                 </h3>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() =>
                     setIsNewFolderModalOpen(
@@ -2560,7 +2560,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
 
               <div className="flex items-center justify-end gap-2">
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() =>
                     setIsNewFolderModalOpen(
@@ -2572,7 +2572,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                   Cancel
                 </button>
 
-                <button
+                <button aria-label="Action"
                   type="submit"
                   disabled={
                     !newFolderName.trim()
@@ -2640,7 +2640,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                   </div>
                 </div>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() =>
                     setIsConnectModalOpen(
@@ -2690,7 +2690,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                   Opens the standard Google Sign-In consent dialog to securely mount your Drive in this tab.
                 </p>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() =>
                     void handleConnectWithGoogle()
@@ -2766,7 +2766,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                     className="w-full px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-[#303134] border border-black/5 dark:border-white/10 text-stone-900 dark:text-white focus:outline-none"
                   />
 
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={
                       handleApplyManualToken
@@ -2791,7 +2791,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
               {/* Footer */}
               <div className="pt-2 border-t border-black/5 dark:border-white/10 flex items-center justify-between">
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={
                     handleDisconnectDrive
@@ -2805,7 +2805,7 @@ export const GoogleDriveView: React.FC<GoogleDriveViewProps> = ({
                   Unmount this Drive
                 </button>
 
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() =>
                     setIsConnectModalOpen(

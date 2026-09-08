@@ -788,7 +788,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={onClose}
             className="p-2 rounded-xl text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
@@ -800,7 +800,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
         {/* Service Selector Tabs */}
         <div className="flex items-center gap-1.5 px-5 pt-3.5 pb-2 overflow-x-auto border-b border-gray-100 dark:border-white/5 bg-gray-50/30 dark:bg-black/20 no-scrollbar">
           {/* Raindrop Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('raindrop');
@@ -821,7 +821,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* Pinterest Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('pinterest');
@@ -842,7 +842,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* Browser Bookmarks Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('browser');
@@ -860,7 +860,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* Pocket Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('pocket');
@@ -880,7 +880,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* Pinboard Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('pinboard');
@@ -898,7 +898,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* Linkding Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('linkding');
@@ -916,7 +916,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* mymind Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('mymind');
@@ -934,7 +934,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* Fabric.so Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('fabric');
@@ -952,7 +952,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* KaraKeep Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('karakeep');
@@ -970,7 +970,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* Instapaper Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('instapaper');
@@ -988,7 +988,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* Custom God Mode Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('custom');
@@ -1009,7 +1009,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           </button>
 
           {/* Manual Add Tab */}
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={() => {
               setActiveService('manual');
@@ -1065,7 +1065,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
             <div className="space-y-4">
               {/* Raindrop Subtabs (API Sync vs File Backup) */}
               <div className="flex items-center justify-between gap-2 p-1 bg-gray-100 dark:bg-white/5 rounded-xl text-xs font-semibold">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setRaindropSubTab('api')}
                   className={`flex-1 py-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
@@ -1077,7 +1077,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>Continuous API Sync</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setRaindropSubTab('file')}
                   className={`flex-1 py-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
@@ -1119,7 +1119,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                         className="w-full px-3.5 py-2.5 pr-20 bg-white dark:bg-black/30 rounded-xl border border-gray-200 dark:border-white/10 text-xs text-gray-900 dark:text-white placeholder-gray-400 outline-none focus:border-[#0089FF] focus:ring-2 focus:ring-[#0089FF]/20 font-mono transition-all"
                       />
                       <div className="absolute right-2 flex items-center gap-1">
-                        <button
+                        <button aria-label="Action"
                           type="button"
                           onClick={() => setShowToken(!showToken)}
                           className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-lg cursor-pointer"
@@ -1131,7 +1131,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
 
                     <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
                       <div className="flex items-center gap-2">
-                        <button
+                        <button aria-label="Action"
                           type="button"
                           onClick={handleTestConnection}
                           disabled={isTesting || !apiToken.trim()}
@@ -1142,7 +1142,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                         </button>
 
                         {userName && (
-                          <button
+                          <button aria-label="Action"
                             type="button"
                             onClick={handleDisconnect}
                             className="px-2.5 py-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-xl text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer"
@@ -1212,7 +1212,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                             <span>Ready to fetch your bookmarks</span>
                           )}
                         </div>
-                        <button
+                        <button aria-label="Action"
                           type="button"
                           onClick={handleSyncNow}
                           disabled={isSyncing}
@@ -1258,7 +1258,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
             <div className="space-y-4">
               {/* Pinterest Subtabs */}
               <div className="flex items-center justify-between gap-1.5 p-1 bg-gray-100 dark:bg-white/5 rounded-xl text-xs font-semibold overflow-x-auto no-scrollbar">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setPinterestSubTab('api')}
                   className={`flex-1 py-1.5 px-2 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap ${
@@ -1270,7 +1270,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>API Connect</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setPinterestSubTab('file')}
                   className={`flex-1 py-1.5 px-2 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap ${
@@ -1282,7 +1282,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                   <Upload className="w-3.5 h-3.5" />
                   <span>Data Archive</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setPinterestSubTab('rss')}
                   className={`flex-1 py-1.5 px-2 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap ${
@@ -1294,7 +1294,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                   <Globe className="w-3.5 h-3.5" />
                   <span>Public Board / RSS</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setPinterestSubTab('links')}
                   className={`flex-1 py-1.5 px-2 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap ${
@@ -1337,14 +1337,14 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                         className="w-full px-3.5 py-2.5 pr-20 bg-white dark:bg-black/30 rounded-xl border border-gray-200 dark:border-white/10 text-xs text-gray-900 dark:text-white placeholder-gray-400 outline-none focus:border-[#E60023] focus:ring-2 focus:ring-[#E60023]/20 font-mono transition-all"
                       />
                       <div className="absolute right-2 flex items-center gap-1">
-                        <button
+                        <button aria-label="Action"
                           type="button"
                           onClick={() => setShowPinterestToken(!showPinterestToken)}
                           className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors cursor-pointer"
                         >
                           {showPinterestToken ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                         </button>
-                        <button
+                        <button aria-label="Action"
                           type="button"
                           onClick={handleTestPinterest}
                           disabled={isTestingPinterest || !pinterestToken.trim()}
@@ -1386,7 +1386,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                           </div>
                         </div>
 
-                        <button
+                        <button aria-label="Action"
                           type="button"
                           onClick={handleDisconnectPinterest}
                           className="px-2.5 py-1 text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors cursor-pointer flex items-center gap-1"
@@ -1442,7 +1442,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                             <span>Ready to fetch your pins</span>
                           )}
                         </div>
-                        <button
+                        <button aria-label="Action"
                           type="button"
                           onClick={handleSyncPinterest}
                           disabled={isSyncingPinterest}
@@ -1514,7 +1514,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                         placeholder="https://www.pinterest.com/username/board-name/ or username/board"
                         className="flex-1 px-3.5 py-2.5 bg-white dark:bg-black/30 rounded-xl border border-gray-200 dark:border-white/10 text-xs text-gray-900 dark:text-white placeholder-gray-400 outline-none focus:border-[#E60023] focus:ring-2 focus:ring-[#E60023]/20 transition-all font-mono"
                       />
-                      <button
+                      <button aria-label="Action"
                         type="button"
                         onClick={handleFetchPinterestRss}
                         disabled={isFetchingRss || !pinterestPublicUrl.trim()}
@@ -1559,7 +1559,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                     />
 
                     <div className="flex justify-end">
-                      <button
+                      <button aria-label="Action"
                         type="button"
                         onClick={handleParsePinterestLinks}
                         disabled={!pinterestLinksText.trim()}
@@ -1879,7 +1879,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
 
               {/* Mode Toggle: File Upload vs Text / Markdown Paste */}
               <div className="flex items-center gap-2 border-b border-gray-200 dark:border-white/5 pb-2">
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setCustomImportMode('upload')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-colors ${
@@ -1890,7 +1890,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                 >
                   📁 Drop Any File
                 </button>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={() => setCustomImportMode('paste')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-colors ${
@@ -1933,7 +1933,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                     )}
                   </div>
 
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={handleScanGodModeText}
                     disabled={!godModeText.trim() || isParsingFile}
@@ -2016,7 +2016,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
               </div>
 
               <div className="flex justify-end pt-2">
-                <button
+                <button aria-label="Action"
                   type="submit"
                   disabled={!manualUrl.trim()}
                   className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-xs"
@@ -2036,7 +2036,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   <span>Found {parsedPreview.count} bookmarks in {parsedPreview.sourceName}</span>
                 </div>
-                <button
+                <button aria-label="Action"
                   type="button"
                   onClick={handleApplyPreview}
                   className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
@@ -2065,7 +2065,7 @@ export const BookmarkSyncModal: React.FC<BookmarkSyncModalProps> = ({
           <span className="text-[11px] text-gray-400">
             Bookmarks are saved locally in your browser's IndexedDB.
           </span>
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={onClose}
             className="px-4 py-1.5 bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/15 text-gray-800 dark:text-white rounded-xl text-xs font-semibold cursor-pointer transition-all"

@@ -563,7 +563,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
 
   const subNavButtons = (
     <div className="flex bg-[#1a1a1a]/5 dark:bg-white/5 p-0.5 sm:p-1 rounded-xl border border-red-500/20">
-      <button
+      <button aria-label="Action"
         onClick={() => setSubView('day')}
         className={`px-2 sm:px-2.5 py-1 text-xs font-semibold rounded-lg flex items-center gap-1 transition-all cursor-pointer ${
           subView === 'day'
@@ -573,7 +573,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
       >
         <Layout className="w-3 h-3" /> <span className="hidden sm:inline">Feed</span>
       </button>
-      <button
+      <button aria-label="Action"
         onClick={() => setSubView('week')}
         className={`px-2 sm:px-2.5 py-1 text-xs font-semibold rounded-lg flex items-center gap-1 transition-all cursor-pointer ${
           subView === 'week'
@@ -583,7 +583,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
       >
         <List className="w-3 h-3" /> <span className="hidden sm:inline">Week</span>
       </button>
-      <button
+      <button aria-label="Action"
         onClick={() => setSubView('month')}
         className={`px-2 sm:px-2.5 py-1 text-xs font-semibold rounded-lg flex items-center gap-1 transition-all cursor-pointer ${
           subView === 'month'
@@ -593,7 +593,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
       >
         <CalendarIcon className="w-3 h-3" /> <span className="hidden sm:inline">Month</span>
       </button>
-      <button
+      <button aria-label="Action"
         onClick={() => setSubView('log')}
         className={`px-2 sm:px-2.5 py-1 text-xs font-semibold rounded-lg flex items-center gap-1 transition-all cursor-pointer ${
           subView === 'log'
@@ -618,7 +618,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
         <p className="text-xs text-gray-300 dark:text-gray-300 max-w-sm mb-6 leading-relaxed">
           Import your YouTube watch history from Google Takeout to view video streams, channels, and statistics.
         </p>
-        <button
+        <button aria-label="Action"
           onClick={onImportClick}
           className="bg-gradient-to-r from-red-600 via-rose-600 to-red-500 hover:from-red-500 hover:to-rose-500 text-white px-5 py-2.5 rounded-2xl text-xs font-bold shadow-xl transition-all flex items-center gap-2 cursor-pointer active:scale-95"
         >
@@ -917,7 +917,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
           <div className="flex items-center gap-1.5 flex-wrap">
             {/* Scope Switcher: Day vs All History */}
             <div className="flex bg-[#1a1a1a]/5 dark:bg-white/5 p-0.5 rounded-md border border-[#1a1a1a]/10 dark:border-white/10 text-xs">
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewScope('day')}
                 className={`px-2.5 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   viewScope === 'day'
@@ -927,7 +927,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
               >
                 Day
               </button>
-              <button
+              <button aria-label="Action"
                 onClick={() => setViewScope('all')}
                 className={`px-2.5 py-0.5 font-medium rounded transition-all cursor-pointer ${
                   viewScope === 'all'
@@ -976,7 +976,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
             />
 
             {/* Right Panel Toggle Button */}
-            <button
+            <button aria-label="Action"
               onClick={() => setIsRightPanelOpen(!isRightPanelOpen)}
               className={`px-2.5 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs ${
                 isRightPanelOpen
@@ -1009,7 +1009,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
               ))}
             </select>
             {filterChannel !== 'all' && (
-              <button
+              <button aria-label="Action"
                 onClick={() => setFilterChannel('all')}
                 className="text-red-500 hover:text-red-700 font-bold px-1 rounded-md hover:bg-red-500/10 cursor-pointer"
                 title="Clear channel filter"
@@ -1349,7 +1349,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
 
                 {visibleCount < displayVideos.length && (
                   <div className="py-4 text-center">
-                    <button
+                    <button aria-label="Action"
                       onClick={() => setVisibleCount(prev => Math.min(prev + 50, displayVideos.length))}
                       className="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 bg-gray-100 dark:bg-gray-850 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-xl transition-all cursor-pointer inline-flex items-center gap-2 shadow-2xs"
                     >
@@ -1381,7 +1381,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
                   <h3 className="text-sm font-bold text-gray-900 dark:text-white line-clamp-2 leading-snug">
                     {activeVideoAnalytics.title}
                   </h3>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => onShowChannelProfile(activeVideoAnalytics.channel)}
                     className="text-xs font-semibold text-red-500 hover:underline mt-0.5 block truncate"
                   >
@@ -1390,14 +1390,14 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
                 </div>
 
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <button
+                  <button aria-label="Action"
                     onClick={() => onShowVideoProfile(activeVideoAnalytics.title, activeVideoAnalytics.channel)}
                     className="p-1.5 rounded-xl bg-gray-100 dark:bg-[#202020] text-gray-600 dark:text-gray-300 hover:text-red-500 transition-colors"
                     title="Open Full Analytics Modal"
                   >
                     <Maximize2 className="w-4 h-4" />
                   </button>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setIsRightPanelOpen(false)}
                     className="p-1.5 rounded-xl bg-gray-100 dark:bg-[#202020] text-gray-600 dark:text-gray-300 hover:text-red-500 transition-colors"
                     title="Close Panel"
@@ -1409,14 +1409,14 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
 
               {/* Quick Actions Row */}
               <div className="flex items-center gap-1.5 flex-wrap pt-1 border-t border-gray-100 dark:border-gray-800/80">
-                <button
+                <button aria-label="Action"
                   onClick={handleCopyUrl}
                   className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-gray-100 dark:bg-[#1c1c1c] text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   {copyFeedback ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
                   <span>{copyFeedback ? 'Copied' : 'Copy Link'}</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={handleCopyMarkdown}
                   className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-gray-100 dark:bg-[#1c1c1c] text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors flex items-center gap-1 cursor-pointer"
                 >
@@ -1438,7 +1438,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
 
               {/* Analytics Panel Tab Switcher */}
               <div className="flex items-center gap-1 bg-gray-100 dark:bg-[#181818] p-1 rounded-xl text-xs">
-                <button
+                <button aria-label="Action"
                   onClick={() => setActivePanelTab('analytics')}
                   className={`flex-1 py-1 px-2 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activePanelTab === 'analytics'
@@ -1449,7 +1449,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
                   <BarChart2 className="w-3.5 h-3.5 text-red-500" />
                   <span>Analytics</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={() => setActivePanelTab('player')}
                   className={`flex-1 py-1 px-2 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activePanelTab === 'player'
@@ -1460,7 +1460,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
                   <Play className="w-3.5 h-3.5 text-red-500" />
                   <span>Player</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={() => setActivePanelTab('channel')}
                   className={`flex-1 py-1 px-2 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activePanelTab === 'channel'
@@ -1471,7 +1471,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
                   <Tv className="w-3.5 h-3.5 text-red-500" />
                   <span>Channel</span>
                 </button>
-                <button
+                <button aria-label="Action"
                   onClick={() => setActivePanelTab('notes')}
                   className={`flex-1 py-1 px-2 font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activePanelTab === 'notes'
@@ -1506,7 +1506,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
                           {activeVideoAnalytics.channel}
                         </span>
                       </div>
-                      <button
+                      <button aria-label="Action"
                         onClick={() => setActivePanelTab('player')}
                         className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 cursor-pointer"
                         title="Play in Embedded Player"
@@ -1735,7 +1735,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
                         {activeVideoAnalytics.channelTotalViews} total watches • {activeVideoAnalytics.channelUniqueCount} unique videos
                       </p>
                     </div>
-                    <button
+                    <button aria-label="Action"
                       onClick={() => onShowChannelProfile(activeVideoAnalytics.channel)}
                       className="px-2.5 py-1.5 rounded-xl bg-white dark:bg-black text-red-500 text-xs font-bold border border-red-500/30 hover:bg-red-500 hover:text-white transition-colors cursor-pointer"
                     >
@@ -1816,7 +1816,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
                         placeholder="Add tag (e.g. tutorial, podcast, code)..."
                         className="flex-1 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl px-3 py-1.5 text-xs text-gray-800 dark:text-gray-200 outline-none focus:border-red-500"
                       />
-                      <button
+                      <button aria-label="Action"
                         type="submit"
                         className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
                       >
@@ -1834,7 +1834,7 @@ export const YouTubeView: React.FC<YouTubeViewProps> = ({
                             className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 text-xs font-semibold"
                           >
                             #{t}
-                            <button
+                            <button aria-label="Action"
                               onClick={() => handleRemoveTag(t)}
                               className="w-3.5 h-3.5 rounded-full hover:bg-red-500/20 flex items-center justify-center cursor-pointer ml-0.5"
                             >

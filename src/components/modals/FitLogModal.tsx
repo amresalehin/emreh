@@ -103,7 +103,7 @@ export const FitLogModal: React.FC<FitLogModalProps> = ({
               </p>
             </div>
           </div>
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="p-2 rounded-xl text-gray-400 hover:text-gray-700 dark:hover:text-zinc-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition"
           >
@@ -289,13 +289,13 @@ export const FitLogModal: React.FC<FitLogModalProps> = ({
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-gray-100 dark:border-zinc-800 flex justify-end gap-2 bg-gray-50/50 dark:bg-zinc-900/40">
-          <button
+          <button aria-label="Action"
             onClick={onClose}
             className="px-4 py-2 text-xs font-semibold rounded-xl text-gray-600 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 transition"
           >
             Cancel
           </button>
-          <button
+          <button aria-label="Action"
             onClick={handleSave}
             className="px-5 py-2 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/20 transition"
           >

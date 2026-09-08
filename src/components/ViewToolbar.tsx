@@ -214,7 +214,7 @@ export const ViewToolbar: React.FC<ViewToolbarProps> = ({
                   {calculateRangeDays()}d
                 </span>
                 {onClearDateRange && (
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -302,7 +302,7 @@ export const ViewToolbar: React.FC<ViewToolbarProps> = ({
               className="w-28 sm:w-40 md:w-56 pl-7 pr-6 py-1 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/15 focus:bg-white dark:focus:bg-[#1a1a1e] backdrop-blur-xl border border-black/12 dark:border-white/18 focus:border-blue-500 dark:focus:border-blue-400 rounded-lg text-xs font-medium text-gray-950 dark:text-white outline-none transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 shadow-2xs"
             />
             {searchQuery ? (
-              <button
+              <button aria-label="Action"
                 onClick={() => onSearchChange('')}
                 className="absolute right-1.5 top-1/2 -translate-y-1/2 p-0.5 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white rounded-full cursor-pointer transition-colors"
                 title="Clear search"
@@ -335,7 +335,7 @@ export const ViewToolbar: React.FC<ViewToolbarProps> = ({
         {/* View-Specific Filters Dropdown Popover */}
         {children && (
           <div className="relative" ref={gearRef}>
-            <button
+            <button aria-label="Action"
               onClick={() => setIsGearOpen(!isGearOpen)}
               className={`px-2.5 py-1 rounded-lg flex items-center gap-1.5 text-xs font-semibold border transition-all cursor-pointer shadow-2xs backdrop-blur-xl ${
                 isGearOpen || hasActiveFilters
@@ -358,7 +358,7 @@ export const ViewToolbar: React.FC<ViewToolbarProps> = ({
                   <span className="text-xs font-bold text-gray-950 dark:text-white">
                     Filter Options
                   </span>
-                  <button
+                  <button aria-label="Action"
                     onClick={() => setIsGearOpen(false)}
                     className="p-1 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white rounded-lg cursor-pointer transition-colors"
                   >

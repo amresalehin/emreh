@@ -182,7 +182,7 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
                     <span className="flex items-center gap-1.5 text-[13px] font-bold text-blue-900 dark:text-blue-100">
                       • {ev.title}
                     </span>
-                    <button
+                    <button aria-label="Action"
                       onClick={() => onDeleteEvent(ev.id)}
                       className="text-red-400 hover:text-red-600 p-1 rounded-md hover:bg-red-500/10 cursor-pointer transition-colors"
                       title="Delete Event"
@@ -302,7 +302,7 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
         {/* Day Controls */}
         <div className="flex items-center gap-1.5 shrink-0">
           {onOpenInNotes && (
-            <button
+            <button aria-label="Action"
               onClick={() => onOpenInNotes(dateKey)}
               className="px-2.5 py-1 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-95"
               title="Open or create note for this day in Notes app"
@@ -314,7 +314,7 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
           )}
 
           {mapsCount > 0 && (
-            <button
+            <button aria-label="Action"
               onClick={() => setShowMap(!showMap)}
               className={`px-2.5 py-1 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer border ${
                 showMap
@@ -328,7 +328,7 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
             </button>
           )}
 
-          <button
+          <button aria-label="Action"
             onClick={() => onOpenAddEventForDate(dateKey)}
             className="px-2.5 py-1 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer shadow-2xs active:scale-95"
             title="Add event on this date"
@@ -337,7 +337,7 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
             <span className="hidden sm:inline">Add Event</span>
           </button>
 
-          <button
+          <button aria-label="Action"
             onClick={() => setIsExpanded(!isExpanded)}
             className="p-1.5 rounded-xl bg-white/80 dark:bg-white/10 border border-black/10 dark:border-white/15 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors cursor-pointer"
             title={isExpanded ? 'Collapse day' : 'Expand day'}
@@ -363,7 +363,7 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
                   </span>
                 )}
                 {onOpenInNotes && (
-                  <button
+                  <button aria-label="Action"
                     type="button"
                     onClick={() => onOpenInNotes(dateKey)}
                     className="text-[11px] font-semibold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1 cursor-pointer"
@@ -390,7 +390,7 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
                 {(Array.from(new Set(noteText.match(/\[\[(.*?)\]\]/g) || [])) as string[]).map((m) => {
                   const title = m.slice(2, -2).trim();
                   return (
-                    <button
+                    <button aria-label="Action"
                       key={m}
                       type="button"
                       onClick={() => onOpenNote(title)}

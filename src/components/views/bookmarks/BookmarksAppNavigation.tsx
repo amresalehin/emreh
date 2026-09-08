@@ -219,7 +219,7 @@ export const BookmarksAppNavigation: React.FC<BookmarksAppNavigationProps> = ({
       className="px-4 py-2 border-b border-black/8 dark:border-white/10 bg-white/60 dark:bg-[#151518]/60 backdrop-blur-2xl overflow-x-auto no-scrollbar flex items-center gap-1.5 shrink-0"
     >
       <div className="relative shrink-0 mr-1">
-        <button
+        <button aria-label="Action"
           type="button"
           onClick={() => setIsNavDropdownOpen(prev => !prev)}
           className="p-1.5 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15 text-gray-800 dark:text-gray-200 border border-black/5 dark:border-white/10 flex items-center gap-1 text-[11px] font-bold cursor-pointer transition-colors"
@@ -237,7 +237,7 @@ export const BookmarksAppNavigation: React.FC<BookmarksAppNavigationProps> = ({
               Select Subview
             </div>
             {allAppTabs.map(app => (
-              <button
+              <button aria-label="Action"
                 key={app.id}
                 type="button"
                 onClick={() => {
@@ -269,7 +269,7 @@ export const BookmarksAppNavigation: React.FC<BookmarksAppNavigationProps> = ({
         const isPinterest = app.id === 'pinterest';
 
         return (
-          <button
+          <button aria-label="Action"
             key={app.id}
             id={`bookmark-subview-tab-${app.id}`}
             type="button"

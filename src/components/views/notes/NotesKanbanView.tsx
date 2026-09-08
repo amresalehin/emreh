@@ -83,7 +83,7 @@ export const NotesKanbanView: React.FC<NotesKanbanViewProps> = ({
                   {colNotes.length}
                 </span>
               </div>
-              <button
+              <button aria-label="Action"
                 type="button"
                 onClick={() => onNewNote(undefined, col.status)}
                 title="Add task in this column"
@@ -155,7 +155,7 @@ export const NotesKanbanView: React.FC<NotesKanbanViewProps> = ({
             </div>
 
             {/* Quick Add at Bottom */}
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={() => onNewNote(undefined, col.status)}
               className="mt-2 w-full py-1.5 flex items-center justify-center gap-1 text-xs text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-xl cursor-pointer transition-colors"

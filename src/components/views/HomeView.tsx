@@ -87,7 +87,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
           <div className="flex items-center gap-2 flex-wrap">
             {onNavigateView && (
-              <button
+              <button aria-label="Action"
                 onClick={() => onNavigateView('timeline')}
                 className="px-3 py-2 rounded-xl bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-950 text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
               >
@@ -95,7 +95,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               </button>
             )}
             {onOpenVoiceMemo && (
-              <button
+              <button aria-label="Action"
                 onClick={onOpenVoiceMemo}
                 className="px-3 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-900 dark:text-amber-200 border border-amber-500/25 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
               >

@@ -261,7 +261,7 @@ export const MoodboardCard: React.FC<MoodboardCardProps> = ({
         {config.showTags && allTags.length > 0 && (
           <div className="flex items-center gap-1 flex-wrap pt-0.5">
             {allTags.slice(0, 3).map((t, idx) => (
-              <button
+              <button aria-label="Action"
                 key={idx}
                 type="button"
                 onClick={(e) => {
@@ -328,7 +328,7 @@ export const MoodboardCard: React.FC<MoodboardCardProps> = ({
         {/* Quick Move Column Dropdown Button */}
         {availableColumns.length > 1 && onMoveToColumn && (
           <div className="relative">
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
@@ -351,7 +351,7 @@ export const MoodboardCard: React.FC<MoodboardCardProps> = ({
                   Move to column
                 </div>
                 {availableColumns.map(col => (
-                  <button
+                  <button aria-label="Action"
                     key={col.id}
                     type="button"
                     onClick={() => {
@@ -375,7 +375,7 @@ export const MoodboardCard: React.FC<MoodboardCardProps> = ({
 
         {/* Right Action Icons: Edit & Delete */}
         <div className="flex items-center gap-1 ml-auto">
-          <button
+          <button aria-label="Action"
             type="button"
             onClick={(e) => {
               e.stopPropagation();
@@ -388,7 +388,7 @@ export const MoodboardCard: React.FC<MoodboardCardProps> = ({
           </button>
 
           {onDeleteItem && (
-            <button
+            <button aria-label="Action"
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
