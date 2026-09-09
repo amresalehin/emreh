@@ -2,6 +2,7 @@ import { FitDailyMetric } from '../types';
 import { dbGet, dbSet, dbSetMulti, dbGetAllByPrefix, dbDeleteAllByPrefix } from './storage';
 
 export const FIT_STORAGE_KEY_V1 = 'emreh_fit_metrics_v1';
+export const FIT_STORAGE_KEY = FIT_STORAGE_KEY_V1;
 export const FIT_STORAGE_PREFIX = 'fit_metric_v2_';
 
 let migrationPromise: Promise<void> | null = null;

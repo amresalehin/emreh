@@ -2,6 +2,7 @@ import { ScreentimeDayData } from '../types';
 import { dbGet, dbSet, dbSetMulti, dbGetAllByPrefix, dbDeleteAllByPrefix } from './storage';
 
 export const SCREENTIME_STORAGE_KEY_V1 = 'emreh_screentime_data_v1';
+export const SCREENTIME_STORAGE_KEY = SCREENTIME_STORAGE_KEY_V1;
 export const SCREENTIME_STORAGE_PREFIX = 'screentime_data_v2_';
 
 let migrationPromise: Promise<void> | null = null;
