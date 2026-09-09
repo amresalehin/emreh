@@ -1,17 +1,12 @@
 @import "tailwindcss";
 
-@theme {
-  --font-serif: "Newsreader", serif;
-  --font-sans: "Plus Jakarta Sans", sans-serif;
-}
-
 :root {
   --bg: #fdfcf9;
   --ink: #0f172a;
   --ink-muted: #334155;
   --ink-subtle: #475569;
-  --accent: #d4a373;
-  --accent-soft: #fbf0e4;
+  --accent: #1e3a8a;
+  --accent-soft: #e0e7ff;
   --border: rgba(15, 23, 42, 0.12);
   --sidebar-w: 240px;
 
@@ -22,13 +17,13 @@
 }
 
 .dark {
-  --bg: #0e0d0c;
-  --ink: #fdfcf9;
-  --ink-muted: #d4c7b8;
-  --ink-subtle: #a89f91;
-  --accent: #d4a373;
-  --accent-soft: rgba(212, 163, 115, 0.2);
-  --border: rgba(255, 255, 255, 0.08);
+  --bg: #121214;
+  --ink: #f8fafc;
+  --ink-muted: #cbd5e1;
+  --ink-subtle: #94a3b8;
+  --accent: #60a5fa;
+  --accent-soft: rgba(30, 58, 138, 0.28);
+  --border: rgba(255, 255, 255, 0.14);
 }
 
 .theme-liquid-glass {

@@ -149,7 +149,8 @@ export interface ResolvedGeoInfo {
   lng: number;
 }
 
-export type ViewType = 'home' | 'timeline' | 'maptimeline' | 'photos' | 'spotify' | 'youtube' | 'browser' | 'notes' | 'bookmarks' | 'box' | 'gdrive' | 'fit' | 'screentime';
+export type MainLens = 'canvas' | 'calendar' | 'notes' | 'connections' | 'drives' | 'maps';
+export type ViewType = 'home' | 'timeline' | 'maptimeline' | 'photos' | 'spotify' | 'youtube' | 'browser' | 'notes' | 'bookmarks' | 'box' | 'gdrive' | 'fit' | 'screentime' | 'canvas' | 'calendar' | 'connections' | 'drives';
 export type SubViewType = 'day' | 'week' | 'month' | 'log' | 'grid' | 'domains';
 export type BrowserPreviewTab = 'card' | 'reader' | 'frame' | 'session';
 export type ViewportMode = 'desktop' | 'tablet' | 'mobile';

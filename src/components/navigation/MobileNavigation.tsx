@@ -16,7 +16,8 @@ import {
   HardDrive,
   Cloud,
   Youtube,
-  Globe
+  Globe,
+  Calendar
 } from 'lucide-react';
 import { ViewType } from '../../types';
 import { PWAInstallButton } from '../pwa/PWAInstallButton';
@@ -49,23 +50,33 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
+  const isLensActive = (lensId: ViewType) => {
+    if (lensId === 'home') return currentView === 'home' || currentView === 'timeline' || currentView === 'canvas';
+    if (lensId === 'calendar') return currentView === 'calendar';
+    if (lensId === 'notes') return currentView === 'notes';
+    if (lensId === 'connections') return ['connections', 'spotify', 'youtube', 'browser', 'bookmarks', 'fit', 'screentime', 'photos'].includes(currentView);
+    if (lensId === 'drives') return ['drives', 'box', 'gdrive'].includes(currentView);
+    if (lensId === 'maptimeline') return currentView === 'maptimeline';
+    return currentView === lensId;
+  };
+
   const primaryTabs: { id: ViewType; label: string; icon: React.ReactNode }[] = [
-    { id: 'home', label: 'Home', icon: <LayoutDashboard className="w-5 h-5" /> },
-    { id: 'timeline', label: 'Journal', icon: <BookOpen className="w-5 h-5" /> },
-    { id: 'maptimeline', label: 'Map', icon: <MapPin className="w-5 h-5" /> },
-    { id: 'spotify', label: 'Music', icon: <Headphones className="w-5 h-5" /> },
+    { id: 'home', label: 'Canvas', icon: <LayoutDashboard className="w-5 h-5" /> },
+    { id: 'calendar', label: 'Calendar', icon: <Calendar className="w-5 h-5" /> },
+    { id: 'notes', label: 'Notes', icon: <BookOpen className="w-5 h-5" /> },
+    { id: 'connections', label: 'Connections', icon: <Globe className="w-5 h-5" /> },
+    { id: 'maptimeline', label: 'Maps', icon: <MapPin className="w-5 h-5" /> },
   ];
 
   const secondaryViews: { id: ViewType; label: string; icon: React.ReactNode; color: string }[] = [
+    { id: 'drives', label: 'Cloud & Local Drives', icon: <HardDrive className="w-4 h-4" />, color: 'text-sky-500' },
     { id: 'photos', label: 'Photos & Heritage', icon: <ImageIcon className="w-4 h-4" />, color: 'text-rose-500' },
-    { id: 'bookmarks', label: 'Bookmarks', icon: <Bookmark className="w-4 h-4" />, color: 'text-teal-500' },
-    { id: 'notes', label: 'Daily Notes', icon: <StickyNote className="w-4 h-4" />, color: 'text-amber-500' },
+    { id: 'bookmarks', label: 'Bookmarks & Links', icon: <Bookmark className="w-4 h-4" />, color: 'text-teal-500' },
+    { id: 'spotify', label: 'Spotify Music', icon: <Headphones className="w-4 h-4" />, color: 'text-emerald-500' },
     { id: 'youtube', label: 'YouTube Watch', icon: <Youtube className="w-4 h-4" />, color: 'text-red-500' },
     { id: 'browser', label: 'Chrome History', icon: <Globe className="w-4 h-4" />, color: 'text-yellow-500' },
     { id: 'screentime', label: 'Screen Time', icon: <Clock className="w-4 h-4" />, color: 'text-indigo-500' },
-    { id: 'fit', label: 'Google Fit', icon: <HeartPulse className="w-4 h-4" />, color: 'text-emerald-500' },
-    { id: 'box', label: 'Box Cloud', icon: <Cloud className="w-4 h-4" />, color: 'text-blue-500' },
-    { id: 'gdrive', label: 'Google Drive', icon: <HardDrive className="w-4 h-4" />, color: 'text-cyan-500' },
+    { id: 'fit', label: 'Google Fit', icon: <HeartPulse className="w-4 h-4" />, color: 'text-orange-500' },
   ];
 
   const handleSelectView = (view: ViewType) => {
@@ -121,18 +132,18 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
         className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-[#121214]/90 backdrop-blur-xl border-t border-black/8 dark:border-white/10 flex items-center justify-around px-2 py-1.5 pb-[calc(0.375rem+env(safe-area-inset-bottom))] shadow-lg select-none"
       >
         {primaryTabs.map((tab) => {
-          const isActive = currentView === tab.id;
+          const isActive = isLensActive(tab.id);
           return (
             <button aria-label="Action"
               key={tab.id}
               onClick={() => handleSelectView(tab.id)}
               className={`flex-1 py-1 flex flex-col items-center justify-center gap-0.5 rounded-xl transition-all cursor-pointer ${
                 isActive
-                  ? 'text-amber-500 font-bold'
+                  ? 'text-[#d4a373] font-bold'
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
-              <div className={`p-1 rounded-lg ${isActive ? 'bg-amber-500/15' : ''}`}>
+              <div className={`p-1 rounded-lg ${isActive ? 'bg-[#d4a373]/15' : ''}`}>
                 {tab.icon}
               </div>
               <span className="text-[10px] tracking-tight">{tab.label}</span>
@@ -144,12 +155,12 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
         <button aria-label="Action"
           onClick={() => setIsDrawerOpen(true)}
           className={`flex-1 py-1 flex flex-col items-center justify-center gap-0.5 rounded-xl transition-all cursor-pointer ${
-            isDrawerOpen || !['home', 'timeline', 'maptimeline', 'spotify'].includes(currentView)
-              ? 'text-amber-500 font-bold'
+            isDrawerOpen || !['home', 'timeline', 'canvas', 'calendar', 'notes', 'connections', 'maptimeline'].includes(currentView)
+              ? 'text-[#d4a373] font-bold'
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <div className={`p-1 rounded-lg ${isDrawerOpen ? 'bg-amber-500/15' : ''}`}>
+          <div className={`p-1 rounded-lg ${isDrawerOpen ? 'bg-[#d4a373]/15' : ''}`}>
             <Menu className="w-5 h-5" />
           </div>
           <span className="text-[10px] tracking-tight">More</span>

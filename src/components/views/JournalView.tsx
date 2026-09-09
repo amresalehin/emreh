@@ -339,7 +339,7 @@ export const JournalView: React.FC<JournalViewProps> = ({
       {/* View Toolbar with Global Date Navigator, Search, Importer & Add Event */}
       <ViewToolbar
         badge={
-          <span className="font-sans text-xs tracking-wide uppercase px-2.5 py-1 rounded-full bg-white/[0.04] ring-1 ring-white/[0.06] text-neutral-300 shadow-2xs backdrop-blur-md">
+          <span className="font-mono text-[11px] font-bold px-2.5 py-1 rounded-lg bg-black/8 dark:bg-white/12 border border-black/10 dark:border-white/15 text-gray-950 dark:text-white shadow-2xs backdrop-blur-md">
             {filteredDateKeys.length} days • {totalStats} entries
           </span>
         }
@@ -354,7 +354,7 @@ export const JournalView: React.FC<JournalViewProps> = ({
         onOpenDateRangePicker={onOpenDateRangePicker}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        searchPlaceholder="Search journal reflections & memories..."
+        searchPlaceholder="Search journal..."
         searchResultsCount={q ? totalStats : undefined}
         onImportClick={onImportClick}
         importLabel="Import"
@@ -362,7 +362,7 @@ export const JournalView: React.FC<JournalViewProps> = ({
           onOpenAddEvent && (
             <button
               onClick={onOpenAddEvent}
-              className="flex items-center gap-1.5 px-3 py-1 font-sans text-xs font-semibold rounded-xl bg-[#d4a373] hover:bg-[#e0a96d] text-neutral-950 transition-all cursor-pointer shadow-2xs shrink-0 active:scale-97"
+              className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition-all cursor-pointer shadow-2xs shrink-0 active:scale-97"
               title="Add a custom event or milestone"
             >
               <Plus className="w-3.5 h-3.5" />
@@ -375,12 +375,12 @@ export const JournalView: React.FC<JournalViewProps> = ({
       {/* Main Continuous Infinite Journal Feed */}
       <div className="max-w-5xl w-full mx-auto px-4 py-6 flex-1">
         {visibleDateKeys.length === 0 ? (
-          <div className="text-center py-16 px-6 bg-[#171614]/70 backdrop-blur-md ring-1 ring-white/[0.05] rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
-            <BookOpen className="w-12 h-12 mx-auto text-[#d4a373] mb-3 opacity-80" />
-            <h3 className="font-serif text-lg font-medium text-neutral-100">
+          <div className="text-center py-16 px-4 bg-white/70 dark:bg-[#18181b]/70 backdrop-blur-xl border border-indigo-500/20 rounded-3xl shadow-xs">
+            <BookOpen className="w-12 h-12 mx-auto text-indigo-500 mb-3 opacity-70" />
+            <h3 className="text-sm font-bold text-gray-900 dark:text-white">
               {q ? 'No matching journal entries found' : 'No journal activity yet'}
             </h3>
-            <p className="font-serif italic text-xs text-neutral-400 mt-1 max-w-sm mx-auto leading-relaxed">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-sm mx-auto">
               {q
                 ? `No entries or reflections matched "${searchQuery}". Try a different keyword.`
                 : 'Import your Google Takeout or Spotify data, or write your first daily reflection to begin your life journal.'}
@@ -388,21 +388,19 @@ export const JournalView: React.FC<JournalViewProps> = ({
             {!q && (
               <div className="mt-5 flex items-center justify-center gap-2.5 flex-wrap">
                 {onImportClick && (
-                  <button
-                    aria-label="Action"
+                  <button aria-label="Action"
                     onClick={onImportClick}
-                    className="px-4 py-2 bg-[#d4a373] hover:bg-[#e0a96d] text-neutral-950 rounded-xl font-sans text-xs font-semibold shadow-2xs transition-colors cursor-pointer active:scale-95"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-2xs transition-colors cursor-pointer active:scale-95"
                   >
                     Import Takeout Data
                   </button>
                 )}
                 {onLoadDemoData && (
-                  <button
-                    aria-label="Action"
+                  <button aria-label="Action"
                     onClick={onLoadDemoData}
-                    className="px-4 py-2 bg-white/[0.04] hover:bg-white/[0.08] text-neutral-200 ring-1 ring-white/[0.06] rounded-xl font-sans text-xs font-semibold shadow-2xs transition-colors cursor-pointer active:scale-95 flex items-center gap-1.5"
+                    className="px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 border border-stone-300 dark:border-stone-700 rounded-xl text-xs font-semibold shadow-2xs transition-colors cursor-pointer active:scale-95 flex items-center gap-1.5"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-[#d4a373]" />
+                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                     <span>Explore Sample Timeline</span>
                   </button>
                 )}
@@ -410,77 +408,57 @@ export const JournalView: React.FC<JournalViewProps> = ({
             )}
           </div>
         ) : (
-          <div className="relative pl-6 sm:pl-8">
-            {/* The Organic Narrative Thread: soft, fading gradient line */}
-            <div className="absolute left-2.5 sm:left-3.5 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-neutral-700/50 to-transparent pointer-events-none" />
+          <div className="space-y-6">
+            {visibleDateKeys.map(dateKey => {
+              const [y, m, d] = dateKey.split('-').map(Number);
+              const dateObj = new Date(y, m - 1, d);
+              const isToday = dateKey === todayKey;
+              const isCurrentSelected = dateKey === selectedDateKey;
+              const dayItems = dateMap.get(dateKey) || [];
+              const dayEvents = eventsMap.get(dateKey) || [];
+              const dayNote = dailyNotesMap[dateKey] || (dateKey === selectedDateKey ? dailyNote : '');
 
-            <div className="space-y-6">
-              {visibleDateKeys.map((dateKey, index) => {
-                const [y, m, d] = dateKey.split('-').map(Number);
-                const dateObj = new Date(y, m - 1, d);
-                const isToday = dateKey === todayKey;
-                const isCurrentSelected = dateKey === selectedDateKey;
-                const dayItems = dateMap.get(dateKey) || [];
-                const dayEvents = eventsMap.get(dateKey) || [];
-                const dayNote = dailyNotesMap[dateKey] || (dateKey === selectedDateKey ? dailyNote : '');
-
-                // Format month/year dividers as understated editorial breaks
-                const currentMonthYear = dateObj.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-                const prevDateKey = index > 0 ? visibleDateKeys[index - 1] : null;
-                const prevDateObj = prevDateKey ? new Date(Number(prevDateKey.split('-')[0]), Number(prevDateKey.split('-')[1]) - 1, Number(prevDateKey.split('-')[2])) : null;
-                const prevMonthYear = prevDateObj ? prevDateObj.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : null;
-                const isNewMonth = index === 0 || currentMonthYear !== prevMonthYear;
-
-                return (
-                  <React.Fragment key={dateKey}>
-                    {isNewMonth && (
-                      <div className="flex items-center gap-4 my-8">
-                        <span className="font-serif italic text-lg text-neutral-300">{currentMonthYear}</span>
-                        <div className="h-[1px] flex-1 bg-neutral-800" />
-                      </div>
-                    )}
-                    <JournalDayCard
-                      key={dateKey}
-                      dateKey={dateKey}
-                      dateObj={dateObj}
-                      isToday={isToday}
-                      isCurrentSelected={isCurrentSelected}
-                      items={dayItems}
-                      allTimelineData={allTimelineData || items}
-                      events={dayEvents}
-                      dailyNote={dayNote}
-                      onSaveDailyNote={text => handleSaveNote(dateKey, text)}
-                      onOpenAddEventForDate={handleAddEventForSpecificDate}
-                      onDeleteEvent={onDeleteEvent}
-                      onSelectBrowser={onSelectBrowser}
-                      onShowTrackProfile={onShowTrackProfile}
-                      onShowArtistProfile={onShowArtistProfile}
-                      onShowVideoProfile={onShowVideoProfile}
-                      onShowChannelProfile={onShowChannelProfile}
-                      onShowDomainProfile={onShowDomainProfile}
-                      onOpenMapModal={onOpenMapModal}
-                      onResolveGeo={onResolveGeo}
-                      onSelectPhoto={onSelectPhoto}
-                      onOpenInNotes={onOpenInNotes}
-                      onOpenNote={onOpenNote}
-                      luminance={luminance}
-                      theme={theme}
-                    />
-                  </React.Fragment>
-                );
-              })}
-            </div>
+              return (
+                <JournalDayCard
+                  key={dateKey}
+                  dateKey={dateKey}
+                  dateObj={dateObj}
+                  isToday={isToday}
+                  isCurrentSelected={isCurrentSelected}
+                  items={dayItems}
+                  allTimelineData={allTimelineData || items}
+                  events={dayEvents}
+                  dailyNote={dayNote}
+                  onSaveDailyNote={text => handleSaveNote(dateKey, text)}
+                  onOpenAddEventForDate={handleAddEventForSpecificDate}
+                  onDeleteEvent={onDeleteEvent}
+                  onSelectBrowser={onSelectBrowser}
+                  onShowTrackProfile={onShowTrackProfile}
+                  onShowArtistProfile={onShowArtistProfile}
+                  onShowVideoProfile={onShowVideoProfile}
+                  onShowChannelProfile={onShowChannelProfile}
+                  onShowDomainProfile={onShowDomainProfile}
+                  onOpenMapModal={onOpenMapModal}
+                  onResolveGeo={onResolveGeo}
+                  onSelectPhoto={onSelectPhoto}
+                  onOpenInNotes={onOpenInNotes}
+                  onOpenNote={onOpenNote}
+                  luminance={luminance}
+                  theme={theme}
+                />
+              );
+            })}
 
             {/* Infinite Sentinel for lazy loading */}
             <div ref={sentinelRef} className="py-6 flex flex-col items-center justify-center">
               {hasMoreDays ? (
-                <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 font-mono">
-                  <Loader2 className="w-4 h-4 animate-spin text-[#d4a373]" />
+                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-mono">
+                  <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
                   <span>Loading past journal days...</span>
                 </div>
               ) : (
-                <div className="flex items-center gap-1.5 text-xs text-neutral-400 font-mono py-4">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#d4a373]" />
+                <div className="flex items-center gap-1.5 text-xs text-gray-400 font-mono py-4">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-500" />
                   <span>Reached the beginning of journal history ({filteredDateKeys.length} days total)</span>
                 </div>
               )}
@@ -497,7 +475,7 @@ export const JournalView: React.FC<JournalViewProps> = ({
               if (onSetToday) onSetToday();
               smoothScrollToDate(todayKey);
             }}
-            className="px-3.5 py-2 rounded-full bg-[#d4a373] hover:bg-[#e0a96d] text-neutral-950 font-sans text-xs font-semibold shadow-lg transition-colors flex items-center gap-1.5 cursor-pointer active:scale-95"
+            className="px-3.5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-lg transition-colors flex items-center gap-1.5 cursor-pointer active:scale-95"
             title="Jump to Today"
           >
             <Compass className="w-3.5 h-3.5" />
@@ -505,7 +483,7 @@ export const JournalView: React.FC<JournalViewProps> = ({
           </button>
           <button
             onClick={handleScrollToTop}
-            className="p-2.5 rounded-full bg-[#171614]/80 hover:bg-[#171614] text-neutral-200 shadow-xl ring-1 ring-white/[0.1] backdrop-blur-md transition-all flex items-center justify-center cursor-pointer active:scale-95"
+            className="p-2.5 rounded-full bg-slate-900/80 hover:bg-slate-900 dark:bg-white/90 dark:hover:bg-white text-white dark:text-gray-900 shadow-xl border border-white/20 backdrop-blur-md transition-all flex items-center justify-center cursor-pointer active:scale-95"
             title="Scroll to Top"
           >
             <ArrowUp className="w-4 h-4" />

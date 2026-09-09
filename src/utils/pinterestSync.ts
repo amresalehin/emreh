@@ -630,7 +630,7 @@ export function parsePinterestUrlBatch(rawText: string, customBoard = 'Pinterest
     if (match) {
       pinId = match[1];
     } else {
-      pinId = deterministicId('pin_raw', url, String(i));
+      pinId = deterministicId('pin_html', title, href);
     }
 
     const title = pinId ? `Pinterest Pin #${pinId}` : 'Saved Pin';

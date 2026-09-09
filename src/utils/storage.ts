@@ -321,7 +321,7 @@ export async function dbGetAllByPrefix<T>(prefix: string): Promise<Record<string
       request.onerror = () => reject(request.error);
     });
   } catch (err) {
-    console.warn(`[storage] dbGetAllByPrefix error for prefix "${prefix}":`, err);
+    console.warn([storage] dbGetAllByPrefix error for prefix "":, err);
     return {};
   }
 }
@@ -351,6 +351,6 @@ export async function dbDeleteAllByPrefix(prefix: string): Promise<void> {
       transaction.onabort = () => reject(transaction.error);
     });
   } catch (err) {
-    console.error(`[storage] dbDeleteAllByPrefix error for prefix "${prefix}":`, err);
+    console.error([storage] dbDeleteAllByPrefix error for prefix "":, err);
   }
 }

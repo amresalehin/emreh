@@ -118,7 +118,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
       >
         <div className="flex items-start justify-between gap-2">
           <h4
-            className={`text-[14px] font-serif font-semibold tracking-tight truncate flex-1 ${
+            className={`text-[13.5px] font-semibold tracking-tight truncate flex-1 ${
               isActive ? 'text-stone-950 dark:text-white font-bold' : 'text-stone-900 dark:text-stone-100'
             }`}
           >
@@ -218,15 +218,15 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
   return (
     <div
       style={{ width: width ? `${width}px` : undefined }}
-      className={`${width ? '' : 'w-72 sm:w-80'} border-r border-stone-200/60 dark:border-white/[0.05] flex flex-col h-full bg-stone-50/50 dark:bg-[#0e0d0c]/80 backdrop-blur-md shrink-0 min-h-0 text-xs select-none`}
+      className={`${width ? '' : 'w-72 sm:w-80'} border-r border-amber-500/20 flex flex-col h-full bg-white/40 dark:bg-black/25 backdrop-blur-md shrink-0 min-h-0 text-xs select-none`}
     >
       {/* Top Header: Notes Count & New Note Action */}
       <div className="p-3.5 pb-2 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="text-base font-serif font-semibold text-stone-900 dark:text-stone-100 tracking-tight">
+          <h2 className="text-base font-bold text-stone-900 dark:text-stone-100 tracking-tight">
             Notes
           </h2>
-          <span className="font-sans text-[11px] font-medium text-stone-500 dark:text-stone-400 px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/10">
+          <span className="text-[11px] font-bold text-stone-500 dark:text-stone-400 px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/10">
             {filteredNotes.length}
           </span>
         </div>
@@ -236,7 +236,7 @@ export const NotesSidebar: React.FC<NotesSidebarProps> = ({
           type="button"
           onClick={() => onNewNote()}
           title="Create New Note (Enter)"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#d4a373] hover:bg-[#c49363] active:scale-95 text-stone-950 font-sans font-medium text-xs shadow-xs transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-semibold text-xs shadow-xs transition-all cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
           <span>New Note</span>

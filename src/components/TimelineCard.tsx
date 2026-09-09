@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
 import { Headphones, Youtube, MapPin, Globe, BarChart2, ExternalLink, Eye, Play, Map as MapIcon, Camera, Star, User } from 'lucide-react';
 import { TimelineItem } from '../types';
 import { buildGoogleMapsEmbedUrl, buildGoogleMapsUrl, formatTime, isGenericPlaceName } from '../utils/dataParser';
@@ -45,8 +44,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
     const loc = item.correlatedLocation;
     if (!loc) return null;
     return (
-      <button
-        aria-label="Correlated Location"
+      <button aria-label="Action"
         type="button"
         onClick={(e) => {
           e.stopPropagation();
@@ -58,21 +56,15 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
             onResolveGeo(loc.lat, loc.lng);
           }
         }}
-        className="inline-flex items-center gap-1 font-sans text-xs tracking-wide uppercase px-2 py-0.5 rounded-full bg-[#d4a373]/10 hover:bg-[#d4a373]/20 text-[#d4a373] ring-1 ring-[#d4a373]/25 transition-all cursor-pointer shadow-2xs hover:scale-102"
+        className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-md bg-amber-500/15 hover:bg-amber-500/25 text-amber-800 dark:text-amber-300 border border-amber-500/30 transition-all cursor-pointer shadow-2xs hover:scale-102"
         title={`Location correlation: ${loc.placeName} (${loc.method === 'exact_stop' ? 'At location' : loc.method === 'route_segment' ? 'In transit' : `~${loc.timeDeltaMinutes}m delta`})`}
       >
-        <MapPin className="w-2.5 h-2.5 text-[#d4a373] shrink-0" />
+        <MapPin className="w-2.5 h-2.5 text-amber-600 dark:text-amber-400 shrink-0" />
         <span className="truncate max-w-[120px] sm:max-w-[160px]">{loc.placeName}</span>
         {loc.method === 'route_segment' && <span className="text-[9px] opacity-75">(transit)</span>}
       </button>
     );
   };
-
-  const baseCardClasses = `relative rounded-2xl bg-[#171614]/70 p-5 shadow-[0_4px_24px_rgba(0,0,0,0.35)] ring-1 ${
-    isSelected
-      ? 'ring-[#d4a373] bg-[#171614]/90 shadow-[0_6px_28px_rgba(212,163,115,0.15)]'
-      : 'ring-white/[0.05] hover:ring-white/[0.12]'
-  } backdrop-blur-md transition-all duration-300 space-y-3 cursor-pointer group`;
 
   // 1. Browser Item
   if (item.type === 'browser') {
@@ -82,81 +74,77 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
     const meta = extractUrlMetadata(url, item.title);
 
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", damping: 26, stiffness: 220 }}
+      <div
         onClick={() => onSelectBrowser && onSelectBrowser(item)}
-        className={baseCardClasses}
+        className={`bg-white/85 dark:bg-[#18181b]/80 backdrop-blur-md border ${
+          isSelected
+            ? 'border-sky-500 ring-2 ring-sky-500/30 bg-sky-500/10 dark:bg-sky-500/15 shadow-sm'
+            : 'border-black/10 dark:border-white/12 hover:border-sky-500/40'
+        } rounded-xl p-3 shadow-2xs transition-all space-y-2 cursor-pointer group`}
       >
-        <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-2.5">
+        <div className="flex items-center justify-between gap-2 border-b border-black/8 dark:border-white/10 pb-1.5">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 font-sans text-xs tracking-wide uppercase px-2.5 py-0.5 rounded-full bg-white/[0.04] text-neutral-300 ring-1 ring-white/[0.06]">
-              <Globe className="w-3 h-3 text-[#d4a373]" /> {domain}
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2 py-0.5 rounded-md bg-sky-500/15 text-sky-800 dark:text-sky-300">
+              <Globe className="w-3 h-3" /> {domain}
             </span>
             {meta.category && (
-              <span className="inline-flex items-center font-sans text-xs tracking-wide uppercase px-2 py-0.5 rounded-full bg-white/[0.02] text-neutral-400">
+              <span className="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-md bg-gray-200/80 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
                 {meta.category}
               </span>
             )}
             {renderLocationBadge()}
           </div>
-          <div className="flex items-center gap-2">
-            <span className="font-sans text-xs tracking-wide uppercase text-neutral-400">{timeStr}</span>
-            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              <button
-                aria-label="Action"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSelectBrowser && onSelectBrowser(item);
-                }}
-                className="px-2 py-0.5 bg-white/[0.05] hover:bg-white/[0.1] text-neutral-200 rounded-md font-sans text-xs tracking-wide transition-colors flex items-center gap-1 cursor-pointer"
-                title="Show Preview on right side"
-              >
-                <Eye className="w-3 h-3 text-[#d4a373]" /> Preview
-              </button>
-              <button
-                aria-label="Action"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onShowDomainProfile && onShowDomainProfile(domain);
-                }}
-                className="p-1 text-neutral-400 hover:text-neutral-200 transition-colors cursor-pointer"
-                title="Domain Analytics"
-              >
-                <BarChart2 className="w-3.5 h-3.5" />
-              </button>
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="p-1 text-neutral-400 hover:text-neutral-200 transition-colors"
-                title="Open URL in new tab"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
+          <div className="flex items-center gap-1">
+            <span className="text-[11px] font-mono font-medium text-gray-700 dark:text-gray-300">{timeStr}</span>
+            <button aria-label="Action"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelectBrowser && onSelectBrowser(item);
+              }}
+              className="px-2 py-0.5 bg-sky-500/15 hover:bg-sky-500/25 text-sky-800 dark:text-sky-300 rounded-md text-[10px] font-bold transition-colors flex items-center gap-1 cursor-pointer"
+              title="Show Preview on right side"
+            >
+              <Eye className="w-3 h-3" /> Preview
+            </button>
+            <button aria-label="Action"
+              onClick={(e) => {
+                e.stopPropagation();
+                onShowDomainProfile && onShowDomainProfile(domain);
+              }}
+              className="p-1 text-gray-600 hover:text-sky-600 dark:text-gray-300 dark:hover:text-sky-400 transition-colors cursor-pointer"
+              title="Domain Analytics"
+            >
+              <BarChart2 className="w-3.5 h-3.5" />
+            </button>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="p-1 text-gray-600 hover:text-sky-600 dark:text-gray-300 dark:hover:text-sky-400 transition-colors"
+              title="Open URL in new tab"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
 
-        <div className="flex items-start gap-3">
-          <img
-            alt="Favicon"
+        <div className="flex items-start gap-2.5">
+          <img alt="Image"
             src={favicon}
-            className="w-5 h-5 rounded mt-0.5 shrink-0 bg-white/[0.03] object-contain p-0.5 ring-1 ring-white/[0.05]"
+            className="w-5 h-5 rounded mt-0.5 shrink-0 bg-gray-100 dark:bg-gray-800 object-contain p-0.5"
             onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
           />
           <div className="min-w-0 flex-1">
-            <h4 className="font-serif font-medium text-sm sm:text-base text-neutral-100 line-clamp-1 group-hover:text-[#d4a373] transition-colors" title={item.title}>
+            <h4 className="text-xs font-bold text-gray-950 dark:text-white line-clamp-1 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors" title={item.title}>
               {item.title}
             </h4>
-            <div className="text-xs text-neutral-400 truncate block group-hover:underline mt-0.5 font-sans font-normal tracking-wide">
+            <div className="text-[11px] text-gray-700 dark:text-gray-300 truncate block group-hover:underline mt-0.5 font-mono font-medium">
               {url}
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     );
   }
 
@@ -166,69 +154,65 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
     const shouldShowPlayer = showEmbed || isSelected;
 
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", damping: 26, stiffness: 220 }}
+      <div
         onClick={() => onSelectSpotify && onSelectSpotify(item)}
-        className={baseCardClasses}
+        className={`bg-white/85 dark:bg-[#18181b]/80 backdrop-blur-md border ${
+          isSelected
+            ? 'border-emerald-500 ring-2 ring-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/15 shadow-sm'
+            : 'border-black/10 dark:border-white/12 hover:border-emerald-500/40'
+        } rounded-xl p-3 shadow-2xs transition-all space-y-2 cursor-pointer group`}
       >
-        <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-2.5">
+        <div className="flex items-center justify-between gap-2 border-b border-black/8 dark:border-white/10 pb-1.5">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="inline-flex items-center gap-1 font-sans text-xs tracking-wide uppercase px-2.5 py-0.5 rounded-full bg-[#d4a373]/10 text-[#d4a373] ring-1 ring-[#d4a373]/20">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-800 dark:text-emerald-300">
               <Headphones className="w-3 h-3" /> Spotify
             </span>
             {item.album && (
-              <span className="inline-flex items-center font-sans text-xs tracking-wide text-neutral-400 px-2 py-0.5 rounded-full bg-white/[0.02] truncate max-w-[150px]">
+              <span className="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-md bg-gray-200/80 dark:bg-gray-800 text-gray-800 dark:text-gray-200 truncate max-w-[150px]">
                 {item.album}
               </span>
             )}
             {renderLocationBadge()}
           </div>
-          <div className="flex items-center gap-2">
-            <span className="font-sans text-xs tracking-wide uppercase text-neutral-400">{timeStr}</span>
-            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              {trackId && (
-                <button
-                  aria-label="Play Track Preview"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowEmbed(!showEmbed);
-                  }}
-                  className={`px-2.5 py-0.5 rounded-md font-sans text-xs tracking-wide transition-colors flex items-center gap-1 cursor-pointer ${
-                    shouldShowPlayer
-                      ? 'bg-[#d4a373] text-neutral-950 font-medium'
-                      : 'bg-white/[0.05] hover:bg-white/[0.1] text-neutral-200'
-                  }`}
-                  title={shouldShowPlayer ? 'Close Player' : 'Play Track Preview'}
-                >
-                  <Play className="w-2.5 h-2.5 fill-current" />
-                  {shouldShowPlayer ? 'Close' : 'Play'}
-                </button>
-              )}
-              <button
-                aria-label="Track Profile"
+          <div className="flex items-center gap-1">
+            <span className="text-[11px] font-mono font-medium text-gray-700 dark:text-gray-300">{timeStr}</span>
+            {trackId && (
+              <button aria-label="Action"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onShowTrackProfile && onShowTrackProfile(item.title, item.subtitle);
+                  setShowEmbed(!showEmbed);
                 }}
-                className="p-1 text-neutral-400 hover:text-neutral-200 transition-colors cursor-pointer"
-                title="Track Profile & Analytics"
+                className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-colors flex items-center gap-1 cursor-pointer ${
+                  shouldShowPlayer
+                    ? 'bg-emerald-600 text-white'
+                    : 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-800 dark:text-emerald-300'
+                }`}
+                title={shouldShowPlayer ? 'Close Player' : 'Play Track Preview'}
               >
-                <BarChart2 className="w-3.5 h-3.5" />
+                <Play className="w-2.5 h-2.5 fill-current" />
+                {shouldShowPlayer ? 'Close' : 'Play'}
               </button>
-            </div>
+            )}
+            <button aria-label="Action"
+              onClick={(e) => {
+                e.stopPropagation();
+                onShowTrackProfile && onShowTrackProfile(item.title, item.subtitle);
+              }}
+              className="p-1 text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-emerald-400 transition-colors cursor-pointer"
+              title="Track Profile & Analytics"
+            >
+              <BarChart2 className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
-
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-2.5 items-center">
           <SpotifyCoverArt
             title={item.title}
             artist={item.subtitle}
             album={item.album}
             trackId={trackId}
             size="xs"
-            className="w-11 h-11 rounded-xl shrink-0 ring-1 ring-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.4)]"
+            className="w-10 h-10 rounded-lg shrink-0 border border-black/10 dark:border-white/10 shadow-2xs"
           />
           <div className="min-w-0 flex-1">
             <h4
@@ -236,7 +220,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
                 e.stopPropagation();
                 onSelectSpotify ? onSelectSpotify(item) : onShowTrackProfile?.(item.title, item.subtitle);
               }}
-              className="font-serif font-medium text-sm sm:text-base text-neutral-100 truncate cursor-pointer hover:text-[#d4a373] transition-colors"
+              className="text-xs font-bold text-gray-950 dark:text-white truncate cursor-pointer hover:text-emerald-600 dark:hover:text-emerald-400"
             >
               {item.title}
             </h4>
@@ -245,17 +229,15 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
                 e.stopPropagation();
                 onShowArtistProfile && onShowArtistProfile(item.subtitle);
               }}
-              className="font-sans text-xs font-medium text-[#d4a373] truncate cursor-pointer hover:underline mt-0.5"
+              className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 truncate cursor-pointer hover:underline mt-0.5"
             >
               {item.subtitle}
             </p>
           </div>
         </div>
-
         {trackId && shouldShowPlayer && (
-          <div className="rounded-xl overflow-hidden ring-1 ring-white/[0.08] bg-black animate-in fade-in duration-200 mt-2">
-            <iframe
-              title="Spotify Embed"
+          <div className="rounded-lg overflow-hidden border border-black/10 dark:border-gray-800 bg-black animate-in fade-in duration-200">
+            <iframe title="Content"
               src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator`}
               width="100%"
               height="80"
@@ -265,7 +247,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
             />
           </div>
         )}
-      </motion.div>
+      </div>
     );
   }
 
@@ -273,73 +255,67 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
   if (item.type === 'youtube') {
     const videoId = item.youtube_video_id;
     const thumbUrl = videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : '';
-
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", damping: 26, stiffness: 220 }}
+      <div
         onClick={() => onSelectYouTube && onSelectYouTube(item)}
-        className={baseCardClasses}
+        className={`bg-white/85 dark:bg-[#18181b]/80 backdrop-blur-md border ${
+          isSelected
+            ? 'border-red-500 ring-2 ring-red-500/30 bg-red-500/10 dark:bg-red-500/15 shadow-sm'
+            : 'border-black/10 dark:border-white/12 hover:border-red-500/40'
+        } rounded-xl p-3 shadow-2xs transition-all space-y-2 cursor-pointer group`}
       >
-        <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-2.5">
+        <div className="flex items-center justify-between gap-2 border-b border-black/8 dark:border-white/10 pb-1.5">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="inline-flex items-center gap-1 font-sans text-xs tracking-wide uppercase px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-300 ring-1 ring-rose-500/20">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-red-500/15 text-red-700 dark:text-red-400">
               <Youtube className="w-3 h-3" /> YouTube
             </span>
             {renderLocationBadge()}
           </div>
-          <div className="flex items-center gap-2">
-            <span className="font-sans text-xs tracking-wide uppercase text-neutral-400">{timeStr}</span>
-            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              <button
-                aria-label="Inspect Video"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSelectYouTube && onSelectYouTube(item);
-                }}
-                className="px-2 py-0.5 bg-white/[0.05] hover:bg-white/[0.1] text-neutral-200 rounded-md font-sans text-xs tracking-wide transition-colors flex items-center gap-1 cursor-pointer"
-                title="Inspect Video Analytics"
+          <div className="flex items-center gap-1">
+            <span className="text-[11px] font-mono font-medium text-gray-700 dark:text-gray-300">{timeStr}</span>
+            <button aria-label="Action"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelectYouTube && onSelectYouTube(item);
+              }}
+              className="px-2 py-0.5 bg-red-500/15 hover:bg-red-500/25 text-red-700 dark:text-red-400 rounded-md text-[10px] font-bold transition-colors flex items-center gap-1 cursor-pointer"
+              title="Inspect Video Analytics"
+            >
+              <Eye className="w-3 h-3" /> Inspect
+            </button>
+            <button aria-label="Action"
+              onClick={(e) => {
+                e.stopPropagation();
+                onShowVideoProfile && onShowVideoProfile(item.title, item.subtitle);
+              }}
+              className="p-1 text-gray-600 hover:text-red-600 dark:text-gray-300 dark:hover:text-red-400 transition-colors cursor-pointer"
+              title="Video Analytics Modal"
+            >
+              <BarChart2 className="w-3.5 h-3.5" />
+            </button>
+            {item.titleUrl && (
+              <a
+                href={item.titleUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="p-1 text-gray-600 hover:text-red-600 dark:text-gray-300 dark:hover:text-red-400 transition-colors"
+                title="Open in YouTube"
               >
-                <Eye className="w-3 h-3 text-[#d4a373]" /> Inspect
-              </button>
-              <button
-                aria-label="Video Profile"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onShowVideoProfile && onShowVideoProfile(item.title, item.subtitle);
-                }}
-                className="p-1 text-neutral-400 hover:text-neutral-200 transition-colors cursor-pointer"
-                title="Video Analytics Modal"
-              >
-                <BarChart2 className="w-3.5 h-3.5" />
-              </button>
-              {item.titleUrl && (
-                <a
-                  href={item.titleUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="p-1 text-neutral-400 hover:text-neutral-200 transition-colors"
-                  title="Open in YouTube"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              )}
-            </div>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            )}
           </div>
         </div>
-
-        <div className="flex gap-3 items-start">
+        <div className="flex gap-2.5 items-start">
           {thumbUrl ? (
-            <img
-              alt="Video Thumbnail"
+            <img alt="Image"
               src={thumbUrl}
               onClick={(e) => {
                 e.stopPropagation();
                 onSelectYouTube && onSelectYouTube(item);
               }}
-              className="w-20 h-13 object-cover rounded-xl bg-black cursor-pointer group-hover:opacity-90 transition-opacity shrink-0 ring-1 ring-white/[0.08]"
+              className="w-20 h-13 object-cover rounded-lg bg-black cursor-pointer group-hover:opacity-90 transition-opacity shrink-0 border border-black/10 dark:border-gray-800"
               onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
             />
           ) : (
@@ -348,7 +324,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
                 e.stopPropagation();
                 onSelectYouTube && onSelectYouTube(item);
               }}
-              className="w-20 h-13 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center cursor-pointer shrink-0 ring-1 ring-rose-500/20"
+              className="w-20 h-13 rounded-lg bg-red-500/15 text-red-600 flex items-center justify-center cursor-pointer shrink-0 border border-red-500/20"
             >
               <Youtube className="w-5 h-5" />
             </div>
@@ -359,7 +335,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
                 e.stopPropagation();
                 onSelectYouTube && onSelectYouTube(item);
               }}
-              className="font-serif font-medium text-sm sm:text-base text-neutral-100 line-clamp-2 leading-snug cursor-pointer group-hover:text-[#d4a373] transition-colors"
+              className="text-xs font-bold text-gray-950 dark:text-white line-clamp-2 leading-snug cursor-pointer group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors"
               title={item.title}
             >
               {item.title}
@@ -369,13 +345,13 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
                 e.stopPropagation();
                 onShowChannelProfile && onShowChannelProfile(item.subtitle);
               }}
-              className="font-sans text-xs text-neutral-400 font-medium truncate cursor-pointer hover:underline mt-0.5"
+              className="text-[11px] text-gray-700 dark:text-gray-300 font-medium truncate cursor-pointer hover:underline mt-0.5"
             >
               {item.subtitle}
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
     );
   }
 
@@ -386,57 +362,48 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
     const isGeneric = isGenericPlaceName(item.title);
 
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", damping: 26, stiffness: 220 }}
-        className={baseCardClasses}
-      >
-        <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-2.5">
-          <span className="inline-flex items-center gap-1 font-sans text-xs tracking-wide uppercase px-2.5 py-0.5 rounded-full bg-[#d4a373]/10 text-[#d4a373] ring-1 ring-[#d4a373]/20">
+      <div className="bg-white/85 dark:bg-[#18181b]/80 backdrop-blur-md border border-black/10 dark:border-white/12 rounded-xl p-3 shadow-2xs hover:border-blue-500/40 transition-all space-y-2 relative overflow-hidden">
+        <div className="flex items-center justify-between gap-2 border-b border-black/8 dark:border-white/10 pb-1.5">
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-800 dark:text-blue-300">
             <MapPin className="w-3 h-3" /> Maps
           </span>
-          <div className="flex items-center gap-2">
-            <span className="font-sans text-xs tracking-wide uppercase text-neutral-400">{timeStr}</span>
-            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              <button
-                aria-label="Preview Maps"
-                onClick={() => onOpenMapModal && onOpenMapModal(item.title, item.subtitle, gmapsEmbedUrl, gmapsUrl)}
-                className="px-2 py-0.5 bg-white/[0.05] hover:bg-white/[0.1] text-neutral-200 rounded-md font-sans text-xs tracking-wide transition-colors flex items-center gap-1 cursor-pointer"
-                title="Preview on Google Maps"
-              >
-                <MapIcon className="w-3 h-3 text-[#d4a373]" /> Preview
-              </button>
-              <a
-                href={gmapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-1 text-neutral-400 hover:text-neutral-200 transition-colors"
-                title="Open in Google Maps"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
+          <div className="flex items-center gap-1">
+            <span className="text-[11px] font-mono font-medium text-gray-700 dark:text-gray-300">{timeStr}</span>
+            <button aria-label="Action"
+              onClick={() => onOpenMapModal && onOpenMapModal(item.title, item.subtitle, gmapsEmbedUrl, gmapsUrl)}
+              className="px-2 py-0.5 bg-blue-500/15 hover:bg-blue-500/25 text-blue-800 dark:text-blue-300 rounded-md text-[10px] font-bold transition-colors flex items-center gap-1 cursor-pointer"
+              title="Preview on Google Maps"
+            >
+              <MapIcon className="w-3 h-3" /> Preview
+            </button>
+            <a
+              href={gmapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-1 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors"
+              title="Open in Google Maps"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
         <div>
           <div className="flex items-center gap-1.5">
-            <span className="font-serif font-medium text-sm sm:text-base text-neutral-100 truncate group-hover:text-[#d4a373] transition-colors">
+            <span className="text-xs font-bold text-gray-950 dark:text-white truncate hover:text-blue-600">
               {item.title}
             </span>
             {isGeneric && item.lat != null && item.lng != null && onResolveGeo && (
-              <button
-                aria-label="Resolve"
+              <button aria-label="Action"
                 onClick={() => onResolveGeo(item.lat!, item.lng!)}
-                className="font-sans text-[10px] tracking-wider uppercase bg-[#d4a373]/20 hover:bg-[#d4a373]/30 text-[#d4a373] px-2 py-0.5 rounded-full font-semibold cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity"
+                className="text-[9px] bg-amber-500/20 hover:bg-amber-500/30 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded font-bold cursor-pointer"
               >
                 Resolve
               </button>
             )}
           </div>
-          <p className="font-sans text-xs text-neutral-400 font-normal truncate mt-0.5">{item.subtitle}</p>
+          <p className="text-[11px] text-gray-700 dark:text-gray-300 font-medium truncate mt-0.5">{item.subtitle}</p>
         </div>
-      </motion.div>
+      </div>
     );
   }
 
@@ -445,101 +412,101 @@ export const TimelineCard: React.FC<TimelineCardProps> = React.memo(({
     const photoSrc = item.thumbnailUrl || item.photoUrl || item.localBlobUrl;
 
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", damping: 26, stiffness: 220 }}
+      <div
         onClick={() => onSelectPhoto && onSelectPhoto(item)}
-        className={baseCardClasses}
+        className="bg-white/85 dark:bg-[#18181b]/80 backdrop-blur-md border border-black/10 dark:border-white/12 hover:border-rose-500/40 rounded-xl p-3 shadow-2xs hover:shadow-md transition-all space-y-2.5 cursor-pointer group"
       >
-        <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-2.5">
+        <div className="flex items-center justify-between gap-2 border-b border-black/8 dark:border-white/10 pb-1.5">
           <div className="flex items-center gap-1.5">
-            <span className="inline-flex items-center gap-1.5 font-sans text-xs tracking-wide uppercase px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-300 ring-1 ring-rose-500/20">
-              <Camera className="w-3 h-3 text-[#d4a373]" />
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2 py-0.5 rounded-md bg-rose-500/15 text-rose-800 dark:text-rose-300 border border-rose-500/20">
+              <svg className="w-3 h-3" viewBox="0 0 24 24">
+                <path fill="#EA4335" d="M12 2a5 5 0 0 0-5 5v5h5a5 5 0 0 0 0-10z" />
+                <path fill="#FBBC05" d="M22 12a5 5 0 0 0-5-5h-5v5a5 5 0 0 0 10 0z" />
+                <path fill="#34A853" d="M12 22a5 5 0 0 0 5-5v-5h-5a5 5 0 0 0 0 10z" />
+                <path fill="#4285F4" d="M2 12a5 5 0 0 0 5 5h5v-5a5 5 0 0 0-10 0z" />
+              </svg>
               <span>Google Photos</span>
             </span>
             {item.camera && (
-              <span className="hidden sm:inline-flex items-center gap-1 font-sans text-xs tracking-wide uppercase text-neutral-400 bg-white/[0.02] px-2 py-0.5 rounded-full">
+              <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold text-gray-700 dark:text-gray-300 bg-gray-200/80 dark:bg-gray-800 px-2 py-0.5 rounded">
+                <Camera className="w-2.5 h-2.5" />
                 <span className="truncate max-w-[120px]">{item.camera}</span>
               </span>
             )}
             {renderLocationBadge()}
           </div>
-          <div className="flex items-center gap-2">
-            <span className="font-sans text-xs tracking-wide uppercase text-neutral-400">{timeStr}</span>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] font-mono font-medium text-gray-700 dark:text-gray-300">{timeStr}</span>
             {item.favorite && (
-              <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
             )}
-            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              {item.lat != null && item.lng != null && onOpenMapModal && (
-                <button
-                  aria-label="View Location on Map"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const embed = buildGoogleMapsEmbedUrl(item);
-                    const ext = buildGoogleMapsUrl(item);
-                    onOpenMapModal(item.title, item.subtitle, embed, ext);
-                  }}
-                  className="p-1 text-neutral-400 hover:text-neutral-200 transition-colors"
-                  title="View Location on Map"
-                >
-                  <MapPin className="w-3.5 h-3.5 text-[#d4a373]" />
-                </button>
-              )}
-            </div>
+            {item.lat != null && item.lng != null && onOpenMapModal && (
+              <button aria-label="Action"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const embed = buildGoogleMapsEmbedUrl(item);
+                  const ext = buildGoogleMapsUrl(item);
+                  onOpenMapModal(item.title, item.subtitle, embed, ext);
+                }}
+                className="p-1 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors"
+                title="View Location on Map"
+              >
+                <MapPin className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
 
         {/* Thumbnail and Details */}
         <div className="flex gap-3 items-start">
           {photoSrc && (
-            <div className="relative w-24 h-20 rounded-xl overflow-hidden bg-neutral-900 shrink-0 ring-1 ring-white/[0.08]">
+            <div className="relative w-24 h-20 rounded-lg overflow-hidden bg-gray-100 dark:bg-zinc-800 shrink-0 border border-black/10 dark:border-zinc-800">
               <img
                 src={photoSrc}
                 alt={item.title || 'Google Photos'}
                 loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                 <Eye className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 drop-shadow transition-opacity" />
               </div>
             </div>
           )}
 
           <div className="min-w-0 flex-1 space-y-1">
-            <h4 className="font-serif font-medium text-sm sm:text-base text-neutral-100 line-clamp-2 leading-snug group-hover:text-[#d4a373] transition-colors">
+            <h4 className="text-xs font-bold text-gray-950 dark:text-white line-clamp-2 leading-snug group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
               {item.title || 'Photo Memory'}
             </h4>
             {item.description && item.description !== item.title && (
-              <p className="font-serif italic text-xs sm:text-sm text-neutral-300 line-clamp-2 leading-relaxed">
+              <p className="text-[11px] text-gray-800 dark:text-gray-200 line-clamp-1 italic font-normal">
                 "{item.description}"
               </p>
             )}
-            <div className="flex items-center gap-2 flex-wrap font-sans text-xs tracking-wide uppercase text-neutral-400 pt-1">
+            <div className="flex items-center gap-2 flex-wrap text-[10px] text-gray-700 dark:text-gray-300 pt-0.5 font-medium">
               {item.album && (
-                <span className="bg-white/[0.04] px-2 py-0.5 rounded-full text-neutral-300 truncate max-w-[140px]">
+                <span className="bg-gray-200/80 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-gray-800 dark:text-gray-200 font-semibold truncate max-w-[140px]">
                   {item.album}
                 </span>
               )}
               {item.lat != null && item.lng != null && (
-                <span className="flex items-center gap-1 text-[#d4a373]">
+                <span className="flex items-center gap-0.5 text-emerald-700 dark:text-emerald-400 font-semibold">
                   <MapPin className="w-2.5 h-2.5" />
                   <span>Geo-tagged</span>
                 </span>
               )}
               {item.people && item.people.length > 0 && (
-                <span className="flex items-center gap-1 text-neutral-300">
+                <span className="flex items-center gap-0.5 text-purple-700 dark:text-purple-300 font-semibold">
                   <User className="w-2.5 h-2.5" />
                   <span>{item.people.join(', ')}</span>
                 </span>
               )}
               {item.formattedFileSize && (
-                <span className="text-neutral-500 font-mono ml-auto">{item.formattedFileSize}</span>
+                <span className="text-gray-600 dark:text-gray-400 font-mono ml-auto">{item.formattedFileSize}</span>
               )}
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     );
   }
 

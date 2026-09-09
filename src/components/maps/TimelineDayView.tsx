@@ -218,12 +218,12 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
   return (
     <div className="pb-12">
       {/* Day Overview Header Card */}
-      <div className="mb-4 bg-white/60 dark:bg-[#171614]/70 backdrop-blur-md p-3.5 rounded-2xl ring-1 ring-white/[0.05] shadow-[0_4px_24px_rgba(0,0,0,0.25)]">
+      <div className="mb-4 bg-white/60 dark:bg-black/35 backdrop-blur-md p-3.5 rounded-2xl border border-black/8 dark:border-white/10 shadow-xs">
         <div className="flex items-center justify-between">
-          <span className="font-serif text-sm font-semibold text-gray-950 dark:text-stone-100">
+          <span className="text-xs font-bold text-gray-950 dark:text-white">
             {formattedDate}
           </span>
-          <span className="font-sans text-[11px] font-medium tracking-wide uppercase text-[#d4a373] bg-[#d4a373]/10 px-2.5 py-0.5 rounded-full ring-1 ring-[#d4a373]/20">
+          <span className="text-[11px] font-bold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/70 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-blue-200/80 dark:border-blue-800/80 shadow-2xs">
             {placeItems.length} {placeItems.length === 1 ? 'place' : 'places'}
           </span>
         </div>
@@ -271,10 +271,10 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
               <div
                 key={item.id || index}
                 onClick={() => onSelectItem(item)}
-                className={`group relative p-3.5 rounded-2xl bg-white/60 dark:bg-[#171614]/70 backdrop-blur-md ring-1 transition-all cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.25)] ${
+                className={`group relative p-3.5 rounded-2xl bg-white/60 dark:bg-black/35 backdrop-blur-md border transition-all cursor-pointer shadow-xs ${
                   isSelected
-                    ? 'ring-[#d4a373] shadow-[0_4px_24px_rgba(212,163,115,0.15)]'
-                    : 'ring-white/[0.05] hover:ring-white/[0.12]'
+                    ? 'border-blue-500/70 ring-2 ring-blue-500/25 dark:border-blue-400 shadow-md'
+                    : 'border-black/8 dark:border-white/10 hover:border-black/15 dark:hover:border-white/15 hover:shadow-md'
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -354,10 +354,10 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
             <div
               key={item.id || index}
               onClick={() => onSelectItem(item)}
-              className={`group relative p-3.5 rounded-2xl bg-white/60 dark:bg-[#171614]/70 backdrop-blur-md ring-1 transition-all cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.25)] ${
+              className={`group relative p-3.5 rounded-2xl bg-white/60 dark:bg-black/35 backdrop-blur-md border transition-all cursor-pointer shadow-xs ${
                 isSelected
-                  ? 'ring-[#d4a373] shadow-[0_4px_24px_rgba(212,163,115,0.15)]'
-                  : 'ring-white/[0.05] hover:ring-white/[0.12]'
+                  ? 'border-blue-500/70 ring-2 ring-blue-500/25 dark:border-blue-400 shadow-md'
+                  : 'border-black/8 dark:border-white/10 hover:border-black/15 dark:hover:border-white/15 hover:shadow-md'
               }`}
             >
               {/* Top: Category Icon, Place Title & Time */}
@@ -381,7 +381,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
                       : category.id === 'health'
                       ? 'bg-[#D81B60]'
                       : 'bg-[#EA4335]'
-                  } ${isSelected ? 'scale-105 ring-2 ring-[#d4a373]' : 'group-hover:scale-105'}`}
+                  } ${isSelected ? 'scale-105 ring-2 ring-blue-400' : 'group-hover:scale-105'}`}
                   title={category.label}
                 >
                   {renderCategoryIcon(category, 'w-4 h-4')}
@@ -391,24 +391,24 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <h4 className="font-serif text-sm font-semibold text-gray-900 dark:text-stone-100 truncate">
+                        <h4 className="text-sm font-bold text-gray-900 dark:text-white truncate">
                           {item.title}
                         </h4>
                         {visitCount > 1 && (
-                          <span className="font-sans text-[10px] font-medium tracking-wide uppercase text-[#d4a373] bg-[#d4a373]/10 px-1.5 py-0.5 rounded-full ring-1 ring-[#d4a373]/20 shrink-0">
+                          <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 px-1.5 py-0.5 rounded-full shrink-0">
                             {visitCount} visits
                           </span>
                         )}
                       </div>
 
                       {/* Time & Dwell */}
-                      <div className="flex items-center gap-1.5 font-sans text-xs text-stone-400 dark:text-stone-500 mt-0.5">
-                        <Clock className="w-3 h-3 text-stone-400 shrink-0" />
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mt-0.5 font-medium">
+                        <Clock className="w-3 h-3 text-gray-400 shrink-0" />
                         <span>{timeRange}</span>
                         {item.ms_played ? (
                           <>
                             <span>•</span>
-                            <span className="text-[#d4a373] font-medium">
+                            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
                               {formatDuration(item.ms_played)}
                             </span>
                           </>
@@ -422,7 +422,7 @@ export const TimelineDayView: React.FC<TimelineDayViewProps> = ({
                         e.stopPropagation();
                         onOpenInspector(item);
                       }}
-                      className="p-1.5 text-stone-400 hover:text-[#d4a373] hover:bg-stone-100 dark:hover:bg-white/5 rounded-xl transition-all cursor-pointer shrink-0 opacity-60 sm:opacity-0 group-hover:opacity-100"
+                      className="p-1.5 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/50 rounded-xl transition-colors cursor-pointer shrink-0"
                       title="Inspect place history & analytics"
                     >
                       <BarChart2 className="w-4 h-4" />
