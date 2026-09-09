@@ -114,10 +114,12 @@ export async function dbSet<T>(key: string, value: T): Promise<StorageWriteResul
     await new Promise<void>((resolve, reject) => {
       const transaction = db.transaction(STORE_NAME, 'readwrite');
       const store = transaction.objectStore(STORE_NAME);
-      const request = store.put(value, key);
-
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
+      
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () => reject(transaction.error);
+      transaction.onabort = () => reject(transaction.error);
+      
+      store.put(value, key);
     });
 
     // Also remove from localStorage if it existed there to prevent quota issues
@@ -136,6 +138,7 @@ export async function dbSet<T>(key: string, value: T): Promise<StorageWriteResul
         const strVal = JSON.stringify(value);
         if (strVal.length < 1048576) {
           localStorage.setItem(key, strVal);
+          return { backend: 'localstorage' };
         }
       } catch (lsErr) {
         console.warn(`[storage] localStorage fallback also failed for key "${key}":`, lsErr);
@@ -151,6 +154,33 @@ export async function dbSet<T>(key: string, value: T): Promise<StorageWriteResul
 }
 
 /**
+ * Save multiple items to IndexedDB in a single atomic transaction.
+ */
+export async function dbSetMulti(entries: Record<string, any>): Promise<void> {
+  const db = await getDB();
+  await new Promise<void>((resolve, reject) => {
+    const transaction = db.transaction(STORE_NAME, 'readwrite');
+    const store = transaction.objectStore(STORE_NAME);
+
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+    transaction.onabort = () => reject(transaction.error);
+
+    for (const [key, value] of Object.entries(entries)) {
+      store.put(value, key);
+    }
+  });
+
+  if (typeof window !== 'undefined' && window.localStorage) {
+    for (const key of Object.keys(entries)) {
+      try {
+        localStorage.removeItem(key);
+      } catch (_) {}
+    }
+  }
+}
+
+/**
  * Delete an item from IndexedDB and localStorage.
  */
 export async function dbDelete(key: string): Promise<void> {
@@ -160,10 +190,12 @@ export async function dbDelete(key: string): Promise<void> {
     await new Promise<void>((resolve, reject) => {
       const transaction = db.transaction(STORE_NAME, 'readwrite');
       const store = transaction.objectStore(STORE_NAME);
-      const request = store.delete(key);
 
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () => reject(transaction.error);
+      transaction.onabort = () => reject(transaction.error);
+      
+      store.delete(key);
     });
   } catch (err) {
     console.warn(`[storage] dbDelete error for key "${key}":`, err);
@@ -191,10 +223,12 @@ export async function dbClear(): Promise<void> {
     await new Promise<void>((resolve, reject) => {
       const transaction = db.transaction(STORE_NAME, 'readwrite');
       const store = transaction.objectStore(STORE_NAME);
-      const request = store.clear();
 
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () => reject(transaction.error);
+      transaction.onabort = () => reject(transaction.error);
+      
+      store.clear();
     });
   } catch (err) {
     console.warn('[storage] dbClear error:', err);
@@ -210,7 +244,14 @@ export async function dbClear(): Promise<void> {
           key.startsWith('mylife_') || 
           key.startsWith('emreh_') || 
           key.startsWith('maps_place_') || 
-          key.startsWith('geo_')
+          key.startsWith('geo_') ||
+          key.startsWith('raindrop_') ||
+          key.startsWith('pinterest_') ||
+          key.startsWith('notes_') ||
+          key.startsWith('google_fit_') ||
+          key.startsWith('spotify_') ||
+          key.startsWith('timeline_') ||
+          key.startsWith('global_')
         )) {
           keysToRemove.push(key);
         }

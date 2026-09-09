@@ -205,7 +205,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
       <div className="p-4 border-b border-gray-200/80 dark:border-white/10 bg-gray-50/90 dark:bg-[#18181b]/90 backdrop-blur-md shrink-0 space-y-3">
         <div className="flex items-start justify-between gap-2.5">
           <div className="flex items-start gap-3 min-w-0 flex-1">
-            <img alt="Image"
+            <img
               src={favicon}
               className="w-9 h-9 rounded-xl bg-white dark:bg-gray-800 p-1.5 border border-gray-200 dark:border-gray-700 shrink-0 object-contain shadow-2xs"
               onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
@@ -244,7 +244,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
           {/* Action buttons */}
           <div className="flex items-center gap-1 shrink-0">
             {onDeleteItem && (
-              <button aria-label="Action"
+              <button
                 onClick={() => {
                   onDeleteItem(item.id);
                   onClose();
@@ -258,7 +258,7 @@ export const BrowserInspectorPanel: React.FC<BrowserInspectorPanelProps> = ({
             )}
 
             {onOpenDetailModal && (
-              <button aria-label="Action"
+              <button
                 onClick={() => onOpenDetailModal(item)}
                 className="p-1.5 rounded-lg text-gray-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-gray-200/60 dark:hover:bg-white/10 transition-colors cursor-pointer"
                 title="Expand to Full Modal"

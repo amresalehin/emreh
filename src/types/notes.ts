@@ -110,6 +110,7 @@ export interface NoteObject {
   relations?: NoteRelation[];
   blocks: NoteBlock[];
   favorite?: boolean;
+  importBatchId?: string;
   isPinned?: boolean;
   customProperties?: Record<string, string | number | boolean>;
 }

@@ -275,9 +275,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
             return (
               <li key={item.id} className="w-full">
-                <button aria-label="Action"
+                <button aria-label={item.label}
                   onClick={() => onSetView(item.id)}
-                  aria-label={item.label}
                   title={item.label}
                   aria-current={isActive ? 'page' : undefined}
                   className={`

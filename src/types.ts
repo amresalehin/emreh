@@ -383,6 +383,7 @@ export interface FitDailyMetric {
   workouts?: FitWorkout[];
   weightKg?: number;
   heightM?: number;
+  importBatchId?: string;
 }
 
 export interface FitnessDailyMetric {
@@ -469,6 +470,7 @@ export interface ScreentimeDayData {
   hourlyMinutes: number[]; // 24 entries (0..23)
   categories: Record<ScreentimeCategory | string, number>;
   apps: ScreentimeAppItem[];
+  importBatchId?: string;
 }
 
 

@@ -890,6 +890,7 @@ export const App: React.FC = () => {
               const parsedMetrics = await parseFitFiles(files);
               if (Object.keys(parsedMetrics).length > 0) {
                 const currentFit = await loadStoredFitMetrics();
+                Object.values(parsedMetrics).forEach(m => m.importBatchId = batchId);
                 const mergedFit = { ...currentFit, ...parsedMetrics };
                 await persistStoredFitMetrics(mergedFit);
                 window.dispatchEvent(new CustomEvent('emreh_fit_updated'));
@@ -944,6 +945,8 @@ export const App: React.FC = () => {
           const parsedScreentime = await parseScreentimeFiles(files);
           const datesCount = Object.keys(parsedScreentime).length;
           if (datesCount > 0) {
+            const batchId = `screentime_${Date.now()}`;
+            Object.values(parsedScreentime).forEach(s => s.importBatchId = batchId);
             const currentStats = await loadStoredScreentimeData();
             const merged = { ...currentStats, ...parsedScreentime };
             await persistStoredScreentimeData(merged);
@@ -951,7 +954,7 @@ export const App: React.FC = () => {
             const importedName = files.length === 1 ? files[0].name : `Screentime Logs (${files.length} files)`;
             const totalBytes = files.reduce((sum, f) => sum + f.size, 0);
             setImportedFiles(prev => [{
-              id: `screentime_${Date.now()}`, name: importedName, fileName: importedName, filename: importedName,
+              id: batchId, name: importedName, fileName: importedName, filename: importedName,
               fileSize: `${(totalBytes / 1024).toFixed(1)} KB`, fileType: 'screentime',
               recordCount: datesCount, count: datesCount,
               importDate: new Date().toISOString()
@@ -1085,11 +1088,57 @@ export const App: React.FC = () => {
   };
 
   // Delete Imported File and cascade-delete associated timeline items
-  const handleDeleteImportedFile = (fileId: string) => {
+  const handleDeleteImportedFile = async (fileId: string) => {
+    const fileRecord = importedFiles.find(f => f.id === fileId);
+
     // Remove timeline items linked to this import via importBatchId
     setTimelineData(prev => prev.filter(item => item.importBatchId !== fileId));
     // Remove the import record itself
     setImportedFiles(prev => prev.filter(f => f.id !== fileId));
+
+    if (fileRecord) {
+      const type = fileRecord.fileType || fileRecord.type;
+      if (type === 'google_fit' || type === 'fit') {
+        try {
+          const { loadStoredFitMetrics, persistStoredFitMetrics } = await import('./utils/fitStorage');
+          const currentFit = await loadStoredFitMetrics();
+          const filteredFit: Record<string, any> = {};
+          for (const [k, v] of Object.entries(currentFit)) {
+            if (v.importBatchId !== fileId) filteredFit[k] = v;
+          }
+          await persistStoredFitMetrics(filteredFit);
+          
+          // Only clear raw google fit dataset if no other fit files exist
+          const remainingFit = prev => prev.filter(f => f.id !== fileId && (f.fileType === 'google_fit' || f.fileType === 'fit'));
+          setImportedFiles(prev => {
+            const rem = remainingFit(prev);
+            if (rem.length === 0) {
+              setGoogleFitData(null);
+              import('./utils/storage').then(({ dbDelete }) => dbDelete('mylife_google_fit'));
+            }
+            return prev;
+          });
+        } catch(e) {}
+      } else if (type === 'screentime') {
+        try {
+          const { loadStoredScreentimeData, persistStoredScreentimeData } = await import('./utils/screentimeStorage');
+          const currentST = await loadStoredScreentimeData();
+          const filteredST: Record<string, any> = {};
+          for (const [k, v] of Object.entries(currentST)) {
+            if (v.importBatchId !== fileId) filteredST[k] = v;
+          }
+          await persistStoredScreentimeData(filteredST);
+        } catch(e) {}
+      } else if (type === 'notes') {
+        try {
+          const { loadStoredNotes, persistStoredNotes } = await import('./utils/notesStorage');
+          const currentNotes = await loadStoredNotes();
+          const filteredNotes = currentNotes.filter(n => n.importBatchId !== fileId);
+          await persistStoredNotes(filteredNotes);
+          window.dispatchEvent(new CustomEvent('emreh_notes_updated', { detail: { count: filteredNotes.length } }));
+        } catch(e) {}
+      }
+    }
   };
 
   // Google Photos Mounting & Management Handlers
@@ -1199,7 +1248,7 @@ export const App: React.FC = () => {
   }, [timelineData]);
 
   // Selectively clear single dataset without losing other data
-  const handleClearDataset = async (type: 'spotify' | 'youtube' | 'maps' | 'browser' | 'notes' | 'events') => {
+  const handleClearDataset = async (type: 'spotify' | 'youtube' | 'maps' | 'browser' | 'notes' | 'events' | 'fit' | 'screentime' | 'photos') => {
     if (type === 'notes') {
       setDailyNotesMap({});
       setBookmarkNotes({});
@@ -1208,8 +1257,10 @@ export const App: React.FC = () => {
         await Promise.all([
           dbDelete('mylife_daily_notes'),
           dbDelete('mylife_bookmark_notes'),
-          dbDelete('mylife_bookmark_tags')
+          dbDelete('mylife_bookmark_tags'),
+          dbDelete('mylife_power_notes_v1')
         ]);
+        window.dispatchEvent(new CustomEvent('emreh_notes_updated', { detail: { count: 0 } }));
       } catch (e) {
         console.warn('Failed to clear notes in IndexedDB', e);
       }
@@ -1226,7 +1277,29 @@ export const App: React.FC = () => {
       return;
     }
 
-    // Otherwise timeline data type (spotify, youtube, maps, browser)
+    if (type === 'fit') {
+      setGoogleFitData(null);
+      try {
+        await Promise.all([
+          dbDelete('mylife_google_fit'),
+          dbDelete('emreh_fit_metrics_v1')
+        ]);
+        window.dispatchEvent(new CustomEvent('emreh_fit_updated', { detail: { count: 0 } }));
+      } catch (e) {}
+      setImportedFiles(prev => prev.filter(f => f.fileType !== 'google_fit' && f.fileType !== 'fit'));
+      return;
+    }
+
+    if (type === 'screentime') {
+      try {
+        await dbDelete('emreh_screentime_data_v1');
+        window.dispatchEvent(new CustomEvent('emreh_screentime_updated', { detail: { count: 0 } }));
+      } catch (e) {}
+      setImportedFiles(prev => prev.filter(f => f.fileType !== 'screentime'));
+      return;
+    }
+
+    // Otherwise timeline data type (spotify, youtube, maps, browser, photos)
     const updatedTimeline = timelineData.filter(item => item.type !== type);
     setTimelineData(updatedTimeline);
     setImportedFiles(prev => prev.filter(f => f.fileType !== type));
@@ -1295,11 +1368,40 @@ export const App: React.FC = () => {
           return;
         }
 
-        // Restore core stores (managed by React state + useEffect persistence)
         const restoredTimeline: TimelineItem[] = data.timelineData.map((item: any) => ({
           ...item,
           dateObj: new Date(item.ts || item.dateObj)
         }));
+
+        // Build object of all IndexedDB entries to be saved atomically
+        const multiEntries: Record<string, any> = {
+          'mylife_timeline_items': restoredTimeline,
+          'mylife_calendar_events': data.calendarEvents,
+          'mylife_daily_notes': data.dailyNotesMap,
+          'mylife_imported_files': data.importedFiles,
+          'mylife_bookmark_notes': data.bookmarkNotes,
+          'mylife_bookmark_tags': data.bookmarkTags,
+          'mylife_session_snapshots': data.sessionSnapshots,
+        };
+
+        if (data.googleFitData) {
+          multiEntries['mylife_google_fit'] = data.googleFitData;
+        }
+        if (data.fitMetrics) {
+          multiEntries['emreh_fit_metrics_v1'] = data.fitMetrics;
+        }
+        if (data.screentimeData) {
+          multiEntries['emreh_screentime_data_v1'] = data.screentimeData;
+        }
+        if (data.powerNotes) {
+          multiEntries['mylife_power_notes_v1'] = data.powerNotes;
+        }
+
+        // Perform transactional save first!
+        const { dbSetMulti } = await import('./utils/storage');
+        await dbSetMulti(multiEntries);
+
+        // Once successful, update React state safely
         setTimelineData(restoredTimeline);
         setCalendarEvents(data.calendarEvents);
         setDailyNotesMap(data.dailyNotesMap);
@@ -1311,25 +1413,18 @@ export const App: React.FC = () => {
           handleUpdateSettings(data.settings);
         }
 
-        // Restore Google Fit raw data
         if (data.googleFitData) {
           setGoogleFitData(data.googleFitData);
-          await dbSet('mylife_google_fit', data.googleFitData);
-        }
-
-        // Restore v3.0 stores (managed outside React state, write directly to IndexedDB)
-        if (data.fitMetrics) {
-          await persistStoredFitMetrics(data.fitMetrics);
-        }
-        if (data.screentimeData) {
-          await persistStoredScreentimeData(data.screentimeData);
-        }
-        if (data.powerNotes) {
-          await dbSet('mylife_power_notes_v1', data.powerNotes);
         }
 
         // Restore view-specific localStorage data
         restoreViewData(data.viewNotes, data.viewTags);
+
+        // Dispatch events for stores without React state
+        window.dispatchEvent(new CustomEvent('emreh_fit_updated', { detail: { count: data.fitMetrics ? Object.keys(data.fitMetrics).length : 0 } }));
+        window.dispatchEvent(new CustomEvent('emreh_screentime_updated', { detail: { count: data.screentimeData ? Object.keys(data.screentimeData).length : 0 } }));
+        window.dispatchEvent(new CustomEvent('emreh_notes_updated', { detail: { count: data.powerNotes ? data.powerNotes.length : 0 } }));
+
       } catch (err) {
         console.error('Failed to parse and restore backup file:', err);
       }

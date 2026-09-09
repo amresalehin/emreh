@@ -335,7 +335,7 @@ export const ViewToolbar: React.FC<ViewToolbarProps> = ({
         {/* View-Specific Filters Dropdown Popover */}
         {children && (
           <div className="relative" ref={gearRef}>
-            <button aria-label="Action"
+            <button
               onClick={() => setIsGearOpen(!isGearOpen)}
               className={`px-2.5 py-1 rounded-lg flex items-center gap-1.5 text-xs font-semibold border transition-all cursor-pointer shadow-2xs backdrop-blur-xl ${
                 isGearOpen || hasActiveFilters

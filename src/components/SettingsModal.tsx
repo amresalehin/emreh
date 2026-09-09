@@ -54,7 +54,7 @@ export interface SettingsModalProps {
   notesCount?: number;
   eventsCount?: number;
   importedFilesCount?: number;
-  onClearDataset: (type: 'spotify' | 'youtube' | 'maps' | 'browser' | 'notes' | 'events') => void;
+  onClearDataset: (type: 'spotify' | 'youtube' | 'maps' | 'browser' | 'notes' | 'events' | 'fit' | 'screentime' | 'photos') => void;
   onClearAllData: () => void;
   onExportFullBackup: () => void;
   onImportBackup: (file: File) => void;
