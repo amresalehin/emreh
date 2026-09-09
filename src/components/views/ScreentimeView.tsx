@@ -240,7 +240,7 @@ export const ScreentimeView: React.FC<ScreentimeViewProps> = ({
       newApps = [
         ...current.apps,
         {
-          id: `manual_${Date.now()}`,
+          id: `manual_${current.date}_${manualAppName.trim()}`,
           name: manualAppName.trim(),
           category: manualCategory,
           durationMinutes: min

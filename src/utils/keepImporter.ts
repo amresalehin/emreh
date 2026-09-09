@@ -40,7 +40,7 @@ export function parseKeepJsonObject(jsonObj: any, fileName?: string): KeepNote |
       const text = item.text || item.content || '';
       if (text) {
         checklistItems.push({
-          id: `item_${idx}_${Date.now()}`,
+          id: deterministicId('keep_item', idx, String(text).trim()),
           text: String(text).trim(),
           completed: Boolean(item.isChecked || item.completed)
         });
@@ -49,7 +49,7 @@ export function parseKeepJsonObject(jsonObj: any, fileName?: string): KeepNote |
   } else if (Array.isArray(jsonObj.checklistItems)) {
     jsonObj.checklistItems.forEach((item: any, idx: number) => {
       checklistItems.push({
-        id: item.id || `item_${idx}_${Date.now()}`,
+        id: item.id || deterministicId('keep_item', idx, String(item.text || item.content || '').trim()),
         text: String(item.text || item.content || '').trim(),
         completed: Boolean(item.completed || item.isChecked)
       });
@@ -142,7 +142,7 @@ export function parseKeepHtmlText(htmlText: string, fileName?: string): KeepNote
       const cleanText = text.replace(/^[☑☐\[\]x\s]+/, '').trim();
       if (cleanText) {
         checklistItems.push({
-          id: `item_${idx}_${Date.now()}`,
+          id: deterministicId('keep_item', idx, cleanText),
           text: cleanText,
           completed: isChecked
         });
@@ -238,7 +238,7 @@ export async function parseKeepFiles(
             const title = baseName.replace(/\.txt$/i, '');
             if (text.trim() || title) {
               parsedNotes.push({
-                id: `keep_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+                id: deterministicId('keep', title, text, file.date ? new Date(file.date).toISOString() : ''),
                 title: title || 'Note',
                 content: text,
                 color: 'default',
@@ -248,8 +248,8 @@ export async function parseKeepFiles(
                 isTrashed: false,
                 isChecklist: false,
                 checklistItems: [],
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
+                createdAt: file.date ? new Date(file.date).toISOString() : new Date().toISOString(),
+                updatedAt: file.date ? new Date(file.date).toISOString() : new Date().toISOString()
               });
             }
           }
@@ -286,7 +286,7 @@ export async function parseKeepFiles(
         const text = await file.text();
         const title = file.name.replace(/\.(txt|md)$/i, '');
         parsedNotes.push({
-          id: `keep_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+          id: deterministicId('keep', title, text, file.lastModified ? new Date(file.lastModified).toISOString() : ''),
           title: title || 'Imported Note',
           content: text,
           color: 'default',
@@ -296,8 +296,8 @@ export async function parseKeepFiles(
           isTrashed: false,
           isChecklist: false,
           checklistItems: [],
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          createdAt: file.lastModified ? new Date(file.lastModified).toISOString() : new Date().toISOString(),
+          updatedAt: file.lastModified ? new Date(file.lastModified).toISOString() : new Date().toISOString()
         });
       } catch (err) {
         console.warn(`Error parsing ${file.name}:`, err);
@@ -318,7 +318,7 @@ export function keepNoteToNoteObject(keepNote: KeepNote): NoteObject {
   if (keepNote.isChecklist && keepNote.checklistItems && keepNote.checklistItems.length > 0) {
     keepNote.checklistItems.forEach((item, idx) => {
       blocks.push({
-        id: `blk-${Date.now()}-${idx}-${Math.random().toString(36).substring(2, 6)}`,
+        id: deterministicId('keep_blk', keepNote.id, idx, item.text),
         type: 'todo',
         content: item.text,
         checked: Boolean(item.completed)
@@ -328,7 +328,7 @@ export function keepNoteToNoteObject(keepNote: KeepNote): NoteObject {
     const lines = keepNote.content.split('\n');
     lines.forEach((line, idx) => {
       const trimmed = line.trim();
-      const blkId = `blk-${Date.now()}-${idx}-${Math.random().toString(36).substring(2, 6)}`;
+      const blkId = deterministicId('keep_blk', keepNote.id, idx, trimmed);
       if (!trimmed) {
         blocks.push({
           id: blkId,
@@ -377,7 +377,7 @@ export function keepNoteToNoteObject(keepNote: KeepNote): NoteObject {
 
   if (blocks.length === 0) {
     blocks.push({
-      id: `blk-${Date.now()}-1`,
+      id: deterministicId('keep_blk', keepNote.id, 'empty'),
       type: 'paragraph',
       content: ''
     });
@@ -395,7 +395,7 @@ export function keepNoteToNoteObject(keepNote: KeepNote): NoteObject {
   }
 
   return {
-    id: `note-keep-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`,
+    id: `note-${keepNote.id}`,
     title: keepNote.title || (keepNote.isChecklist ? 'Keep Checklist' : 'Keep Note'),
     type: keepNote.isChecklist ? 'task' : 'note',
     icon: keepNote.isChecklist ? '☑️' : '💡',

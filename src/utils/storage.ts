@@ -181,6 +181,33 @@ export async function dbSetMulti(entries: Record<string, any>): Promise<void> {
 }
 
 /**
+ * Delete multiple items from IndexedDB in a single atomic transaction.
+ */
+export async function dbDeleteMulti(keys: string[]): Promise<void> {
+  const db = await getDB();
+  await new Promise<void>((resolve, reject) => {
+    const transaction = db.transaction(STORE_NAME, 'readwrite');
+    const store = transaction.objectStore(STORE_NAME);
+
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+    transaction.onabort = () => reject(transaction.error);
+
+    for (const key of keys) {
+      store.delete(key);
+    }
+  });
+
+  if (typeof window !== 'undefined' && window.localStorage) {
+    for (const key of keys) {
+      try {
+        localStorage.removeItem(key);
+      } catch (_) {}
+    }
+  }
+}
+
+/**
  * Delete an item from IndexedDB and localStorage.
  */
 export async function dbDelete(key: string): Promise<void> {
@@ -264,5 +291,66 @@ export async function dbClear(): Promise<void> {
   
   if (idbError) {
     throw new StorageDeleteError('__all__', idbError);
+  }
+}
+
+/**
+ * Retrieve all items from IndexedDB that have a key starting with the given prefix.
+ */
+export async function dbGetAllByPrefix<T>(prefix: string): Promise<Record<string, T>> {
+  try {
+    const db = await getDB();
+    return await new Promise<Record<string, T>>((resolve, reject) => {
+      const transaction = db.transaction(STORE_NAME, 'readonly');
+      const store = transaction.objectStore(STORE_NAME);
+      const range = IDBKeyRange.bound(prefix, prefix + '\uffff');
+      const request = store.openCursor(range);
+      
+      const results: Record<string, T> = {};
+      
+      request.onsuccess = (event: any) => {
+        const cursor = event.target.result;
+        if (cursor) {
+          results[cursor.key] = cursor.value;
+          cursor.continue();
+        } else {
+          resolve(results);
+        }
+      };
+      
+      request.onerror = () => reject(request.error);
+    });
+  } catch (err) {
+    console.warn([storage] dbGetAllByPrefix error for prefix "":, err);
+    return {};
+  }
+}
+
+/**
+ * Delete all items from IndexedDB that have a key starting with the given prefix.
+ */
+export async function dbDeleteAllByPrefix(prefix: string): Promise<void> {
+  try {
+    const db = await getDB();
+    await new Promise<void>((resolve, reject) => {
+      const transaction = db.transaction(STORE_NAME, 'readwrite');
+      const store = transaction.objectStore(STORE_NAME);
+      const range = IDBKeyRange.bound(prefix, prefix + '\uffff');
+      const request = store.openCursor(range);
+      
+      request.onsuccess = (event: any) => {
+        const cursor = event.target.result;
+        if (cursor) {
+          cursor.delete();
+          cursor.continue();
+        }
+      };
+      
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () => reject(transaction.error);
+      transaction.onabort = () => reject(transaction.error);
+    });
+  } catch (err) {
+    console.error([storage] dbDeleteAllByPrefix error for prefix "":, err);
   }
 }

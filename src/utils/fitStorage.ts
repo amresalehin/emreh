@@ -1,17 +1,37 @@
 import { FitDailyMetric } from '../types';
-import { dbGet, dbSet } from './storage';
+import { dbGet, dbSet, dbSetMulti, dbGetAllByPrefix, dbDeleteAllByPrefix } from './storage';
 
-export const FIT_STORAGE_KEY = 'emreh_fit_metrics_v1';
+export const FIT_STORAGE_KEY_V1 = 'emreh_fit_metrics_v1';
+export const FIT_STORAGE_PREFIX = 'fit_metric_v2_';
+
+let migrationPromise: Promise<void> | null = null;
+
+async function runMigration() {
+  const savedV1 = await dbGet<Record<string, FitDailyMetric>>(FIT_STORAGE_KEY_V1, {});
+  if (savedV1 && typeof savedV1 === 'object' && Object.keys(savedV1).length > 0) {
+    console.log('Migrating fit metrics to fine-grained v2 storage...');
+    await persistStoredFitMetrics(savedV1);
+    await dbSet(FIT_STORAGE_KEY_V1, {});
+  }
+}
 
 /**
  * Loads all stored Google Fit daily metrics from local IndexedDB storage.
  */
 export async function loadStoredFitMetrics(): Promise<Record<string, FitDailyMetric>> {
   try {
-    const saved = await dbGet<Record<string, FitDailyMetric>>(FIT_STORAGE_KEY, {});
-    if (saved && typeof saved === 'object') {
-      return saved;
+    if (!migrationPromise) {
+      migrationPromise = runMigration();
     }
+    await migrationPromise;
+
+    const v2Data = await dbGetAllByPrefix<FitDailyMetric>(FIT_STORAGE_PREFIX);
+    const result: Record<string, FitDailyMetric> = {};
+    for (const [key, val] of Object.entries(v2Data)) {
+      const dateKey = key.replace(FIT_STORAGE_PREFIX, '');
+      result[dateKey] = val;
+    }
+    return result;
   } catch (err) {
     console.error('Failed to load fit metrics from storage:', err);
   }
@@ -19,10 +39,16 @@ export async function loadStoredFitMetrics(): Promise<Record<string, FitDailyMet
 }
 
 /**
- * Persists the entire Google Fit metrics map and notifies the application.
+ * Replaces the entire Google Fit metrics dataset.
+ * We clear old V2 prefix keys first to ensure deleted keys don't linger.
  */
 export async function persistStoredFitMetrics(metrics: Record<string, FitDailyMetric>): Promise<void> {
-  await dbSet(FIT_STORAGE_KEY, metrics);
+  await dbDeleteAllByPrefix(FIT_STORAGE_PREFIX);
+  const entries: Record<string, FitDailyMetric> = {};
+  for (const [date, metric] of Object.entries(metrics)) {
+    entries[FIT_STORAGE_PREFIX + date] = metric;
+  }
+  await dbSetMulti(entries);
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new CustomEvent('emreh_fit_updated', { detail: { count: Object.keys(metrics).length } }));
   }
@@ -30,16 +56,17 @@ export async function persistStoredFitMetrics(metrics: Record<string, FitDailyMe
 
 /**
  * Merges and saves a single day's Fit metric.
- * NOTE: This performs a full read-modify-write cycle (write amplification).
+ * Write amplification is resolved: we only update the specific day's record!
  */
 export async function saveSingleFitMetric(metric: FitDailyMetric): Promise<void> {
-  const current = await loadStoredFitMetrics();
+  const key = FIT_STORAGE_PREFIX + metric.date;
+  const existing = await dbGet<FitDailyMetric | null>(key, null);
   const updated = {
-    ...current,
-    [metric.date]: {
-      ...(current[metric.date] || {}),
-      ...metric
-    }
+    ...(existing || {}),
+    ...metric
   };
-  await persistStoredFitMetrics(updated);
+  await dbSet(key, updated);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('emreh_fit_updated', { detail: { count: 1 } }));
+  }
 }

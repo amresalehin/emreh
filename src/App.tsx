@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, Suspense, useRef } from 'react';
 import { TimelineItem, CalendarEvent, ImportedFileRecord, ViewType, MetricType, DateRange, UserSettings, GlassTheme, LuminanceMode } from './types';
 import { getDemoTimelineData } from './utils/demoData';
 import { parseUploadedFiles, reverseGeocodeLocation, reverseGeocodeItem, batchReverseGeocodePlaces, isGenericPlaceName } from './utils/dataParser';
-import { dbGet, dbSet, dbDelete, dbClear } from './utils/storage';
+import { dbGet, dbSet, dbSetMulti, dbDelete, dbClear, dbGetAllByPrefix, dbDeleteMulti, dbDeleteAllByPrefix } from './utils/storage';
 import { Sidebar } from './components/Sidebar';
 import { AnimatePresence, motion } from 'motion/react';
 import { promptNativeDirectoryMount } from './utils/photosMountService';
@@ -225,7 +225,8 @@ export const App: React.FC = () => {
     async function hydrateState() {
       try {
         const [
-          savedTimeline,
+          savedTimelineV1,
+          savedTimelineV2Map,
           savedEvents,
           savedNotes,
           savedFiles,
@@ -235,6 +236,7 @@ export const App: React.FC = () => {
           savedFit
         ] = await Promise.all([
           dbGet<TimelineItem[] | null>('mylife_timeline_items', null),
+          dbGetAllByPrefix<TimelineItem>('tl_item_v2_'),
           dbGet<CalendarEvent[] | null>('mylife_calendar_events', null),
           dbGet<Record<string, string> | null>('mylife_daily_notes', null),
           dbGet<ImportedFileRecord[] | null>('mylife_imported_files', null),
@@ -244,9 +246,20 @@ export const App: React.FC = () => {
           dbGet<GoogleFitDataset | null>('mylife_google_fit', null)
         ]);
 
-        if (savedTimeline && Array.isArray(savedTimeline) && savedTimeline.length > 0) {
+        let loadedTimeline: TimelineItem[] = [];
+        if (savedTimelineV2Map && Object.keys(savedTimelineV2Map).length > 0) {
+          loadedTimeline = Object.values(savedTimelineV2Map);
+        } else if (savedTimelineV1 && Array.isArray(savedTimelineV1) && savedTimelineV1.length > 0) {
+          loadedTimeline = savedTimelineV1;
+          // Trigger migration to v2 asynchronously
+          const v2Entries: Record<string, TimelineItem> = {};
+          loadedTimeline.forEach(item => { v2Entries[`tl_item_v2_${item.id}`] = item; });
+          dbSetMulti(v2Entries).then(() => dbSet('mylife_timeline_items', null)).catch(console.error);
+        }
+
+        if (loadedTimeline.length > 0) {
           setTimelineData(
-            savedTimeline.map((item: any) => ({
+            loadedTimeline.map((item: any) => ({
               ...item,
               dateObj: new Date(item.ts)
             }))
@@ -530,11 +543,44 @@ export const App: React.FC = () => {
     }
   }, [isHydrated]);
 
-  // Timeline persistence via useEffect — matches the pattern used by all other stores.
-  // Replaces the old persistTimeline() which had dual responsibility (state + I/O).
+  const prevTimelineRef = useRef<TimelineItem[] | null>(null);
+
+  // Timeline persistence via useEffect using fine-grained delta sync
+  // Eliminates write-amplification by only storing changed items and deleting removed items.
   useEffect(() => {
     if (!isHydrated) return;
-    dbSet('mylife_timeline_items', timelineData).catch(err => console.error('Failed to persist timeline:', err));
+
+    if (!prevTimelineRef.current) {
+      prevTimelineRef.current = timelineData;
+      return; // Fast path: first hydration, already synced to DB
+    }
+
+    const prevMap = new Map(prevTimelineRef.current.map(i => [i.id, i]));
+    const currentMap = new Map(timelineData.map(i => [i.id, i]));
+
+    const upserts: Record<string, TimelineItem> = {};
+    const deletions: string[] = [];
+
+    for (const item of timelineData) {
+      if (prevMap.get(item.id) !== item) {
+        upserts[`tl_item_v2_${item.id}`] = item;
+      }
+    }
+
+    for (const item of prevTimelineRef.current) {
+      if (!currentMap.has(item.id)) {
+        deletions.push(`tl_item_v2_${item.id}`);
+      }
+    }
+
+    if (Object.keys(upserts).length > 0) {
+      dbSetMulti(upserts).catch(err => console.error('Timeline upsert failed:', err));
+    }
+    if (deletions.length > 0) {
+      dbDeleteMulti(deletions).catch(err => console.error('Timeline delete failed:', err));
+    }
+
+    prevTimelineRef.current = timelineData;
   }, [timelineData, isHydrated]);
 
   // Converted Google Fit items integrated into the unified timeline
@@ -1375,7 +1421,6 @@ export const App: React.FC = () => {
 
         // Build object of all IndexedDB entries to be saved atomically
         const multiEntries: Record<string, any> = {
-          'mylife_timeline_items': restoredTimeline,
           'mylife_calendar_events': data.calendarEvents,
           'mylife_daily_notes': data.dailyNotesMap,
           'mylife_imported_files': data.importedFiles,
@@ -1387,12 +1432,6 @@ export const App: React.FC = () => {
         if (data.googleFitData) {
           multiEntries['mylife_google_fit'] = data.googleFitData;
         }
-        if (data.fitMetrics) {
-          multiEntries['emreh_fit_metrics_v1'] = data.fitMetrics;
-        }
-        if (data.screentimeData) {
-          multiEntries['emreh_screentime_data_v1'] = data.screentimeData;
-        }
         if (data.powerNotes) {
           multiEntries['mylife_power_notes_v1'] = data.powerNotes;
         }
@@ -1401,7 +1440,15 @@ export const App: React.FC = () => {
         const { dbSetMulti } = await import('./utils/storage');
         await dbSetMulti(multiEntries);
 
+        // Save fine-grained stores
+        const { persistStoredFitMetrics } = await import('./utils/fitStorage');
+        if (data.fitMetrics) await persistStoredFitMetrics(data.fitMetrics);
+        
+        const { persistStoredScreentimeData } = await import('./utils/screentimeStorage');
+        if (data.screentimeData) await persistStoredScreentimeData(data.screentimeData);
+
         // Once successful, update React state safely
+        // (Timeline will be automatically delta-synced to DB by the useEffect)
         setTimelineData(restoredTimeline);
         setCalendarEvents(data.calendarEvents);
         setDailyNotesMap(data.dailyNotesMap);

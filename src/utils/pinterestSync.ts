@@ -1,5 +1,6 @@
 import { TimelineItem } from '../types';
 import { extractDomain } from './urlMetadata';
+import { deterministicId } from './idGenerator';
 import { UniversalBookmarkResult } from './bookmarkSyncServices';
 import { resilientFetch, resilientFetchRss, RateLimitDetails, SyncErrorCategory } from './resilientFetch';
 
@@ -213,7 +214,7 @@ export async function syncPinterestPins(options: {
   const rawPins = Array.isArray(data?.items) ? data.items : [];
 
   rawPins.forEach((p: any) => {
-    const pinId = p.id || Math.random().toString(36).substring(2, 9);
+    const pinId = p.id || deterministicId('pin', p.title, p.link, p.description);
     const pinUrl = `https://www.pinterest.com/pin/${pinId}/`;
     const targetUrl = p.link || pinUrl;
     const title = p.title || p.description?.slice(0, 70) || 'Pinterest Pin';
@@ -299,7 +300,7 @@ export function parsePinterestJson(jsonText: string): UniversalBookmarkResult {
       : raw.pins || raw.items || raw.data || raw.results || [];
 
     list.forEach((p: any) => {
-      const pinId = p.id || p.pin_id || Math.random().toString(36).substring(2, 9);
+      const pinId = p.id || p.pin_id || deterministicId('pin', p.title, p.url, p.description, p.source);
       const pinUrl = p.pin_url || p.url || `https://www.pinterest.com/pin/${pinId}/`;
       const targetUrl = p.link || p.source || p.destination_url || pinUrl;
       const title = p.title || p.description?.slice(0, 80) || p.note?.slice(0, 80) || 'Pinterest Pin';
@@ -433,7 +434,7 @@ export function parsePinterestCsv(csvText: string): UniversalBookmarkResult {
     }
 
     const domain = extractDomain(effectiveUrl);
-    const pinId = rawId || Math.random().toString(36).substring(2, 8);
+    const pinId = rawId || deterministicId('pin_csv', title, effectiveUrl, desc);
     const timelineId = `pinterest_csv_${pinId}_${i}`;
 
     collectionsSet.add(board || 'Pinterest');
@@ -629,7 +630,7 @@ export function parsePinterestUrlBatch(rawText: string, customBoard = 'Pinterest
     if (match) {
       pinId = match[1];
     } else {
-      pinId = Math.random().toString(36).substring(2, 9);
+      pinId = deterministicId('pin_html', title, href);
     }
 
     const title = pinId ? `Pinterest Pin #${pinId}` : 'Saved Pin';
