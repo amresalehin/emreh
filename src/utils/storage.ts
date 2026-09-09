@@ -321,7 +321,7 @@ export async function dbGetAllByPrefix<T>(prefix: string): Promise<Record<string
       request.onerror = () => reject(request.error);
     });
   } catch (err) {
-    console.warn([storage] dbGetAllByPrefix error for prefix "":, err);
+    console.warn('[storage] dbGetAllByPrefix error for prefix "":', err);
     return {};
   }
 }
