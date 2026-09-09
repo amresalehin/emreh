@@ -1107,7 +1107,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
       `}</style>
 
       {/* Google Docs Primary Top Bar */}
-      <div className="h-12 px-4 border-b border-stone-200/70 dark:border-stone-800/80 flex items-center justify-between gap-3 bg-[#fdfcf9]/90 dark:bg-[#151517]/90 backdrop-blur-md shrink-0">
+      <div className="h-12 px-4 border-b border-stone-200/70 dark:border-white/[0.05] flex items-center justify-between gap-3 bg-[#fdfcf9]/90 dark:bg-[#121110]/90 backdrop-blur-md shrink-0">
         {/* Left: Document Metadata & Clickable Word Count Dialog */}
         <div className="flex items-center gap-2 min-w-0">
           <button aria-label="Action"
@@ -1720,7 +1720,7 @@ export const NoteDocumentEditor: React.FC<NoteDocumentEditorProps> = ({
                 value={note.title}
                 onChange={(e) => onUpdateNote({ ...note, title: e.target.value })}
                 placeholder="Title"
-                className="w-full bg-transparent outline-none font-bold text-3xl sm:text-4xl text-stone-900 dark:text-stone-100 tracking-tight leading-tight placeholder:text-stone-300 dark:placeholder:text-stone-700"
+                className="w-full bg-transparent outline-none font-serif font-semibold text-3xl sm:text-4xl text-stone-900 dark:text-stone-100 tracking-tight leading-tight placeholder:text-stone-300 dark:placeholder:text-stone-700"
               />
             </div>
 

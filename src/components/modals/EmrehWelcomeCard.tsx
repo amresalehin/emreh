@@ -76,10 +76,10 @@ export const EmrehWelcomeCard: React.FC<EmrehWelcomeCardProps> = ({
           max-w-[920px]
           overflow-hidden
           rounded-[30px]
-          border border-white/[0.11]
-          bg-[#141817]/[0.985]
+          ring-1 ring-white/[0.06]
+          bg-[#141312]/[0.985]
           text-white
-          shadow-[0_40px_120px_rgba(0,0,0,0.52)]
+          shadow-[0_40px_120px_rgba(0,0,0,0.65)]
           backdrop-blur-2xl
           animate-in
           fade-in
@@ -89,12 +89,12 @@ export const EmrehWelcomeCard: React.FC<EmrehWelcomeCardProps> = ({
         onClick={(event) => event.stopPropagation()}
       >
         {/* Deep ambient atmosphere */}
-        <div className="pointer-events-none absolute -left-40 -top-36 h-[520px] w-[520px] rounded-full bg-[#9fc9ba]/[0.11] blur-[120px]" />
-        <div className="pointer-events-none absolute -right-28 -bottom-40 h-[500px] w-[500px] rounded-full bg-[#b8afd0]/[0.10] blur-[120px]" />
-        <div className="pointer-events-none absolute left-[34%] top-1/2 h-[300px] w-[300px] -translate-y-1/2 rounded-full bg-[#d8d1bd]/[0.035] blur-[110px]" />
+        <div className="pointer-events-none absolute -left-40 -top-36 h-[520px] w-[520px] rounded-full bg-[#d4a373]/[0.08] blur-[120px]" />
+        <div className="pointer-events-none absolute -right-28 -bottom-40 h-[500px] w-[500px] rounded-full bg-[#b8afd0]/[0.08] blur-[120px]" />
+        <div className="pointer-events-none absolute left-[34%] top-1/2 h-[300px] w-[300px] -translate-y-1/2 rounded-full bg-[#d8d1bd]/[0.03] blur-[110px]" />
 
         {/* Top edge glow */}
-        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.16] to-transparent" />
+        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-[#d4a373]/[0.2] to-transparent" />
 
         {/* Close */}
         <button
@@ -110,16 +110,16 @@ export const EmrehWelcomeCard: React.FC<EmrehWelcomeCardProps> = ({
           {/* Visual side */}
           <div className="relative flex min-h-[300px] items-center justify-center overflow-hidden border-b border-white/[0.06] px-8 py-10 md:min-h-[470px] md:border-b-0 md:border-r md:px-12">
             {/* Fine radial wash */}
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(208,225,218,0.10),transparent_38%),radial-gradient(circle_at_20%_90%,rgba(189,178,211,0.07),transparent_36%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(212,163,115,0.08),transparent_38%),radial-gradient(circle_at_20%_90%,rgba(189,178,211,0.06),transparent_36%)]" />
 
             <div className="relative flex flex-col items-center">
               <div className="relative">
                 {/* Soft halo */}
-                <div className="absolute -inset-7 rounded-full bg-gradient-to-br from-[#cfe8df]/[0.10] via-transparent to-[#ddd9eb]/[0.08] blur-2xl" />
+                <div className="absolute -inset-7 rounded-full bg-gradient-to-br from-[#d4a373]/[0.12] via-transparent to-[#ddd9eb]/[0.08] blur-2xl" />
 
                 {/* Icon */}
-                <div className="relative h-[178px] w-[178px] rounded-full bg-gradient-to-br from-[#cfe8df] via-[#d7d4e0] to-[#ead9df] p-[2px] shadow-[0_16px_55px_rgba(210,220,215,0.14)]">
-                  <div className="h-full w-full overflow-hidden rounded-full border border-white/[0.10] bg-[#0b0e0d]">
+                <div className="relative h-[178px] w-[178px] rounded-full bg-gradient-to-br from-[#e0a96d] via-[#d4a373] to-[#ead9df] p-[2px] shadow-[0_16px_55px_rgba(212,163,115,0.14)]">
+                  <div className="h-full w-full overflow-hidden rounded-full border border-white/[0.10] bg-[#0e0d0c]">
                     <img
                       src={`${import.meta.env.BASE_URL}app-icon.svg`}
                       alt="Emreh"
@@ -138,18 +138,18 @@ export const EmrehWelcomeCard: React.FC<EmrehWelcomeCardProps> = ({
 
               <div className="mt-7 text-center">
                 <div className="flex items-center justify-center gap-2">
-                  <h1 className="text-[27px] font-semibold tracking-[-0.04em] text-[#f1f3f1]">
+                  <h1 className="text-[27px] font-serif font-medium tracking-tight text-[#f1f3f1]">
                     Emreh
                   </h1>
-                  <CheckCircle2 className="h-[18px] w-[18px] text-[#b9cbc5]" />
+                  <CheckCircle2 className="h-[18px] w-[18px] text-[#d4a373]" />
                 </div>
 
-                <div dir="rtl" lang="fa" className="mt-2 text-[19px] font-serif tracking-wide text-[#d5ded9]">
+                <div dir="rtl" lang="fa" className="mt-2 text-[19px] font-serif tracking-wide text-[#d4a373]">
                   اِمْرِه
                 </div>
               </div>
 
-              <div className="mt-7 flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[#68736e]">
+              <div className="mt-7 flex items-center gap-2 font-sans text-xs uppercase tracking-wide text-neutral-400">
                 <span className="h-px w-8 bg-white/[0.10]" />
                 <span>A quiet place for your life</span>
                 <span className="h-px w-8 bg-white/[0.10]" />
@@ -160,57 +160,58 @@ export const EmrehWelcomeCard: React.FC<EmrehWelcomeCardProps> = ({
           {/* Information side */}
           <div className="flex flex-col justify-center px-7 py-8 sm:px-10 sm:py-10 md:px-12 lg:px-14">
             <div>
-              <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-[#76817d]">
+              <p className="font-sans text-xs tracking-wide uppercase text-neutral-400">
                 Welcome to your space
               </p>
 
-              <h2 className="mt-3 max-w-[520px] text-[30px] font-medium leading-[1.08] tracking-[-0.04em] text-[#f0f2ef] sm:text-[35px]">
+              <h2 className="mt-3 max-w-[520px] font-serif text-[30px] font-medium leading-[1.12] text-[#f0f2ef] sm:text-[36px]">
                 A companion for the journey.
               </h2>
 
-              <p className="mt-4 max-w-[520px] text-[13px] leading-[1.75] text-[#929d98] sm:text-[14px]">
+              <p className="mt-4 max-w-[520px] font-serif italic text-[14px] leading-[1.8] text-neutral-300 sm:text-[15px]">
                 Emreh brings the pieces of your life together — quietly,
-                personally, and in one place.
+                personally, and in one intimate place.
               </p>
             </div>
 
             {/* Meaning panels */}
             <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-[18px] border border-white/[0.07] bg-white/[0.028] px-5 py-4">
-                <div dir="rtl" lang="fa" className="text-[21px] font-serif text-[#e1e8e4]">
+              <div className="rounded-2xl ring-1 ring-white/[0.05] bg-white/[0.02] shadow-[0_4px_24px_rgba(0,0,0,0.35)] px-5 py-4">
+                <div dir="rtl" lang="fa" className="text-[21px] font-serif text-[#e0a96d]">
                   همراه
                 </div>
-                <div className="mt-1 text-[13px] text-[#d0d7d4]">Companion</div>
-                <div className="mt-1 text-[9px] uppercase tracking-[0.16em] text-[#68736e]">Persian</div>
+                <div className="mt-1 font-serif text-sm text-[#d0d7d4]">Companion</div>
+                <div className="mt-1 font-sans text-[10px] uppercase tracking-wider text-neutral-400">Persian</div>
               </div>
 
-              <div className="rounded-[18px] border border-white/[0.07] bg-white/[0.028] px-5 py-4">
-                <div className="text-[16px] font-medium tracking-[0.01em] text-[#e1e8e4]">
+              <div className="rounded-2xl ring-1 ring-white/[0.05] bg-white/[0.02] shadow-[0_4px_24px_rgba(0,0,0,0.35)] px-5 py-4">
+                <div className="text-[16px] font-serif font-medium tracking-[0.01em] text-[#e0a96d]">
                   amran- · ämrä
                 </div>
-                <div className="mt-1 text-[13px] text-[#d0d7d4]">Beloved</div>
-                <div className="mt-1 text-[9px] uppercase tracking-[0.16em] text-[#68736e]">Turkic</div>
+                <div className="mt-1 font-serif text-sm text-[#d0d7d4]">Beloved</div>
+                <div className="mt-1 font-sans text-[10px] uppercase tracking-wider text-neutral-400">Turkic</div>
               </div>
             </div>
 
-            <p className="mt-5 max-w-[520px] text-[12px] leading-[1.7] text-[#858f8b]">
+            <p className="mt-5 max-w-[520px] font-serif italic text-xs leading-[1.7] text-neutral-400">
               A companion who walks beside you, and someone deeply loved.
             </p>
 
-            <div className="mt-8 flex items-center justify-between gap-5 border-t border-white/[0.07] pt-6">
+            <div className="mt-8 flex items-center justify-between gap-5 border-t border-white/[0.06] pt-6">
               <div>
-                <p className="text-[9px] uppercase tracking-[0.18em] text-[#66716d]">
+                <p className="font-sans text-[10px] uppercase tracking-wider text-neutral-400">
                   Developed by
                 </p>
-                <p className="mt-1 text-[12px] font-medium text-[#c0cac6]">
+                <p className="mt-1 font-serif text-sm font-medium text-neutral-200">
                   Amre Salehin
                 </p>
               </div>
 
-              <button aria-label="Action"
+              <button
+                aria-label="Enter Emreh"
                 type="button"
                 onClick={handleClose}
-                className="group inline-flex items-center gap-2 rounded-[14px] border border-[#d5e1dc]/[0.11] bg-[#d5e1dc]/[0.07] px-5 py-3 text-[12px] font-medium text-[#dce4e0] transition-all hover:border-[#d5e1dc]/[0.17] hover:bg-[#d5e1dc]/[0.12] active:scale-[0.99] cursor-pointer"
+                className="group inline-flex items-center gap-2 rounded-xl bg-[#d4a373] hover:bg-[#e0a96d] px-5 py-3 font-sans text-xs font-semibold text-neutral-950 transition-all shadow-[0_2px_12px_rgba(212,163,115,0.25)] active:scale-[0.98] cursor-pointer"
               >
                 Enter Emreh
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />

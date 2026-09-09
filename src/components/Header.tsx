@@ -127,11 +127,11 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className={`border-b border-white/15 dark:border-white/10 px-3 sm:px-4 py-2 flex items-center justify-between z-30 shrink-0 transition-all gap-2 sm:gap-4 ${className}`}>
+      <header className={`border-b border-black/[0.05] dark:border-white/[0.06] bg-white/75 dark:bg-[#121110]/70 backdrop-blur-md px-3 sm:px-4 py-2 flex items-center justify-between z-30 shrink-0 transition-all gap-2 sm:gap-4 ${className}`}>
         {/* Brand & View Identity */}
         <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
           <div className="flex items-center gap-2" title="Emreh — همراه (Hamrah)">
-            <div className="w-7 h-7 rounded-xl overflow-hidden shadow-xs flex items-center justify-center border border-stone-300 dark:border-stone-700 shrink-0 bg-[#081318] dark:bg-[#071114] p-0.5">
+            <div className="w-7 h-7 rounded-xl overflow-hidden shadow-xs flex items-center justify-center ring-1 ring-black/[0.06] dark:ring-white/[0.08] shrink-0 bg-[#081318] dark:bg-[#071114] p-0.5">
               <img
                 src={`${import.meta.env.BASE_URL}app-icon.svg`}
                 alt="Emreh Logo"
@@ -146,17 +146,17 @@ export const Header: React.FC<HeaderProps> = ({
               />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-sm font-semibold text-stone-900 dark:text-stone-100 tracking-tight leading-tight hidden xs:block">
+              <h1 className="text-base font-serif font-medium text-stone-900 dark:text-neutral-100 tracking-tight leading-tight hidden xs:block">
                 Emreh
               </h1>
-              <span className="text-[11px] font-serif font-medium text-stone-500 dark:text-stone-400 tracking-wide hidden sm:block -mt-0.5">
+              <span className="text-[11px] font-serif font-medium text-stone-500 dark:text-neutral-400 tracking-wide hidden sm:block -mt-0.5">
                 همراه
               </span>
             </div>
           </div>
 
           {/* View Breadcrumb Pill */}
-          <div className="hidden lg:flex items-center gap-1.5 pl-2.5 border-l border-gray-300/60 dark:border-white/15 text-xs font-bold text-gray-700 dark:text-gray-200">
+          <div className="hidden lg:flex items-center gap-1.5 pl-2.5 border-l border-gray-300/60 dark:border-white/10 font-sans text-xs tracking-wide uppercase text-neutral-400">
             {activeView.icon}
             <span>{activeView.name}</span>
           </div>
@@ -164,30 +164,31 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Center: Powerful Global Omnibar Search Trigger */}
         <div className="flex-1 max-w-xl mx-auto px-1 sm:px-2">
-          <button aria-label="Action"
+          <button
+            aria-label="Action"
             onClick={() => setIsSearchOpen(true)}
-            className="w-full flex items-center justify-between gap-2.5 px-3 py-1.5 sm:py-2 bg-gray-100/90 dark:bg-white/5 hover:bg-gray-200/80 dark:hover:bg-white/10 border border-gray-200/80 dark:border-white/10 rounded-2xl text-left transition-all group cursor-pointer shadow-2xs hover:shadow-sm"
+            className="w-full flex items-center justify-between gap-2.5 px-3 py-1.5 sm:py-2 bg-white/70 dark:bg-white/[0.03] hover:bg-white/90 dark:hover:bg-white/[0.06] ring-1 ring-black/[0.05] dark:ring-white/[0.05] hover:ring-amber-500/30 dark:hover:ring-white/[0.12] rounded-2xl text-left transition-all group cursor-pointer shadow-[0_2px_12px_rgba(0,0,0,0.15)]"
             title={`Search across all life events (${isMac ? '⌘K' : 'Ctrl+K'})`}
           >
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-6 h-6 rounded-lg bg-[#d4a373]/10 text-[#d4a373] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                 <Search className="w-3.5 h-3.5" />
               </div>
-              <div className="min-w-0 flex items-center gap-1.5 text-xs">
-                <span className="font-semibold text-gray-700 dark:text-gray-200 truncate">
+              <div className="min-w-0 flex items-center gap-1.5 font-sans text-xs">
+                <span className="font-normal text-neutral-700 dark:text-neutral-200 truncate">
                   Search all life history...
                 </span>
-                <span className="hidden xl:inline text-[11px] text-gray-400 dark:text-gray-500">
+                <span className="hidden xl:inline text-[11px] text-neutral-400 dark:text-neutral-500 font-normal">
                   (music, videos, places, web, notes)
                 </span>
               </div>
             </div>
 
             <div className="flex items-center gap-1 shrink-0">
-              <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono font-bold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-2xs">
+              <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-sans font-medium text-neutral-400 bg-white/[0.05] ring-1 ring-white/[0.08] rounded-md">
                 {isMac ? '⌘K' : 'Ctrl+K'}
               </kbd>
-              <span className="sm:hidden text-gray-400">
+              <span className="sm:hidden text-neutral-400">
                 <Search className="w-3.5 h-3.5" />
               </span>
             </div>

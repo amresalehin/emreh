@@ -151,13 +151,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         flex-col
         justify-between
         border-r
-        border-black/8
-        dark:border-white/10
+        border-black/5
+        dark:border-white/[0.06]
         bg-white/75
-        dark:bg-[#121214]/80
+        dark:bg-[#0e0d0c]/85
         backdrop-blur-xl
         supports-[backdrop-filter]:bg-white/70
-        dark:supports-[backdrop-filter]:bg-[#121214]/75
+        dark:supports-[backdrop-filter]:bg-[#0e0d0c]/80
         shadow-[4px_0_24px_rgba(0,0,0,0.03)]
         transition-all
         duration-300
@@ -296,8 +296,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     backdrop-blur-xl
                     ${
                       isActive
-                        ? 'bg-blue-600/18 text-blue-900 dark:bg-blue-500/25 dark:text-blue-100 font-semibold shadow-xs border border-blue-500/35 dark:border-blue-400/40 backdrop-blur-2xl'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white bg-white/20 dark:bg-white/[0.03] hover:bg-white/60 dark:hover:bg-white/12 border border-black/5 dark:border-white/8 hover:border-black/12 dark:hover:border-white/20 shadow-2xs hover:shadow-xs'
+                        ? 'bg-[#d4a373]/20 text-neutral-950 dark:bg-[#d4a373]/25 dark:text-[#fdfcf9] font-medium shadow-[0_2px_12px_rgba(212,163,115,0.18)] ring-1 ring-[#d4a373]/40'
+                        : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white bg-transparent hover:bg-white/[0.04] ring-1 ring-transparent hover:ring-white/[0.08]'
                     }
                   `}
                 >

@@ -237,8 +237,9 @@ export async function parseKeepFiles(
           } else if (pLower.endsWith('.txt')) {
             const title = baseName.replace(/\.txt$/i, '');
             if (text.trim() || title) {
+              const fileIsoDate = (file as any).date ? new Date((file as any).date).toISOString() : file.lastModified ? new Date(file.lastModified).toISOString() : new Date().toISOString();
               parsedNotes.push({
-                id: deterministicId('keep', title, text, file.date ? new Date(file.date).toISOString() : ''),
+                id: deterministicId('keep', title, text, fileIsoDate),
                 title: title || 'Note',
                 content: text,
                 color: 'default',
@@ -248,8 +249,8 @@ export async function parseKeepFiles(
                 isTrashed: false,
                 isChecklist: false,
                 checklistItems: [],
-                createdAt: file.date ? new Date(file.date).toISOString() : new Date().toISOString(),
-                updatedAt: file.date ? new Date(file.date).toISOString() : new Date().toISOString()
+                createdAt: fileIsoDate,
+                updatedAt: fileIsoDate
               });
             }
           }

@@ -913,8 +913,9 @@ export const App: React.FC = () => {
             await dbSet('mylife_google_fit', parsedFit);
             const importedName = files.length === 1 ? files[0].name : `Fitness & Health Data (${files.length} files)`;
             const totalBytes = files.reduce((sum, f) => sum + f.size, 0);
+            const batchId = `google_fit_${Date.now()}`;
             setImportedFiles(prev => [{
-              id: `google_fit_${Date.now()}`, name: importedName, fileName: importedName, filename: importedName,
+              id: batchId, name: importedName, fileName: importedName, filename: importedName,
               fileSize: `${(totalBytes / 1024 / 1024).toFixed(1)} MB`, fileType: 'google_fit',
               recordCount: totalRecords, count: totalRecords,
               importDate: new Date().toISOString()
@@ -2186,9 +2187,9 @@ export const App: React.FC = () => {
 
     if (settings.backgroundEffect === 'static') {
       return (settings.luminance === 'dark' && isAmoled)
-        ? 'bg-[#121214] text-[#fdfcf9]'
+        ? 'bg-[#0e0d0c] text-[#fdfcf9]'
         : settings.luminance === 'dark'
-        ? 'bg-[#18191c] text-[#fdfcf9]'
+        ? 'bg-[#121110] text-[#fdfcf9]'
         : 'bg-[#fdfcf9] text-[#1a1a1a]';
     }
 
@@ -2199,8 +2200,11 @@ export const App: React.FC = () => {
   return (
     <div
       style={{ zoom }}
-      className={`h-[100dvh] w-full min-h-0 flex flex-col text-[#1a1a1a] dark:text-[#fdfcf9] overflow-hidden font-['Inter',sans-serif] relative transition-colors duration-700 ${containerBgClass}`}
+      className={`h-[100dvh] w-full min-h-0 flex flex-col text-[#1a1a1a] dark:text-[#fdfcf9] overflow-hidden font-sans relative transition-colors duration-700 ${containerBgClass}`}
     >
+      {/* Ambient background bloom to root wrapper */}
+      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(212,163,115,0.08),rgba(255,255,255,0))] z-0" />
+
       {/* Zoom Scale Notification Toast */}
       {zoomToast && (
         <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-3.5 py-1.5 rounded-full bg-black/90 dark:bg-white/95 text-white dark:text-black font-semibold text-xs shadow-2xl backdrop-blur-md pointer-events-none animate-in fade-in zoom-in-95">

@@ -499,7 +499,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
             onKeyDown={handleKeyDown}
             onPaste={(e) => onPaste?.(e, index, block)}
             placeholder="Heading 1..."
-            className={`w-full bg-transparent resize-none outline-none font-bold text-2xl text-gray-900 dark:text-white tracking-tight leading-snug placeholder:text-gray-300 dark:placeholder:text-gray-600 ${alignClass}`}
+            className={`w-full bg-transparent resize-none outline-none font-serif font-bold text-2xl text-gray-900 dark:text-white tracking-tight leading-snug placeholder:text-gray-300 dark:placeholder:text-gray-600 ${alignClass}`}
           />
         )}
 
@@ -513,7 +513,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
             onKeyDown={handleKeyDown}
             onPaste={(e) => onPaste?.(e, index, block)}
             placeholder="Heading 2..."
-            className={`w-full bg-transparent resize-none outline-none font-semibold text-xl text-gray-800 dark:text-gray-100 tracking-tight leading-snug placeholder:text-gray-300 dark:placeholder:text-gray-600 mt-2 ${alignClass}`}
+            className={`w-full bg-transparent resize-none outline-none font-serif font-semibold text-xl text-gray-800 dark:text-gray-100 tracking-tight leading-snug placeholder:text-gray-300 dark:placeholder:text-gray-600 mt-2 ${alignClass}`}
           />
         )}
 
@@ -527,7 +527,7 @@ const BlockItemInner: React.FC<BlockItemProps> = ({
             onKeyDown={handleKeyDown}
             onPaste={(e) => onPaste?.(e, index, block)}
             placeholder="Heading 3..."
-            className={`w-full bg-transparent resize-none outline-none font-semibold text-lg text-gray-800 dark:text-gray-200 tracking-tight leading-snug placeholder:text-gray-300 dark:placeholder:text-gray-600 mt-1 ${alignClass}`}
+            className={`w-full bg-transparent resize-none outline-none font-serif font-semibold text-lg text-gray-800 dark:text-gray-200 tracking-tight leading-snug placeholder:text-gray-300 dark:placeholder:text-gray-600 mt-1 ${alignClass}`}
           />
         )}
 

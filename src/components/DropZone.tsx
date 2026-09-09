@@ -89,30 +89,30 @@ export const DropZone: React.FC<DropZoneProps> = ({
         onClick={() => fileInputRef.current?.click()}
         className={`w-full rounded-2xl border-2 border-dashed p-8 md:p-12 text-center transition-all duration-200 cursor-pointer relative overflow-hidden group ${
           isDragOver
-            ? 'border-cyan-400 bg-cyan-950/30 scale-[1.01] shadow-2xl shadow-cyan-500/10'
-            : 'border-slate-800 hover:border-slate-700 bg-slate-900/60 hover:bg-slate-900/80 shadow-xl'
+            ? 'border-[#d4a373] bg-[#d4a373]/10 scale-[1.01] shadow-2xl shadow-[#d4a373]/10'
+            : 'border-white/10 hover:border-white/20 bg-[#171614]/60 hover:bg-[#171614]/80 shadow-xl'
         }`}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#d4a373]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
         <div className="flex flex-col items-center max-w-md mx-auto">
-          <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5 text-cyan-400 group-hover:scale-110 transition-transform shadow-lg shadow-cyan-500/10">
+          <div className="w-16 h-16 rounded-2xl bg-[#d4a373]/10 ring-1 ring-[#d4a373]/20 flex items-center justify-center mb-5 text-[#d4a373] group-hover:scale-110 transition-transform shadow-lg shadow-[#d4a373]/10">
             <UploadCloud className="w-8 h-8 animate-bounce" />
           </div>
 
-          <h2 className="text-xl md:text-2xl font-bold text-slate-100 tracking-tight mb-2">
+          <h2 className="text-xl md:text-2xl font-serif font-medium text-neutral-100 tracking-tight mb-2">
             Upload & Run Any Web App
           </h2>
-          <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-            Drag & drop a <span className="text-cyan-400 font-semibold">.zip</span> archive here, or click to browse.
+          <p className="font-serif italic text-sm text-neutral-400 mb-6 leading-relaxed">
+            Drag & drop a <span className="text-[#d4a373] font-semibold">.zip</span> archive here, or click to browse.
             Everything unpacks in client-side memory with zero server lag.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-            <span className="px-2.5 py-1 rounded-full bg-slate-800/90 border border-slate-700/60 text-slate-300 text-xs font-mono">
+            <span className="px-2.5 py-1 rounded-full bg-white/[0.04] ring-1 ring-white/[0.06] text-neutral-300 font-sans text-xs tracking-wide uppercase">
               HTML5 Games
             </span>
-            <span className="px-2.5 py-1 rounded-full bg-slate-800/90 border border-slate-700/60 text-slate-300 text-xs font-mono">
+            <span className="px-2.5 py-1 rounded-full bg-white/[0.04] ring-1 ring-white/[0.06] text-neutral-300 font-sans text-xs tracking-wide uppercase">
               Vite / React dist
             </span>
             <span className="px-2.5 py-1 rounded-full bg-slate-800/90 border border-slate-700/60 text-slate-300 text-xs font-mono">

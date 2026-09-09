@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
 import {
   Calendar as CalendarIcon,
   ChevronDown,
@@ -114,7 +115,7 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
   );
   const totalCount = items.length + events.length;
 
-  // Formatted date string
+  // Formatted date string in expressive editorial tone
   const formattedDayTitle = useMemo(() => {
     return dateObj.toLocaleDateString(undefined, {
       weekday: 'long',
@@ -164,10 +165,10 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
       return (
         <div
           key={hour}
-          className="space-y-2.5 pt-1"
+          className="space-y-3 pt-2"
         >
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-[11px] font-mono font-bold text-gray-700 dark:text-gray-300">
-            <Clock className="w-3 h-3 text-blue-500" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.04] text-xs font-sans tracking-wide uppercase text-neutral-400 ring-1 ring-white/[0.06]">
+            <Clock className="w-3 h-3 text-[#d4a373]" />
             <span>{displayHour}</span>
           </div>
 
@@ -175,31 +176,32 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
             {bucket.events.map(ev => (
               <div
                 key={ev.id}
-                className="bg-blue-500/10 dark:bg-blue-950/40 backdrop-blur-md border border-blue-500/25 dark:border-blue-700/50 rounded-2xl p-3.5 text-xs text-blue-950 dark:text-blue-100 shadow-2xs hover:border-blue-500/40 transition-all flex flex-col justify-between"
+                className="relative rounded-2xl bg-[#171614]/70 p-4 shadow-[0_4px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.05] hover:ring-white/[0.12] transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex justify-between items-start font-bold">
-                    <span className="flex items-center gap-1.5 text-[13px] font-bold text-blue-900 dark:text-blue-100">
+                    <span className="flex items-center gap-1.5 font-serif font-medium text-sm sm:text-base text-neutral-100">
                       • {ev.title}
                     </span>
-                    <button aria-label="Action"
+                    <button
+                      aria-label="Delete Event"
                       onClick={() => onDeleteEvent(ev.id)}
-                      className="text-red-400 hover:text-red-600 p-1 rounded-md hover:bg-red-500/10 cursor-pointer transition-colors"
+                      className="text-neutral-500 hover:text-rose-400 p-1 rounded-md hover:bg-white/[0.05] cursor-pointer transition-colors opacity-0 group-hover:opacity-100"
                       title="Delete Event"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
                   {ev.description && (
-                    <p className="mt-1 text-xs text-blue-800 dark:text-blue-200/90 leading-relaxed font-normal">
+                    <p className="mt-1 font-serif italic text-xs text-neutral-300 leading-relaxed font-normal">
                       {ev.description}
                     </p>
                   )}
                 </div>
                 {ev.start && (
-                  <div className="mt-2 pt-1 border-t border-blue-500/15 flex items-center justify-between text-[10px] font-mono text-blue-700 dark:text-blue-300 font-bold">
+                  <div className="mt-2.5 pt-1.5 border-t border-white/[0.06] flex items-center justify-between font-sans text-xs tracking-wide uppercase text-neutral-400">
                     <span>Scheduled Time</span>
-                    <span>{ev.start} {ev.end ? `→ ${ev.end}` : ''}</span>
+                    <span className="font-mono text-neutral-300">{ev.start} {ev.end ? `→ ${ev.end}` : ''}</span>
                   </div>
                 )}
               </div>
@@ -227,72 +229,65 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
   }, [itemsByHour, onDeleteEvent, onSelectBrowser, onShowTrackProfile, onShowArtistProfile, onShowVideoProfile, onShowChannelProfile, onShowDomainProfile, onOpenMapModal, onResolveGeo, onSelectPhoto]);
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", damping: 26, stiffness: 220 }}
       id={`journal-day-${dateKey}`}
       ref={cardRef}
-      className={`scroll-mt-16 mb-8 rounded-3xl p-4 sm:p-5 transition-all ${
-        theme === 'liquid-glass'
-          ? 'liquid-glass-card bg-white/95 dark:bg-[#0c1626]/85 backdrop-blur-2xl border border-white/95 dark:border-white/15 shadow-md hover:translate-y-[-2px]'
-          : 'solid-glass-card bg-white/90 dark:bg-[#12141a]/90 backdrop-blur-xl border border-stone-200/90 dark:border-stone-800/80 shadow-2xs'
-      } ${
-        isToday
-          ? 'ring-2 ring-blue-500/50 shadow-blue-500/10'
-          : ''
-      } ${
+      className={`scroll-mt-16 mb-8 rounded-2xl bg-[#171614]/70 p-5 sm:p-6 shadow-[0_4px_24px_rgba(0,0,0,0.35)] ring-1 ${
         isCurrentSelected
-          ? 'ring-2 ring-blue-500/70'
-          : ''
-      }`}
+          ? 'ring-[#d4a373] shadow-[0_6px_32px_rgba(212,163,115,0.18)]'
+          : isToday
+          ? 'ring-[#d4a373]/60'
+          : 'ring-white/[0.05] hover:ring-white/[0.12]'
+      } backdrop-blur-md transition-all duration-300`}
     >
-      {/* Clean Day Header Bar (YouTube Section Style - Not a giant enclosing card) */}
-      <div className={`sticky top-0 z-20 py-2.5 px-3 mb-4 rounded-2xl flex items-center justify-between gap-3 shadow-2xs ${
-        theme === 'liquid-glass'
-          ? 'bg-white/95 dark:bg-[#0f172a]/90 backdrop-blur-2xl border border-white/90 dark:border-white/15'
-          : 'bg-white/90 dark:bg-[#16181f]/90 backdrop-blur-xl border border-stone-200/90 dark:border-stone-800/80'
-      }`}>
-        <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-8 h-8 rounded-xl bg-blue-500/15 dark:bg-blue-500/25 text-blue-700 dark:text-blue-300 flex items-center justify-center shrink-0 font-bold text-xs border border-blue-500/30 shadow-2xs">
+      {/* Editorial Day Header Bar */}
+      <div className="sticky top-0 z-20 py-3 px-4 mb-4 rounded-xl flex items-center justify-between gap-3 bg-[#121110]/90 backdrop-blur-md ring-1 ring-white/[0.05] shadow-xs">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-8 h-8 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.08] text-[#d4a373] flex items-center justify-center shrink-0 font-serif font-semibold text-sm">
             {dateObj.getDate()}
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm font-bold text-gray-950 dark:text-white leading-tight">
+              <h3 className="font-serif text-base sm:text-lg font-medium text-neutral-100 leading-tight">
                 {formattedDayTitle}
               </h3>
               {isToday && (
-                <span className="px-2 py-0.5 rounded-full bg-blue-600 text-white font-bold text-[10px] tracking-wide uppercase shadow-2xs">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#d4a373]/20 text-[#d4a373] ring-1 ring-[#d4a373]/30 font-sans text-xs tracking-wide uppercase">
                   Today
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-2 mt-0.5 text-[11px] text-gray-600 dark:text-gray-400 font-mono flex-wrap font-medium">
+            <div className="flex items-center gap-2 mt-0.5 font-sans text-xs tracking-wide uppercase text-neutral-400 flex-wrap">
               <span>{totalCount} item{totalCount !== 1 ? 's' : ''}</span>
               {spotifyCount > 0 && (
-                <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-semibold">
+                <span className="inline-flex items-center gap-1 text-[#d4a373]">
                   • <Headphones className="w-2.5 h-2.5" /> {spotifyCount}
                 </span>
               )}
               {youtubeCount > 0 && (
-                <span className="inline-flex items-center gap-1 text-rose-700 dark:text-rose-400 font-semibold">
+                <span className="inline-flex items-center gap-1 text-rose-400">
                   • <Video className="w-2.5 h-2.5" /> {youtubeCount}
                 </span>
               )}
               {browserCount > 0 && (
-                <span className="inline-flex items-center gap-1 text-blue-700 dark:text-blue-400 font-semibold">
+                <span className="inline-flex items-center gap-1 text-neutral-300">
                   • <Globe className="w-2.5 h-2.5" /> {browserCount}
                 </span>
               )}
               {mapsCount > 0 && (
-                <span className="inline-flex items-center gap-1 text-amber-700 dark:text-amber-400 font-semibold">
+                <span className="inline-flex items-center gap-1 text-amber-400">
                   • <MapIcon className="w-2.5 h-2.5" /> {mapsCount}
                 </span>
               )}
               {correlatedPlacesCount > 0 && (
                 <span
-                  className="inline-flex items-center gap-1 text-amber-700 dark:text-amber-300 font-semibold bg-amber-500/10 dark:bg-amber-500/20 px-1.5 py-0.5 rounded-md border border-amber-500/25"
+                  className="inline-flex items-center gap-1 text-[#d4a373] bg-[#d4a373]/10 px-1.5 py-0.5 rounded-full ring-1 ring-[#d4a373]/20"
                   title={`${correlatedPlacesCount} items linked to places on this day`}
                 >
-                  <MapPin className="w-2.5 h-2.5 text-amber-500" /> {correlatedPlacesCount} linked
+                  <MapPin className="w-2.5 h-2.5 text-[#d4a373]" /> {correlatedPlacesCount} linked
                 </span>
               )}
             </div>
@@ -300,46 +295,50 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
         </div>
 
         {/* Day Controls */}
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
           {onOpenInNotes && (
-            <button aria-label="Action"
+            <button
+              aria-label="Open in Notes"
               onClick={() => onOpenInNotes(dateKey)}
-              className="px-2.5 py-1 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-95"
+              className="px-2.5 py-1 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] ring-1 ring-white/[0.06] text-[#d4a373] font-sans text-xs tracking-wide uppercase font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-95"
               title="Open or create note for this day in Notes app"
             >
-              <FileText className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+              <FileText className="w-3.5 h-3.5 text-[#d4a373]" />
               <span className="hidden sm:inline">Open in Notes</span>
-              <ArrowUpRight className="w-3 h-3 text-amber-500 opacity-80" />
+              <ArrowUpRight className="w-3 h-3 text-[#d4a373] opacity-80" />
             </button>
           )}
 
           {mapsCount > 0 && (
-            <button aria-label="Action"
+            <button
+              aria-label="Toggle Day Movement Map"
               onClick={() => setShowMap(!showMap)}
-              className={`px-2.5 py-1 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer border ${
+              className={`px-2.5 py-1 rounded-xl font-sans text-xs tracking-wide uppercase font-semibold flex items-center gap-1.5 transition-all cursor-pointer ring-1 ${
                 showMap
-                  ? 'bg-blue-500/20 dark:bg-blue-950/70 border-blue-500/40 text-blue-900 dark:text-blue-200 font-bold'
-                  : 'bg-white/80 dark:bg-white/10 border-black/10 dark:border-white/15 text-gray-800 dark:text-gray-200 hover:bg-white dark:hover:bg-white/20'
+                  ? 'bg-[#d4a373]/20 text-[#d4a373] ring-[#d4a373]/30'
+                  : 'bg-white/[0.04] ring-white/[0.06] text-neutral-300 hover:bg-white/[0.08]'
               }`}
               title="Toggle Day Movement Map"
             >
-              <MapIcon className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <MapIcon className="w-3.5 h-3.5 text-[#d4a373]" />
               <span className="hidden sm:inline">{showMap ? 'Hide Map' : 'Day Map'}</span>
             </button>
           )}
 
-          <button aria-label="Action"
+          <button
+            aria-label="Add Event"
             onClick={() => onOpenAddEventForDate(dateKey)}
-            className="px-2.5 py-1 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer shadow-2xs active:scale-95"
+            className="px-3 py-1 rounded-xl bg-[#d4a373] hover:bg-[#e0a96d] text-neutral-950 font-sans text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer shadow-2xs active:scale-95"
             title="Add event on this date"
           >
             <Plus className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Add Event</span>
           </button>
 
-          <button aria-label="Action"
+          <button
+            aria-label={isExpanded ? 'Collapse day' : 'Expand day'}
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1.5 rounded-xl bg-white/80 dark:bg-white/10 border border-black/10 dark:border-white/15 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] ring-1 ring-white/[0.06] text-neutral-400 hover:text-white transition-colors cursor-pointer"
             title={isExpanded ? 'Collapse day' : 'Expand day'}
           >
             {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -347,26 +346,27 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
         </div>
       </div>
 
-      {/* Expandable Day Content - Series of Individual Cards */}
+      {/* Expandable Day Content */}
       {isExpanded && (
         <div className="space-y-4">
-          {/* Standalone Card: Daily Reflection / Diary Entry Box */}
-          <div className="p-4 rounded-2xl bg-white/90 dark:bg-black/35 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-xs hover:border-slate-300 dark:hover:border-white/20 transition-all">
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-gray-200 flex items-center gap-1.5">
-                <Edit3 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> Daily Reflections & Notes
+          {/* Standalone Card: Daily Reflection / Journal Entry Box */}
+          <div className="relative rounded-2xl bg-white/[0.02] p-5 shadow-[0_4px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.05] hover:ring-white/[0.10] backdrop-blur-md transition-all duration-300">
+            <div className="flex items-center justify-between mb-2.5">
+              <label className="font-sans text-xs tracking-wide uppercase text-neutral-400 flex items-center gap-2">
+                <Edit3 className="w-3.5 h-3.5 text-[#d4a373]" /> Daily Reflections & Journal
               </label>
               <div className="flex items-center gap-2">
                 {dailyNote && !isNoteFocused && (
-                  <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 font-bold">
+                  <span className="font-sans text-xs tracking-wide uppercase text-[#d4a373]">
                     ✓ Saved
                   </span>
                 )}
                 {onOpenInNotes && (
-                  <button aria-label="Action"
+                  <button
+                    aria-label="Full Editor"
                     type="button"
                     onClick={() => onOpenInNotes(dateKey)}
-                    className="text-[11px] font-semibold text-amber-700 dark:text-amber-400 hover:underline inline-flex items-center gap-1 cursor-pointer"
+                    className="font-sans text-xs font-medium text-[#d4a373] hover:underline inline-flex items-center gap-1 cursor-pointer"
                   >
                     <span>Full Editor</span>
                     <ArrowUpRight className="w-3 h-3" />
@@ -379,25 +379,26 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
               onChange={e => setNoteText(e.target.value)}
               onFocus={() => setIsNoteFocused(true)}
               onBlur={handleNoteBlur}
-              placeholder={`Write your daily notes, thoughts, reflections, or links like [[Topic]] for ${dateKey}...`}
-              rows={noteText || isNoteFocused ? 3 : 2}
-              className="w-full bg-white dark:bg-white/[0.04] backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-xl p-2.5 text-xs sm:text-sm text-slate-950 dark:text-gray-100 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 resize-y transition-all placeholder:text-slate-400 dark:placeholder:text-gray-500 leading-relaxed font-medium"
+              placeholder={`Write your thoughts, memories, reflections, or notes for ${dateKey}...`}
+              rows={noteText || isNoteFocused ? 4 : 2}
+              className="w-full bg-transparent border-0 outline-none text-neutral-100 placeholder:text-neutral-500 font-serif text-base sm:text-lg leading-relaxed resize-y transition-all focus:ring-0 p-0 mt-1"
             />
             {/* Quick interactive links preview if text has [[...]] and not focused */}
             {!isNoteFocused && noteText && /\[\[.*?\]\]/.test(noteText) && onOpenNote && (
-              <div className="mt-2 pt-2 border-t border-black/5 dark:border-white/5 flex items-center gap-1.5 flex-wrap text-xs">
-                <span className="text-[11px] text-stone-400 font-medium">Interlinks:</span>
+              <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center gap-1.5 flex-wrap">
+                <span className="font-sans text-xs tracking-wide uppercase text-neutral-400">Interlinks:</span>
                 {(Array.from(new Set(noteText.match(/\[\[(.*?)\]\]/g) || [])) as string[]).map((m) => {
                   const title = m.slice(2, -2).trim();
                   return (
-                    <button aria-label="Action"
+                    <button
+                      aria-label="Link to note"
                       key={m}
                       type="button"
                       onClick={() => onOpenNote(title)}
-                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-semibold text-[11px] cursor-pointer transition-colors border border-amber-500/20"
+                      className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#d4a373]/10 hover:bg-[#d4a373]/20 text-[#d4a373] font-sans text-xs font-medium cursor-pointer transition-colors ring-1 ring-[#d4a373]/20"
                     >
                       <span>{title}</span>
-                      <ArrowUpRight className="w-2.5 h-2.5 text-amber-500" />
+                      <ArrowUpRight className="w-2.5 h-2.5 text-[#d4a373]" />
                     </button>
                   );
                 })}
@@ -407,14 +408,14 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
 
           {/* Standalone Card: Day Map (if toggled) */}
           {showMap && mapItems.length > 0 && (
-            <div className="p-4 rounded-2xl bg-white/60 dark:bg-black/35 backdrop-blur-md border border-black/8 dark:border-white/10 shadow-xs">
-              <div className="flex items-center justify-between mb-2.5">
-                <h4 className="text-xs font-bold text-gray-950 dark:text-white flex items-center gap-1.5">
-                  <MapIcon className="w-3.5 h-3.5 text-blue-500" />
+            <div className="relative rounded-2xl bg-[#171614]/70 p-5 shadow-[0_4px_24px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.05] backdrop-blur-md">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="font-serif text-sm font-medium text-neutral-100 flex items-center gap-1.5">
+                  <MapIcon className="w-3.5 h-3.5 text-[#d4a373]" />
                   Day Movement Path ({mapItems.length} locations)
                 </h4>
               </div>
-              <div className="w-full h-72 rounded-xl overflow-hidden border border-black/10 dark:border-white/10 shadow-inner relative z-0 isolate">
+              <div className="w-full h-72 rounded-xl overflow-hidden ring-1 ring-white/[0.08] shadow-inner relative z-0 isolate">
                 <LeafletMap
                   containerId={`journal-day-map-${dateKey}`}
                   items={mapItems}
@@ -424,9 +425,9 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
             </div>
           )}
 
-          {/* Activity & Event Items Feed - Individual Cards (YouTube Style) */}
+          {/* Activity & Event Items Feed */}
           {totalCount === 0 ? (
-            <div className="py-6 px-4 text-center text-xs text-gray-500 dark:text-gray-400 font-mono bg-white/40 dark:bg-white/[0.02] rounded-2xl border border-black/5 dark:border-white/5">
+            <div className="py-6 px-4 text-center font-serif italic text-xs text-neutral-400 bg-white/[0.02] rounded-2xl ring-1 ring-white/[0.04]">
               No recorded activity or events for this date.
             </div>
           ) : (
@@ -436,7 +437,7 @@ export const JournalDayCard: React.FC<JournalDayCardProps> = React.memo(({
           )}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 });
 
