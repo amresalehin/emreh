@@ -38,6 +38,7 @@ import {
   persistStoredFitMetrics,
   saveSingleFitMetric
 } from '../../utils/fitStorage';
+import { syncFitEcosystem } from '../../utils/fitSync';
 import { FitLogModal } from '../modals/FitLogModal';
 import { FitImportModal } from '../modals/FitImportModal';
 import { FitDataVisualizationTab } from './FitDataVisualizationTab';
@@ -89,28 +90,38 @@ export const UnifiedHealthInsightsView: React.FC<UnifiedHealthInsightsViewProps>
 
   // Load metrics from storage & sync on external events
   useEffect(() => {
-    const load = () => {
-      const data = loadStoredFitMetrics();
-      setMetricsMap(data);
+    let isMounted = true;
+    const load = async () => {
+      try {
+        const data = await loadStoredFitMetrics();
+        if (isMounted && data && typeof data === 'object') {
+          setMetricsMap(data);
+        }
+      } catch (err) {
+        console.warn('Failed to load fit metrics in UnifiedHealthInsightsView:', err);
+      }
     };
     load();
 
-    const handleCustomUpdate = () => load();
+    const handleCustomUpdate = () => {
+      load();
+    };
     window.addEventListener('emreh_fit_updated', handleCustomUpdate);
-    return () => window.removeEventListener('emreh_fit_updated', handleCustomUpdate);
+    return () => {
+      isMounted = false;
+      window.removeEventListener('emreh_fit_updated', handleCustomUpdate);
+    };
   }, []);
 
-  const handleSaveMetric = (updated: FitDailyMetric) => {
-    saveSingleFitMetric(updated);
-    setMetricsMap(prev => ({ ...prev, [updated.date]: updated }));
-    window.dispatchEvent(new CustomEvent('emreh_fit_updated'));
+  const handleSaveMetric = async (updated: FitDailyMetric) => {
+    await saveSingleFitMetric(updated);
+    const { metrics } = await syncFitEcosystem({ newMetrics: { [updated.date]: updated } });
+    setMetricsMap(metrics);
   };
 
-  const handleImportMetrics = (newMetrics: Record<string, FitDailyMetric>) => {
-    const merged = { ...metricsMap, ...newMetrics };
-    persistStoredFitMetrics(merged);
+  const handleImportMetrics = async (newMetrics: Record<string, FitDailyMetric>) => {
+    const { metrics: merged } = await syncFitEcosystem({ newMetrics });
     setMetricsMap(merged);
-    window.dispatchEvent(new CustomEvent('emreh_fit_updated'));
   };
 
   // 1. Daily Metrics for currentDate (merging dataset + stored metrics)
@@ -120,7 +131,7 @@ export const UnifiedHealthInsightsView: React.FC<UnifiedHealthInsightsViewProps>
     // Check dataset daily summaries
     const summary = dataset?.dailySummaries?.find(s => s.date === dateKeyStr);
     const intervals = (dataset?.dailyIntervals || []).filter(i => {
-      const d = i.startTime.split('T')[0];
+      const d = i.date || (i.startTime ? i.startTime.split('T')[0] : '');
       return d === dateKeyStr;
     });
 
@@ -162,7 +173,7 @@ export const UnifiedHealthInsightsView: React.FC<UnifiedHealthInsightsViewProps>
 
     // Workouts on this date
     const workouts = (dataset?.workouts || []).filter(w => {
-      const d = w.startTime.split('T')[0];
+      const d = w.startTime ? w.startTime.split('T')[0] : '';
       return d === dateKeyStr;
     });
 

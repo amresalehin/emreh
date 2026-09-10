@@ -4,6 +4,7 @@ import { persistStoredFitMetrics, loadStoredFitMetrics } from './fitStorage';
 import { generateDeterministicId } from './deterministicId';
 import { timelinePersistence, persistTimelineIncremental } from './persistence';
 import { GoogleFitDataset, parseGoogleFitTakeout } from './googleFitParser';
+import { syncFitEcosystem, mergeGoogleFitDatasets } from './fitSync';
 import { parseCalendarDate, parseCalendarInstant, validateCoordinates, CalendarDate } from './calendarDate';
 
 /**
@@ -566,6 +567,7 @@ export async function parseFitFiles(
 ): Promise<Record<string, FitDailyMetric>> {
   const aggregated: Record<string, FitDailyMetric> = {};
   const fileArray = Array.from(files);
+  let aggregatedDataset: GoogleFitDataset | null = null;
 
   for (let i = 0; i < fileArray.length; i++) {
     const file = fileArray[i];
@@ -579,6 +581,7 @@ export async function parseFitFiles(
       // Delegate ZIP handling to parseGoogleFitTakeout for consistent parsing
       try {
         const parsedDataset = await parseGoogleFitTakeout(file);
+        aggregatedDataset = mergeGoogleFitDatasets(aggregatedDataset, parsedDataset);
         const extracted = extractFitDailyMetricsFromDataset(parsedDataset);
         mergeFitMetrics(aggregated, extracted);
       } catch (err) {
@@ -600,6 +603,53 @@ export async function parseFitFiles(
           ensureMetricForDate(aggregated, res.date, 'workout');
           aggregated[res.date].dataSourceType = 'workout';
           aggregated[res.date].workouts.push(res.workout);
+
+          // Also merge into aggregatedDataset to preserve GPS trackpoints & polylines
+          const tcxDataset: GoogleFitDataset = {
+            importedAt: new Date().toISOString(),
+            archiveName: file.name,
+            filesScanned: 1,
+            filesRecognized: 1,
+            unrecognizedFiles: [],
+            parseErrors: [],
+            measurements: [],
+            sessions: [{
+              id: res.workout.id || generateDeterministicId(res.workout.startTime, res.workout.title),
+              activityType: res.workout.activityType || 'Workout',
+              startTime: res.workout.startTime,
+              endTime: res.workout.endTime || res.workout.startTime,
+              durationSeconds: res.workout.durationSeconds || (res.workout.durationMinutes ? res.workout.durationMinutes * 60 : 0),
+              segments: [],
+              aggregates: {},
+              provenance: res.workout.provenance || { file: file.name, dataset: 'activities' }
+            }],
+            workouts: [{
+              id: res.workout.id || generateDeterministicId(res.workout.startTime, res.workout.title),
+              title: res.workout.title || 'Workout Session',
+              activityType: res.workout.activityType || 'Workout',
+              startTime: res.workout.startTime,
+              endTime: res.workout.endTime || res.workout.startTime,
+              durationSeconds: res.workout.durationSeconds || (res.workout.durationMinutes ? res.workout.durationMinutes * 60 : 0),
+              distanceMeters: res.workout.distanceMeters || (res.workout.distanceKm ? Math.round(res.workout.distanceKm * 1000) : 0),
+              calories: res.workout.calories,
+              laps: (res.workout.laps || []).map(lap => ({
+                startTime: lap.startTime,
+                durationSeconds: lap.durationSeconds,
+                distanceMeters: lap.distanceMeters,
+                calories: lap.calories,
+                intensity: lap.intensity,
+                trackpoints: lap.trackpoints || []
+              })),
+              trackpoints: res.workout.trackpoints || [],
+              provenance: res.workout.provenance || { file: file.name, dataset: 'activities' }
+            }],
+            dailyIntervals: [],
+            dailySummaries: [],
+            metricCounts: {},
+            sourceCounts: { TCX: 1 },
+            dateRange: { start: res.date, end: res.date }
+          };
+          aggregatedDataset = mergeGoogleFitDatasets(aggregatedDataset, tcxDataset);
         }
       } catch (err) {
         console.warn(`Error parsing TCX ${file.name}:`, err);
@@ -615,13 +665,14 @@ export async function parseFitFiles(
     }
   }
 
-  // Merge with any pre-existing stored metrics so we don't wipe out previous history
-  const stored = await loadStoredFitMetrics();
-  const fullyMerged = { ...stored, ...aggregated };
-  await persistStoredFitMetrics(fullyMerged);
+  // Bidirectionally synchronize GoogleFitDataset and daily vitals
+  const { metrics: fullyMerged } = await syncFitEcosystem({
+    newDataset: aggregatedDataset,
+    newMetrics: aggregated
+  });
 
   if (onProgress) onProgress(100, 'Fit data parsing complete');
-  return aggregated;
+  return fullyMerged;
 }
 
 export function ensureMetricForDate(target: Record<string, FitDailyMetric>, dateKey: string | CalendarDate, dataSourceType?: FitDataSourceType) {

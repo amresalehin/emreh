@@ -24,6 +24,7 @@ import { FitLogModal } from '../modals/FitLogModal';
 import { RichDateNavButton } from '../common/RichDateNavButton';
 import { FitDataVisualizationTab } from '../fit/FitDataVisualizationTab';
 import { createSampleFitDailyMetrics } from '../fit/sampleFitData';
+import { syncSampleFitData, syncFitEcosystem } from '../../utils/fitSync';
 import { GoogleFitDataset } from '../../utils/googleFitParser';
 
 interface FitHealthViewProps {
@@ -84,9 +85,9 @@ export const FitHealthView: React.FC<FitHealthViewProps> = ({
     persistStoredFitMetrics(updated);
   };
 
-  const handleImportMetrics = (importedMap: Record<string, FitDailyMetric>) => {
-    const updated = { ...metricsMap, ...importedMap };
-    persistMetrics(updated);
+  const handleImportMetrics = async (importedMap: Record<string, FitDailyMetric>) => {
+    const { metrics: updated } = await syncFitEcosystem({ newMetrics: importedMap });
+    setMetricsMap(updated);
 
     // Automatically navigate to the latest date that has recorded data
     const activeImportedDates = Object.keys(importedMap).filter(d => {
@@ -104,9 +105,9 @@ export const FitHealthView: React.FC<FitHealthViewProps> = ({
     }
   };
 
-  const handleSaveMetric = (savedMetric: FitDailyMetric) => {
-    const updated = { ...metricsMap, [savedMetric.date]: savedMetric };
-    persistMetrics(updated);
+  const handleSaveMetric = async (savedMetric: FitDailyMetric) => {
+    const { metrics: updated } = await syncFitEcosystem({ newMetrics: { [savedMetric.date]: savedMetric } });
+    setMetricsMap(updated);
   };
 
   const dateStr = useMemo(() => {
@@ -138,8 +139,8 @@ export const FitHealthView: React.FC<FitHealthViewProps> = ({
   const latestActiveDateStr = hasAnyDataInApp ? allRecordedDates[allRecordedDates.length - 1] : null;
 
   // Realistic 30-day sample data generator for immediate exploration
-  const handleLoadSampleVitals = () => {
-    const sampleMap = createSampleFitDailyMetrics(currentDate);
+  const handleLoadSampleVitals = async () => {
+    const { metrics: sampleMap } = await syncSampleFitData(currentDate);
     handleImportMetrics(sampleMap);
   };
 

@@ -42,6 +42,7 @@ import { LeafletMap } from '../LeafletMap';
 import { PaneResizer } from '../common/PaneResizer';
 import { useResizablePane } from '../../hooks/useResizablePane';
 import { createSampleGoogleFitDataset, createSampleFitDailyMetrics } from '../fit/sampleFitData';
+import { syncSampleFitData } from '../../utils/fitSync';
 import { FitWorkoutInspector } from '../fit/FitWorkoutInspector';
 import { UnifiedHealthInsightsView } from '../fit/UnifiedHealthInsightsView';
 import { persistStoredFitMetrics } from '../../utils/fitStorage';
@@ -176,6 +177,18 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
   // Fallback demo state if user loads sample dataset
   const [localDataset, setLocalDataset] = useState<GoogleFitDataset | null>(null);
   const activeDataset = dataset || localDataset;
+
+  useEffect(() => {
+    const handleGoogleFitEvent = (e: any) => {
+      if (e?.detail) {
+        setLocalDataset(e.detail);
+      }
+    };
+    window.addEventListener('emreh_google_fit_updated', handleGoogleFitEvent);
+    return () => {
+      window.removeEventListener('emreh_google_fit_updated', handleGoogleFitEvent);
+    };
+  }, []);
 
   const day = dateKey(currentDate);
   const rangeStart = dateRange?.startDate
@@ -527,16 +540,12 @@ export const GoogleFitView: React.FC<GoogleFitViewProps> = ({
   };
 
   // Sample data loader
-  const handleLoadSample = () => {
-    const sample = createSampleGoogleFitDataset();
+  const handleLoadSample = async () => {
+    const { dataset: sample } = await syncSampleFitData(currentDate);
     setLocalDataset(sample);
     if (onLoadSampleData) {
       onLoadSampleData(sample);
     }
-    // Also generate and persist 30-day vitals metrics so all tabs have rich synchronized data
-    const vitalsMap = createSampleFitDailyMetrics(currentDate);
-    persistStoredFitMetrics(vitalsMap);
-    window.dispatchEvent(new CustomEvent('emreh_fit_updated'));
     onJumpToDate(new Date(sample.dateRange.end || Date.now()));
   };
 

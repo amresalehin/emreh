@@ -39,6 +39,7 @@ import { EmrehWelcomeCard } from './components/modals/EmrehWelcomeCard';
 import { AudioVoiceMemoModal } from './components/common/AudioVoiceMemoModal';
 import { KeepImportModal } from './components/modals/KeepImportModal';
 import { parseFitFiles, extractFitDailyMetricsFromDataset } from './utils/fitImporter';
+import { syncFitEcosystem, syncSampleFitData } from './utils/fitSync';
 import { loadStoredFitMetrics, saveSingleFitMetric, persistStoredFitMetrics } from './utils/fitStorage';
 import { parseKeepFiles, keepNoteToNoteObject } from './utils/keepImporter';
 import { parseScreentimeFiles } from './utils/screentimeCalculator';
@@ -336,6 +337,17 @@ export const App: React.FC = () => {
     const unsubScreentime = subscribeToScreentime(() => {}); // Screentime handled separately
     const unsubNotes = subscribeToNotes(() => {}); // Notes handled separately
 
+    const handleGoogleFitUpdated = (e: any) => {
+      if (e?.detail) {
+        setGoogleFitData(e.detail);
+      } else {
+        dbGet<GoogleFitDataset | null>('mylife_google_fit', null).then(fit => {
+          if (fit) setGoogleFitData(fit);
+        });
+      }
+    };
+    window.addEventListener('emreh_google_fit_updated', handleGoogleFitUpdated);
+
     return () => {
       unsubTimeline();
       unsubCalendar();
@@ -343,6 +355,7 @@ export const App: React.FC = () => {
       unsubFit();
       unsubScreentime();
       unsubNotes();
+      window.removeEventListener('emreh_google_fit_updated', handleGoogleFitUpdated);
     };
   }, [isHydrated]);
 
@@ -946,8 +959,12 @@ export const App: React.FC = () => {
           const filesScanned = parsedFit.filesScanned || files.length;
           // Import is successful if there are useful records OR if in fit mode (for UI consistency)
           if (totalUsefulRecords > 0 || importModal.mode === 'fit') {
-            setGoogleFitData(parsedFit);
-            await dbSet('mylife_google_fit', parsedFit);
+            // Bidirectionally synchronize GoogleFitDataset and daily metrics
+            const { dataset: syncedFit, metrics: syncedMetrics } = await syncFitEcosystem({
+              newDataset: parsedFit
+            });
+            setGoogleFitData(syncedFit);
+
             const importedName = files.length === 1 ? files[0].name : `Fitness & Health Data (${files.length} files)`;
             const totalBytes = files.reduce((sum, f) => sum + f.size, 0);
             setImportedFiles(prev => [{
@@ -959,7 +976,7 @@ export const App: React.FC = () => {
             }, ...prev]);
 
             // Also convert recorded workouts and daily milestones into Timeline items
-            const fitTimelineItems = convertGoogleFitToTimelineItems(parsedFit);
+            const fitTimelineItems = convertGoogleFitToTimelineItems(syncedFit);
             if (fitTimelineItems.length > 0) {
               setTimelineData(prev => {
                 const existingMap = new Map<string, TimelineItem>();
@@ -980,23 +997,9 @@ export const App: React.FC = () => {
               }, 0);
             }
 
-            // Also extract daily vitals (steps, heart points, move minutes, sleep) into Fit Health storage
-            let parsedMetrics: Record<string, any> = {};
-            try {
-              parsedMetrics = extractFitDailyMetricsFromDataset(parsedFit);
-              if (Object.keys(parsedMetrics).length > 0) {
-                const stored = await loadStoredFitMetrics();
-                const fullyMerged = { ...stored, ...parsedMetrics };
-                await persistStoredFitMetrics(fullyMerged);
-                window.dispatchEvent(new CustomEvent('emreh_fit_updated'));
-              }
-            } catch (metricsErr) {
-              console.warn('Fit daily metrics parse error:', metricsErr);
-            }
-
-            let latestDateObj: Date | null = parsedFit.dateRange.end ? new Date(parsedFit.dateRange.end) : null;
+            let latestDateObj: Date | null = syncedFit.dateRange.end ? new Date(syncedFit.dateRange.end) : null;
             if (!latestDateObj || isNaN(latestDateObj.getTime())) {
-              const sortedMetricDates = Object.keys(parsedMetrics || {}).sort();
+              const sortedMetricDates = Object.keys(syncedMetrics || {}).sort();
               if (sortedMetricDates.length > 0) {
                 const [y, m, d] = sortedMetricDates[sortedMetricDates.length - 1].split('-').map(Number);
                 latestDateObj = new Date(y, m - 1, d);
@@ -1645,34 +1648,16 @@ const datesCount = Object.keys(parsedScreentime).length;
       });
     }
 
-    if (backupData.googleFitData && typeof backupData.googleFitData === 'object') {
+    if ((backupData.googleFitData && typeof backupData.googleFitData === 'object') || (backupData.fitMetrics && typeof backupData.fitMetrics === 'object')) {
       restoreOperations.push({
-        name: 'Google Fit Data',
+        name: 'Google Fit & Health Ecosystem',
         fn: async () => {
-          if (mode === 'merge') {
-            const existing = await dbGet<any>('mylife_google_fit', null);
-            const merged = existing ? { ...existing, ...backupData.googleFitData } : backupData.googleFitData;
-            await dbSet('mylife_google_fit', merged);
-            setGoogleFitData(merged);
-          } else {
-            await dbSet('mylife_google_fit', backupData.googleFitData);
-            setGoogleFitData(backupData.googleFitData);
-          }
-        }
-      });
-    }
-
-    if (backupData.fitMetrics && typeof backupData.fitMetrics === 'object') {
-      restoreOperations.push({
-        name: 'Fit Metrics',
-        fn: async () => {
-          if (mode === 'merge') {
-            const existing = await dbGet<Record<string, FitDailyMetric>>('emreh_fit_metrics_v1', {});
-            const merged = { ...existing, ...backupData.fitMetrics };
-            await persistStoredFitMetrics(merged);
-          } else {
-            await persistStoredFitMetrics(backupData.fitMetrics);
-          }
+          const { dataset } = await syncFitEcosystem({
+            newDataset: backupData.googleFitData,
+            newMetrics: backupData.fitMetrics,
+            overwrite: mode === 'replace'
+          });
+          setGoogleFitData(dataset);
         }
       });
     }
@@ -1822,8 +1807,16 @@ const datesCount = Object.keys(parsedScreentime).length;
       { id: 'demo-2', fileName: 'Google_Takeout_Location_History.json', fileType: 'maps', recordCount: 6, importDate: '2025-05-15T08:00:00.000Z' },
       { id: 'demo-3', fileName: 'YouTube_Watch_History.html', fileType: 'youtube', recordCount: 3, importDate: '2025-05-15T08:00:00.000Z' },
       { id: 'demo-4', fileName: 'Chrome_Browser_History.json', fileType: 'browser', recordCount: 3, importDate: '2025-05-15T08:00:00.000Z' },
-      { id: 'demo-5', fileName: 'Google_Photos_Heritage_Kolkata.zip', fileType: 'photos', recordCount: 2, photoCount: 2, importDate: '2025-05-15T08:00:00.000Z' }
+      { id: 'demo-5', fileName: 'Google_Photos_Heritage_Kolkata.zip', fileType: 'photos', recordCount: 2, photoCount: 2, importDate: '2025-05-15T08:00:00.000Z' },
+      { id: 'demo-6', fileName: 'Takeout_Google_Fit_Telemetries.zip', fileType: 'google_fit', recordCount: 35, count: 35, importDate: '2025-05-15T08:00:00.000Z' }
     ]);
+
+    // Bidirectionally synchronize demo GoogleFitDataset (polylines/sessions) & vitals
+    syncSampleFitData(new Date(2025, 4, 15)).then(({ dataset }) => {
+      setGoogleFitData(dataset);
+    }).catch(err => {
+      console.warn('Failed to load demo fit data:', err);
+    });
   };
 
   // Metric Profile Drilldown Triggers
@@ -2791,9 +2784,9 @@ const datesCount = Object.keys(parsedScreentime).length;
               onSetToday={handleSetToday}
               onJumpToDate={handleJumpToDate}
               initialTab={fitSubView === 'vitals' ? 'insights' : 'workouts'}
-              onLoadSampleData={(sample) => {
-                setGoogleFitData(sample);
-                dbSet('mylife_google_fit', sample);
+              onLoadSampleData={async (sample) => {
+                const { dataset: synced } = await syncFitEcosystem({ newDataset: sample, overwrite: true });
+                setGoogleFitData(synced);
               }}
               luminance={settings.luminance}
               theme={settings.theme}

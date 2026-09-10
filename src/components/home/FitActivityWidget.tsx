@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   HeartPulse,
   Flame,
@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { ViewType, FitDailyMetric } from '../../types';
 import { loadStoredFitMetrics } from '../../utils/fitStorage';
+import { getDateKey } from '../../utils/dataParser';
 
 interface FitActivityWidgetProps {
   currentDate?: Date;
@@ -26,7 +27,10 @@ export const FitActivityWidget: React.FC<FitActivityWidgetProps> = ({
   const [metricsMap, setMetricsMap] = useState<Record<string, FitDailyMetric>>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const dateKey = currentDate.toISOString().slice(0, 10);
+  // Local calendar date formatted as YYYY-MM-DD to avoid UTC off-by-one errors
+  const dateKey = useMemo(() => {
+    return getDateKey(currentDate);
+  }, [currentDate]);
 
   useEffect(() => {
     async function loadData() {

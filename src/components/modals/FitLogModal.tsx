@@ -11,6 +11,7 @@ import {
   Check
 } from 'lucide-react';
 import { FitDailyMetric, FitWorkout } from '../../types';
+import { syncWorkoutToGoogleFitDataset } from '../../utils/fitSync';
 
 interface FitLogModalProps {
   isOpen: boolean;
@@ -39,6 +40,7 @@ export const FitLogModal: React.FC<FitLogModalProps> = ({
   const [addWorkout, setAddWorkout] = useState(false);
   const [workoutType, setWorkoutType] = useState<FitWorkout['type']>('running');
   const [workoutTitle, setWorkoutTitle] = useState('Morning Run');
+  const [workoutTime, setWorkoutTime] = useState('08:00');
   const [workoutDuration, setWorkoutDuration] = useState(30);
   const [workoutCalories, setWorkoutCalories] = useState(250);
   const [workoutDistance, setWorkoutDistance] = useState(4.0);
@@ -49,15 +51,38 @@ export const FitLogModal: React.FC<FitLogModalProps> = ({
     const workouts = existingMetric?.workouts ? [...existingMetric.workouts] : [];
 
     if (addWorkout) {
-      workouts.push({
+      const timePattern = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+      const safeTime = timePattern.test(workoutTime) ? workoutTime : '08:00';
+      const startIso = `${targetDate}T${safeTime}:00.000Z`;
+      const durationSec = Math.max(0, (Number(workoutDuration) || 0) * 60);
+      const endTimestamp = new Date(startIso).getTime() + (durationSec * 1000);
+      const endIso = new Date(endTimestamp).toISOString();
+      const distKm = parseFloat((Number(workoutDistance) || 0).toFixed(2));
+
+      const newWorkout: FitWorkout = {
         id: `w_${targetDate}_${Date.now()}`,
         type: workoutType,
+        activityType: workoutType,
         title: workoutTitle.trim() || 'Workout Session',
-        startTime: '08:00 AM',
-        durationMinutes: workoutDuration,
-        calories: workoutCalories,
-        distanceKm: workoutDistance,
-        avgHeartRateBpm: 140
+        startTime: startIso,
+        endTime: endIso,
+        durationMinutes: Number(workoutDuration) || 0,
+        durationSeconds: durationSec,
+        calories: Number(workoutCalories) || 0,
+        distanceKm: distKm,
+        distanceMeters: Math.round(distKm * 1000),
+        avgHeartRateBpm: 140,
+        trackpoints: [],
+        laps: [],
+        provenance: {
+          file: 'manual_entry',
+          dataset: 'activities'
+        }
+      };
+
+      workouts.push(newWorkout);
+      syncWorkoutToGoogleFitDataset(newWorkout).catch(err => {
+        console.warn('Failed to sync workout to Google Fit dataset:', err);
       });
     }
 
@@ -259,6 +284,18 @@ export const FitLogModal: React.FC<FitLogModalProps> = ({
 
                   <div>
                     <label className="block text-[11px] font-semibold text-gray-600 dark:text-zinc-400 mb-1">
+                      Time of Day
+                    </label>
+                    <input
+                      type="time"
+                      value={workoutTime}
+                      onChange={e => setWorkoutTime(e.target.value)}
+                      className="w-full px-3 py-1.5 text-xs bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl text-gray-900 dark:text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-gray-600 dark:text-zinc-400 mb-1">
                       Duration (Minutes)
                     </label>
                     <input
@@ -278,6 +315,18 @@ export const FitLogModal: React.FC<FitLogModalProps> = ({
                       step="0.1"
                       value={workoutDistance}
                       onChange={e => setWorkoutDistance(Number(e.target.value))}
+                      className="w-full px-3 py-1.5 text-xs bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl text-gray-900 dark:text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-gray-600 dark:text-zinc-400 mb-1">
+                      Est. Calories (kcal)
+                    </label>
+                    <input
+                      type="number"
+                      value={workoutCalories}
+                      onChange={e => setWorkoutCalories(Number(e.target.value))}
                       className="w-full px-3 py-1.5 text-xs bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl text-gray-900 dark:text-white"
                     />
                   </div>
