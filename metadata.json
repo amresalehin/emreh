@@ -1,0 +1,8 @@
+{
+  "name": "Emreh",
+  "description": "Emreh — Personal life companion and fellow traveler (Hamrah / همراه) navigating daily timelines, journals, bookmarks, and memories.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
