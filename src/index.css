@@ -1,0 +1,1587 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #fdfcf9;
+  --ink: #0f172a;
+  --ink-muted: #334155;
+  --ink-subtle: #475569;
+  --accent: #1e3a8a;
+  --accent-soft: #e0e7ff;
+  --border: rgba(15, 23, 42, 0.12);
+  --sidebar-w: 240px;
+
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+.dark {
+  --bg: #121214;
+  --ink: #f8fafc;
+  --ink-muted: #cbd5e1;
+  --ink-subtle: #94a3b8;
+  --accent: #60a5fa;
+  --accent-soft: rgba(30, 58, 138, 0.28);
+  --border: rgba(255, 255, 255, 0.14);
+}
+
+.theme-liquid-glass {
+  --bg: #f0f7ff;
+  --ink: #0c1c38;
+  --ink-muted: #334e68;
+  --ink-subtle: #627d98;
+  --accent: #0284c7;
+  --accent-soft: rgba(2, 132, 199, 0.15);
+  --border: rgba(255, 255, 255, 0.75);
+  color-scheme: light;
+}
+
+.dark.theme-liquid-glass,
+.dark .theme-liquid-glass,
+.theme-liquid-glass.dark {
+  --bg: #071326;
+  --ink: #ffffff;
+  --ink-muted: #cbd5e1;
+  --ink-subtle: #94a3b8;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.28);
+  --border: rgba(255, 255, 255, 0.22);
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   LIQUID GLASS DESIGN SYSTEM (Apple Fluid Optics & Spring Physics)
+   ========================================================================== */
+
+:root {
+  --liquid-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --liquid-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+  --liquid-squish: cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+
+/* Light Liquid Glass Theme: Crystalline Optical Lens & Deep Ink Typography */
+.theme-liquid-glass {
+  --bg: #f5f9ff;
+  --ink: #060b17;
+  --ink-muted: #1e293b;
+  --ink-subtle: #334155;
+  --accent: #0284c7;
+  --accent-soft: rgba(2, 132, 199, 0.12);
+  --border: rgba(15, 23, 42, 0.12);
+  color-scheme: light;
+}
+
+/* Dark Liquid Glass Theme: Deep Obsidian Fluid Optics & Chromatic Glow */
+.dark.theme-liquid-glass,
+.dark .theme-liquid-glass,
+.theme-liquid-glass.dark {
+  --bg: #070f1e;
+  --ink: #ffffff;
+  --ink-muted: #e2e8f0;
+  --ink-subtle: #94a3b8;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.25);
+  --border: rgba(255, 255, 255, 0.2);
+  color-scheme: dark;
+}
+
+/* Base Liquid Glass Typography & Rendering */
+.theme-liquid-glass,
+.theme-liquid-glass * {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   1. LIGHT LIQUID UI: WCAG AAA HIGH-CONTRAST SOLID INK TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) {
+  color: #070b14 !important;
+}
+
+/* High-contrast headings and titles in Light Liquid Glass */
+html:not(.dark).theme-liquid-glass h1,
+html:not(.dark).theme-liquid-glass h2,
+html:not(.dark).theme-liquid-glass h3,
+html:not(.dark).theme-liquid-glass h4,
+html:not(.dark).theme-liquid-glass h5,
+html:not(.dark).theme-liquid-glass h6,
+html:not(.dark).theme-liquid-glass strong,
+html:not(.dark).theme-liquid-glass b,
+html.light.theme-liquid-glass h1,
+html.light.theme-liquid-glass h2,
+html.light.theme-liquid-glass h3,
+html.light.theme-liquid-glass h4,
+html.light.theme-liquid-glass h5,
+html.light.theme-liquid-glass h6,
+html.light.theme-liquid-glass strong,
+html.light.theme-liquid-glass b {
+  color: #050811 !important;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+/* Primary body text: Solid Obsidian Ink (16:1 contrast against light liquid glass) */
+html:not(.dark).theme-liquid-glass .text-black,
+html:not(.dark).theme-liquid-glass .text-gray-950,
+html:not(.dark).theme-liquid-glass .text-gray-900,
+html:not(.dark).theme-liquid-glass .text-stone-950,
+html:not(.dark).theme-liquid-glass .text-stone-900,
+html:not(.dark).theme-liquid-glass .text-slate-950,
+html:not(.dark).theme-liquid-glass .text-slate-900,
+html:not(.dark).theme-liquid-glass .text-neutral-950,
+html:not(.dark).theme-liquid-glass .text-neutral-900,
+html:not(.dark).theme-liquid-glass .text-zinc-950,
+html:not(.dark).theme-liquid-glass .text-zinc-900,
+html:not(.dark).theme-liquid-glass [class*="text-black/9"],
+html.light.theme-liquid-glass .text-black,
+html.light.theme-liquid-glass .text-gray-950,
+html.light.theme-liquid-glass .text-gray-900,
+html.light.theme-liquid-glass .text-stone-950,
+html.light.theme-liquid-glass .text-stone-900,
+html.light.theme-liquid-glass .text-slate-950,
+html.light.theme-liquid-glass .text-slate-900,
+html.light.theme-liquid-glass .text-neutral-950,
+html.light.theme-liquid-glass .text-neutral-900,
+html.light.theme-liquid-glass .text-zinc-950,
+html.light.theme-liquid-glass .text-zinc-900,
+html.light.theme-liquid-glass [class*="text-black/9"] {
+  color: #070b14 !important;
+  font-weight: 600;
+}
+
+/* Secondary text: Solid Slate-800 Ink (11:1 contrast ratio, replacing washed-out tones) */
+html:not(.dark).theme-liquid-glass .text-gray-800,
+html:not(.dark).theme-liquid-glass .text-gray-700,
+html:not(.dark).theme-liquid-glass .text-stone-800,
+html:not(.dark).theme-liquid-glass .text-stone-700,
+html:not(.dark).theme-liquid-glass .text-slate-800,
+html:not(.dark).theme-liquid-glass .text-slate-700,
+html:not(.dark).theme-liquid-glass .text-neutral-800,
+html:not(.dark).theme-liquid-glass .text-neutral-700,
+html:not(.dark).theme-liquid-glass .text-zinc-800,
+html:not(.dark).theme-liquid-glass .text-zinc-700,
+html:not(.dark).theme-liquid-glass [class*="text-black/8"],
+html:not(.dark).theme-liquid-glass [class*="text-black/7"],
+html:not(.dark).theme-liquid-glass [class*="text-stone-900/"],
+html:not(.dark).theme-liquid-glass [class*="text-gray-900/"],
+html:not(.dark).theme-liquid-glass [class*="text-slate-900/"],
+html.light.theme-liquid-glass .text-gray-800,
+html.light.theme-liquid-glass .text-gray-700,
+html.light.theme-liquid-glass .text-stone-800,
+html.light.theme-liquid-glass .text-stone-700,
+html.light.theme-liquid-glass .text-slate-800,
+html.light.theme-liquid-glass .text-slate-700,
+html.light.theme-liquid-glass .text-neutral-800,
+html.light.theme-liquid-glass .text-neutral-700,
+html.light.theme-liquid-glass .text-zinc-800,
+html.light.theme-liquid-glass .text-zinc-700,
+html.light.theme-liquid-glass [class*="text-black/8"],
+html.light.theme-liquid-glass [class*="text-black/7"],
+html.light.theme-liquid-glass [class*="text-stone-900/"],
+html.light.theme-liquid-glass [class*="text-gray-900/"],
+html.light.theme-liquid-glass [class*="text-slate-900/"] {
+  color: #0f172a !important;
+  font-weight: 550;
+}
+
+/* Tertiary text & Metadata: Solid Slate-700 Ink (replaces washed-out semi-transparent grays, 7.8:1 contrast) */
+html:not(.dark).theme-liquid-glass .text-gray-600,
+html:not(.dark).theme-liquid-glass .text-gray-500,
+html:not(.dark).theme-liquid-glass .text-stone-600,
+html:not(.dark).theme-liquid-glass .text-stone-500,
+html:not(.dark).theme-liquid-glass .text-slate-600,
+html:not(.dark).theme-liquid-glass .text-slate-500,
+html:not(.dark).theme-liquid-glass .text-neutral-600,
+html:not(.dark).theme-liquid-glass .text-neutral-500,
+html:not(.dark).theme-liquid-glass .text-zinc-600,
+html:not(.dark).theme-liquid-glass .text-zinc-500,
+html:not(.dark).theme-liquid-glass [class*="text-black/6"],
+html:not(.dark).theme-liquid-glass [class*="text-black/5"],
+html:not(.dark).theme-liquid-glass [class*="text-stone-700/"],
+html:not(.dark).theme-liquid-glass [class*="text-gray-700/"],
+html:not(.dark).theme-liquid-glass [class*="text-slate-700/"],
+html:not(.dark).theme-liquid-glass [class*="text-stone-600/"],
+html:not(.dark).theme-liquid-glass [class*="text-gray-600/"],
+html:not(.dark).theme-liquid-glass [class*="text-slate-600/"],
+html.light.theme-liquid-glass .text-gray-600,
+html.light.theme-liquid-glass .text-gray-500,
+html.light.theme-liquid-glass .text-stone-600,
+html.light.theme-liquid-glass .text-stone-500,
+html.light.theme-liquid-glass .text-slate-600,
+html.light.theme-liquid-glass .text-slate-500,
+html.light.theme-liquid-glass .text-neutral-600,
+html.light.theme-liquid-glass .text-neutral-500,
+html.light.theme-liquid-glass .text-zinc-600,
+html.light.theme-liquid-glass .text-zinc-500,
+html.light.theme-liquid-glass [class*="text-black/6"],
+html.light.theme-liquid-glass [class*="text-black/5"],
+html.light.theme-liquid-glass [class*="text-stone-700/"],
+html.light.theme-liquid-glass [class*="text-gray-700/"],
+html.light.theme-liquid-glass [class*="text-slate-700/"],
+html.light.theme-liquid-glass [class*="text-stone-600/"],
+html.light.theme-liquid-glass [class*="text-gray-600/"],
+html.light.theme-liquid-glass [class*="text-slate-600/"] {
+  color: #334155 !important;
+  font-weight: 500;
+}
+
+/* Micro-labels, Captions, Badges, Footnotes: Solid Slate-600 Ink (5.5:1 contrast, zero background bleed) */
+html:not(.dark).theme-liquid-glass .text-gray-400,
+html:not(.dark).theme-liquid-glass .text-stone-400,
+html:not(.dark).theme-liquid-glass .text-slate-400,
+html:not(.dark).theme-liquid-glass .text-neutral-400,
+html:not(.dark).theme-liquid-glass .text-zinc-400,
+html:not(.dark).theme-liquid-glass .text-stone-300,
+html:not(.dark).theme-liquid-glass .text-gray-300,
+html:not(.dark).theme-liquid-glass .text-slate-300,
+html:not(.dark).theme-liquid-glass [class*="text-black/4"],
+html:not(.dark).theme-liquid-glass [class*="text-black/3"],
+html:not(.dark).theme-liquid-glass [class*="text-stone-500/"],
+html:not(.dark).theme-liquid-glass [class*="text-gray-500/"],
+html:not(.dark).theme-liquid-glass [class*="text-slate-500/"],
+html.light.theme-liquid-glass .text-gray-400,
+html.light.theme-liquid-glass .text-stone-400,
+html.light.theme-liquid-glass .text-slate-400,
+html.light.theme-liquid-glass .text-neutral-400,
+html.light.theme-liquid-glass .text-zinc-400,
+html.light.theme-liquid-glass .text-stone-300,
+html.light.theme-liquid-glass .text-gray-300,
+html.light.theme-liquid-glass .text-slate-300,
+html.light.theme-liquid-glass [class*="text-black/4"],
+html.light.theme-liquid-glass [class*="text-black/3"],
+html.light.theme-liquid-glass [class*="text-stone-500/"],
+html.light.theme-liquid-glass [class*="text-gray-500/"],
+html.light.theme-liquid-glass [class*="text-slate-500/"] {
+  color: #475569 !important;
+  font-weight: 500;
+}
+
+/* Solid ink icons and key elements */
+html:not(.dark).theme-liquid-glass svg.text-stone-400,
+html:not(.dark).theme-liquid-glass svg.text-gray-400,
+html:not(.dark).theme-liquid-glass svg.text-slate-400,
+html.light.theme-liquid-glass svg.text-stone-400,
+html.light.theme-liquid-glass svg.text-gray-400,
+html.light.theme-liquid-glass svg.text-slate-400 {
+  color: #475569 !important;
+}
+
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) kbd {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.18) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08) !important;
+  font-weight: 700 !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. DARK LIQUID UI: LUMINOUS CONTRAST & DEPTH
+   -------------------------------------------------------------------------- */
+.dark.theme-liquid-glass,
+.dark .theme-liquid-glass {
+  color: #f8fafc;
+}
+
+.dark.theme-liquid-glass h1,
+.dark.theme-liquid-glass h2,
+.dark.theme-liquid-glass h3,
+.dark.theme-liquid-glass h4,
+.dark.theme-liquid-glass strong,
+.dark .theme-liquid-glass h1,
+.dark .theme-liquid-glass h2,
+.dark .theme-liquid-glass h3,
+.dark .theme-liquid-glass h4,
+.dark .theme-liquid-glass strong {
+  color: #ffffff !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.dark.theme-liquid-glass .text-gray-950,
+.dark.theme-liquid-glass .text-gray-900,
+.dark.theme-liquid-glass .text-stone-900,
+.dark.theme-liquid-glass .text-stone-800,
+.dark .theme-liquid-glass .text-gray-950,
+.dark .theme-liquid-glass .text-gray-900,
+.dark .theme-liquid-glass .text-stone-900,
+.dark .theme-liquid-glass .text-stone-800 {
+  color: #f8fafc !important;
+}
+
+.dark.theme-liquid-glass .text-gray-700,
+.dark.theme-liquid-glass .text-stone-700,
+.dark.theme-liquid-glass .text-stone-600,
+.dark .theme-liquid-glass .text-gray-700,
+.dark .theme-liquid-glass .text-stone-700,
+.dark .theme-liquid-glass .text-stone-600 {
+  color: #e2e8f0 !important;
+}
+
+.dark.theme-liquid-glass .text-gray-600,
+.dark.theme-liquid-glass .text-gray-500,
+.dark.theme-liquid-glass .text-stone-500,
+.dark.theme-liquid-glass .text-stone-400,
+.dark .theme-liquid-glass .text-gray-600,
+.dark .theme-liquid-glass .text-gray-500,
+.dark .theme-liquid-glass .text-stone-500,
+.dark .theme-liquid-glass .text-stone-400 {
+  color: #94a3b8 !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. APPLE-STYLE LIQUID BUTTONS & TACTILE SPRING PHYSICS
+   -------------------------------------------------------------------------- */
+.theme-liquid-glass button,
+.theme-liquid-glass [role="button"],
+.theme-liquid-glass a[role="button"],
+.theme-liquid-glass .liquid-btn {
+  position: relative;
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.28s ease,
+              filter 0.22s ease,
+              background 0.22s ease,
+              border-color 0.22s ease !important;
+  will-change: transform, box-shadow;
+  outline: none;
+}
+
+/* Buoyant Liquid Lift on Hover (Apple Fluid Physics) */
+.theme-liquid-glass button:hover:not(:disabled),
+.theme-liquid-glass [role="button"]:hover:not(:disabled),
+.theme-liquid-glass a[role="button"]:hover,
+.theme-liquid-glass .liquid-btn:hover {
+  transform: translateY(-2px) scale(1.025) !important;
+  filter: brightness(1.08) saturate(1.18) !important;
+}
+
+/* Elastic Fluid Squish Compression on Active / Press (Apple Haptic Feedback) */
+.theme-liquid-glass button:active:not(:disabled),
+.theme-liquid-glass [role="button"]:active:not(:disabled),
+.theme-liquid-glass a[role="button"]:active,
+.theme-liquid-glass .liquid-btn:active {
+  transform: scale(0.95) translateY(1px) !important;
+  transition-duration: 0.1s !important;
+}
+
+/* Light Liquid Buttons: Specular Meniscus Rim & High Clarity */
+html:not(.dark).theme-liquid-glass button,
+html:not(.dark).theme-liquid-glass [role="button"],
+html:not(.dark).theme-liquid-glass .liquid-btn,
+html.light.theme-liquid-glass button,
+html.light.theme-liquid-glass [role="button"],
+html.light.theme-liquid-glass .liquid-btn {
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+}
+
+html:not(.dark).theme-liquid-glass button:hover:not(:disabled),
+html:not(.dark).theme-liquid-glass [role="button"]:hover:not(:disabled),
+html.light.theme-liquid-glass button:hover:not(:disabled),
+html.light.theme-liquid-glass [role="button"]:hover:not(:disabled) {
+  box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.22),
+              0 2px 6px -1px rgba(15, 23, 42, 0.08),
+              inset 0 1.5px 2px 0 #ffffff,
+              inset 0 -1px 1px 0 rgba(15, 23, 42, 0.06) !important;
+}
+
+html:not(.dark).theme-liquid-glass button:active:not(:disabled),
+html:not(.dark).theme-liquid-glass [role="button"]:active:not(:disabled),
+html.light.theme-liquid-glass button:active:not(:disabled),
+html.light.theme-liquid-glass [role="button"]:active:not(:disabled) {
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.12),
+              inset 0 2px 4px 0 rgba(15, 23, 42, 0.08),
+              inset 0 -1px 1px 0 #ffffff !important;
+  filter: brightness(0.97) !important;
+}
+
+/* Dark Liquid Buttons: Luminous Cyan-Azure Glow & Meniscus */
+.dark.theme-liquid-glass button,
+.dark.theme-liquid-glass [role="button"],
+.dark.theme-liquid-glass .liquid-btn,
+.dark .theme-liquid-glass button,
+.dark .theme-liquid-glass [role="button"],
+.dark .theme-liquid-glass .liquid-btn {
+  backdrop-filter: blur(24px) saturate(220%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(220%) !important;
+}
+
+.dark.theme-liquid-glass button:hover:not(:disabled),
+.dark.theme-liquid-glass [role="button"]:hover:not(:disabled),
+.dark .theme-liquid-glass button:hover:not(:disabled),
+.dark .theme-liquid-glass [role="button"]:hover:not(:disabled) {
+  box-shadow: 0 8px 26px -4px rgba(56, 189, 248, 0.35),
+              0 2px 8px -1px rgba(0, 0, 0, 0.5),
+              inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.5),
+              inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark.theme-liquid-glass button:active:not(:disabled),
+.dark.theme-liquid-glass [role="button"]:active:not(:disabled),
+.dark .theme-liquid-glass button:active:not(:disabled),
+.dark .theme-liquid-glass [role="button"]:active:not(:disabled) {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.6),
+              inset 0 2px 4px 0 rgba(0, 0, 0, 0.5),
+              inset 0 -1px 1px 0 rgba(255, 255, 255, 0.1) !important;
+  filter: brightness(0.92) !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. APPLE-STYLE LIQUID LEAFLETS (Cards, Panels, Floating Sheets)
+   -------------------------------------------------------------------------- */
+/* All leaflets and cards inherit spring hover physics */
+.theme-liquid-glass div[id^="journal-day-"],
+.theme-liquid-glass .editorial-panel,
+.theme-liquid-glass .liquid-glass-surface,
+.theme-liquid-glass main article,
+.theme-liquid-glass .bookmark-card,
+.theme-liquid-glass .spotify-card,
+.theme-liquid-glass .youtube-card,
+.theme-liquid-glass .browser-card,
+.theme-liquid-glass .photo-card {
+  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.32s ease,
+              border-color 0.28s ease !important;
+  will-change: transform, box-shadow;
+}
+
+/* Hover Buoyancy on Interactive Leaflets */
+.theme-liquid-glass .bookmark-card:hover,
+.theme-liquid-glass .spotify-card:hover,
+.theme-liquid-glass .youtube-card:hover,
+.theme-liquid-glass .browser-card:hover,
+.theme-liquid-glass .photo-card:hover,
+.theme-liquid-glass div[id^="journal-day-"]:hover {
+  transform: translateY(-3px) scale(1.008) !important;
+}
+
+/* Light Liquid Leaflets: Distinct background saturations and higher contrast borders */
+html:not(.dark).theme-liquid-glass div[id^="journal-day-"],
+html:not(.dark).theme-liquid-glass .editorial-panel,
+html:not(.dark).theme-liquid-glass .liquid-glass-surface,
+html:not(.dark).theme-liquid-glass main article,
+html:not(.dark).theme-liquid-glass .bookmark-card,
+html:not(.dark).theme-liquid-glass .spotify-card,
+html:not(.dark).theme-liquid-glass .youtube-card,
+html:not(.dark).theme-liquid-glass .browser-card,
+html:not(.dark).theme-liquid-glass .photo-card,
+html.light.theme-liquid-glass div[id^="journal-day-"],
+html.light.theme-liquid-glass .editorial-panel,
+html.light.theme-liquid-glass .liquid-glass-surface,
+html.light.theme-liquid-glass main article,
+html.light.theme-liquid-glass .bookmark-card,
+html.light.theme-liquid-glass .spotify-card,
+html.light.theme-liquid-glass .youtube-card,
+html.light.theme-liquid-glass .browser-card,
+html.light.theme-liquid-glass .photo-card {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.92) 0%, rgba(246, 249, 254, 0.85) 100%) !important;
+  backdrop-filter: blur(28px) saturate(190%) contrast(108%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(108%) !important;
+  border: 1.5px solid rgba(148, 163, 184, 0.5) !important;
+  border-top: 1.5px solid #ffffff !important;
+  border-bottom: 1.5px solid rgba(100, 116, 139, 0.6) !important;
+  box-shadow: 0 14px 36px -6px rgba(15, 23, 42, 0.13),
+              0 3px 10px -2px rgba(15, 23, 42, 0.08),
+              inset 0 1.5px 2px 0 #ffffff,
+              inset 0 -1.5px 2px 0 rgba(15, 23, 42, 0.06) !important;
+}
+
+html:not(.dark).theme-liquid-glass .bookmark-card:hover,
+html:not(.dark).theme-liquid-glass .spotify-card:hover,
+html:not(.dark).theme-liquid-glass .youtube-card:hover,
+html:not(.dark).theme-liquid-glass .browser-card:hover,
+html:not(.dark).theme-liquid-glass .photo-card:hover,
+html:not(.dark).theme-liquid-glass div[id^="journal-day-"]:hover,
+html.light.theme-liquid-glass .bookmark-card:hover,
+html.light.theme-liquid-glass .spotify-card:hover,
+html.light.theme-liquid-glass .youtube-card:hover,
+html.light.theme-liquid-glass .browser-card:hover,
+html.light.theme-liquid-glass .photo-card:hover,
+html.light.theme-liquid-glass div[id^="journal-day-"]:hover {
+  border-color: rgba(100, 116, 139, 0.7) !important;
+  box-shadow: 0 20px 48px -8px rgba(15, 23, 42, 0.18),
+              0 6px 16px -3px rgba(15, 23, 42, 0.1),
+              inset 0 2px 2px 0 #ffffff !important;
+}
+
+/* Dark Liquid Leaflets: Deep Obsidian Surface with Meniscus Edge */
+.dark.theme-liquid-glass div[id^="journal-day-"],
+.dark.theme-liquid-glass .editorial-panel,
+.dark.theme-liquid-glass .liquid-glass-surface,
+.dark.theme-liquid-glass main article,
+.dark.theme-liquid-glass .bookmark-card,
+.dark.theme-liquid-glass .spotify-card,
+.dark.theme-liquid-glass .youtube-card,
+.dark.theme-liquid-glass .browser-card,
+.dark.theme-liquid-glass .photo-card,
+.dark .theme-liquid-glass div[id^="journal-day-"],
+.dark .theme-liquid-glass .editorial-panel,
+.dark .theme-liquid-glass .liquid-glass-surface,
+.dark .theme-liquid-glass main article,
+.dark .theme-liquid-glass .bookmark-card,
+.dark .theme-liquid-glass .spotify-card,
+.dark .theme-liquid-glass .youtube-card,
+.dark .theme-liquid-glass .browser-card,
+.dark .theme-liquid-glass .photo-card {
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(10, 20, 42, 0.72) !important;
+  backdrop-filter: blur(34px) saturate(220%) contrast(106%) !important;
+  -webkit-backdrop-filter: blur(34px) saturate(220%) contrast(106%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.55) !important;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.6), 
+              0 0 30px rgba(56, 189, 248, 0.12), 
+              inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.45), 
+              inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark.theme-liquid-glass .bookmark-card:hover,
+.dark.theme-liquid-glass .spotify-card:hover,
+.dark.theme-liquid-glass .youtube-card:hover,
+.dark.theme-liquid-glass .browser-card:hover,
+.dark.theme-liquid-glass .photo-card:hover,
+.dark.theme-liquid-glass div[id^="journal-day-"]:hover,
+.dark .theme-liquid-glass .bookmark-card:hover,
+.dark .theme-liquid-glass .spotify-card:hover,
+.dark .theme-liquid-glass .youtube-card:hover,
+.dark .theme-liquid-glass .browser-card:hover,
+.dark .theme-liquid-glass .photo-card:hover,
+.dark .theme-liquid-glass div[id^="journal-day-"]:hover {
+  box-shadow: 0 30px 70px -12px rgba(0, 0, 0, 0.75), 
+              0 0 40px rgba(56, 189, 248, 0.25), 
+              inset 0 2px 2px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Sticky Day Leaflet Header */
+html:not(.dark).theme-liquid-glass div[id^="journal-day-"] > div:first-child,
+html.light.theme-liquid-glass div[id^="journal-day-"] > div:first-child {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.92) 100%), rgba(240, 246, 255, 0.95) !important;
+  backdrop-filter: blur(32px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+  border-bottom: 1.5px solid rgba(148, 163, 184, 0.45) !important;
+  border-top: 1.5px solid #ffffff !important;
+  box-shadow: 0 4px 16px -3px rgba(15, 23, 42, 0.06), inset 0 1.5px 1.5px #ffffff !important;
+}
+
+.dark.theme-liquid-glass div[id^="journal-day-"] > div:first-child,
+.dark .theme-liquid-glass div[id^="journal-day-"] > div:first-child {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%), rgba(18, 38, 76, 0.75) !important;
+  backdrop-filter: blur(32px) saturate(220%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(220%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 0 10px 30px -6px rgba(0, 0, 0, 0.4), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.55) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. APPLE-STYLE LIQUID DIVISIONS (Beveled Liquid Meniscus Seams)
+   -------------------------------------------------------------------------- */
+/* Navigation Sidebar Liquid Division - specifically targeted to main navigation */
+html:not(.dark).theme-liquid-glass #main-sidebar,
+html:not(.dark).theme-liquid-glass nav[aria-label="Editorial Navigation Sidebar"],
+html.light.theme-liquid-glass #main-sidebar,
+html.light.theme-liquid-glass nav[aria-label="Editorial Navigation Sidebar"] {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(36px) saturate(180%) contrast(104%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(180%) contrast(104%) !important;
+  border-right: 1.5px solid rgba(148, 163, 184, 0.4) !important;
+  border-top: 1.5px solid #ffffff !important;
+  box-shadow: 8px 0 28px -4px rgba(15, 23, 42, 0.06),
+              inset -1px 0 0 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark.theme-liquid-glass #main-sidebar,
+.dark.theme-liquid-glass nav[aria-label="Editorial Navigation Sidebar"],
+.dark .theme-liquid-glass #main-sidebar,
+.dark .theme-liquid-glass nav[aria-label="Editorial Navigation Sidebar"] {
+  background: rgba(8, 18, 38, 0.65) !important;
+  backdrop-filter: blur(36px) saturate(220%) contrast(106%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(220%) contrast(106%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 10px 0 40px -6px rgba(0, 0, 0, 0.55),
+              inset -1px 0 0 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Header & Toolbars Liquid Division */
+html:not(.dark).theme-liquid-glass #view-header-toolbar,
+html:not(.dark).theme-liquid-glass header[id="main-app-header"],
+html.light.theme-liquid-glass #view-header-toolbar,
+html.light.theme-liquid-glass header[id="main-app-header"] {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(36px) saturate(180%) contrast(104%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(180%) contrast(104%) !important;
+  border-bottom: 1.5px solid rgba(148, 163, 184, 0.4) !important;
+  border-top: 1.5px solid #ffffff !important;
+  box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.06),
+              inset 0 -1px 0 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark.theme-liquid-glass #view-header-toolbar,
+.dark.theme-liquid-glass header[id="main-app-header"],
+.dark .theme-liquid-glass #view-header-toolbar,
+.dark .theme-liquid-glass header[id="main-app-header"] {
+  background: rgba(8, 18, 38, 0.65) !important;
+  backdrop-filter: blur(36px) saturate(220%) contrast(106%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(220%) contrast(106%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.45),
+              inset 0 -1px 0 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Modals insulation: prevent global leaflet styles from hijacking modal dialogs */
+[role="dialog"],
+#settings-modal-card {
+  isolation: isolate;
+}
+
+/* General Division Lines, Borders & Meniscus Seams */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) hr,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .divide-y > *,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .divide-x > * {
+  border-color: rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark.theme-liquid-glass hr,
+.dark.theme-liquid-glass .divide-y > *,
+.dark.theme-liquid-glass .divide-x > *,
+.dark .theme-liquid-glass hr,
+.dark .theme-liquid-glass .divide-y > *,
+.dark .theme-liquid-glass .divide-x > * {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.14) !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. HIGH-CLARITY LIQUID INPUTS & CONTROLS
+   -------------------------------------------------------------------------- */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) input,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) textarea,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) select {
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border: 1.5px solid rgba(15, 23, 42, 0.18) !important;
+  color: #070b14 !important;
+  font-weight: 550;
+  box-shadow: inset 0 1.5px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark.theme-liquid-glass input,
+.dark.theme-liquid-glass textarea,
+.dark.theme-liquid-glass select,
+.dark .theme-liquid-glass input,
+.dark .theme-liquid-glass textarea,
+.dark .theme-liquid-glass select {
+  background: rgba(8, 18, 38, 0.7) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.45) !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45), 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+}
+
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) input::placeholder,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) textarea::placeholder {
+  color: #475569 !important;
+  opacity: 1 !important;
+  font-weight: 450 !important;
+}
+
+.dark.theme-liquid-glass input::placeholder,
+.dark.theme-liquid-glass textarea::placeholder,
+.dark .theme-liquid-glass input::placeholder,
+.dark .theme-liquid-glass textarea::placeholder {
+  color: rgba(148, 163, 184, 0.75) !important;
+}
+
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) input:focus,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) textarea:focus {
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2), inset 0 1px 2px rgba(15, 23, 42, 0.05) !important;
+}
+
+.dark.theme-liquid-glass input:focus,
+.dark.theme-liquid-glass textarea:focus,
+.dark .theme-liquid-glass input:focus,
+.dark .theme-liquid-glass textarea:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25), inset 0 1.5px 2px rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Modals & Dialogs in Liquid Glass */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) [role="dialog"],
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .modal-content,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) div[class*="fixed"][class*="z-50"] > div[class*="rounded-"] {
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.94) 100%), rgba(246, 250, 255, 0.98) !important;
+  backdrop-filter: blur(40px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 1) !important;
+  border-top: 1.5px solid #ffffff !important;
+  box-shadow: 0 32px 75px -16px rgba(15, 23, 42, 0.18),
+              0 0 35px rgba(2, 132, 199, 0.12),
+              inset 0 1.5px 2px #ffffff !important;
+}
+
+.dark.theme-liquid-glass [role="dialog"],
+.dark.theme-liquid-glass .modal-content,
+.dark.theme-liquid-glass div[class*="fixed"][class*="z-50"] > div[class*="rounded-"],
+.dark .theme-liquid-glass [role="dialog"],
+.dark .theme-liquid-glass .modal-content,
+.dark .theme-liquid-glass div[class*="fixed"][class*="z-50"] > div[class*="rounded-"] {
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(8, 18, 40, 0.9) !important;
+  backdrop-filter: blur(40px) saturate(220%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(220%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 32px 80px -16px rgba(0, 0, 0, 0.8),
+              0 0 45px rgba(56, 189, 248, 0.2),
+              inset 0 1.5px 2px rgba(255, 255, 255, 0.55) !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. DISTINCT VIEW COLOR PALETTES & ELEVATED CONTRAST RATIOS (LIGHT LIQUID UI)
+   -------------------------------------------------------------------------- */
+/* Journal / Life View: Crystalline Rose & Prismatic Amethyst Meniscus */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-journal div[id^="journal-day-"],
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-journal .liquid-glass-surface {
+  box-shadow: 0 16px 44px -8px rgba(15, 23, 42, 0.08),
+              0 4px 14px -2px rgba(219, 39, 119, 0.09),
+              inset 0 1.5px 2px 0 #ffffff,
+              inset 0 -1px 1px 0 rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Map Timeline View: Topographic Elevation Sage & Emerald Meniscus */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-maptimeline div[id^="journal-day-"],
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-maptimeline .liquid-glass-surface {
+  box-shadow: 0 16px 44px -8px rgba(15, 23, 42, 0.08),
+              0 4px 14px -2px rgba(16, 185, 129, 0.11),
+              inset 0 1.5px 2px 0 #ffffff,
+              inset 0 -1px 1px 0 rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Spotify View: Soundwave Mint & Electric Jade Meniscus */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-spotify .spotify-card,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-spotify .liquid-glass-surface {
+  box-shadow: 0 16px 44px -8px rgba(15, 23, 42, 0.08),
+              0 4px 14px -2px rgba(34, 197, 94, 0.12),
+              inset 0 1.5px 2px 0 #ffffff,
+              inset 0 -1px 1px 0 rgba(15, 23, 42, 0.04) !important;
+}
+
+/* YouTube View: Sunset Ruby & Vibrant Coral Meniscus */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-youtube .youtube-card,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-youtube .liquid-glass-surface {
+  box-shadow: 0 16px 44px -8px rgba(15, 23, 42, 0.08),
+              0 4px 14px -2px rgba(239, 68, 68, 0.11),
+              inset 0 1.5px 2px 0 #ffffff,
+              inset 0 -1px 1px 0 rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Notes & Diary View: Molten Honey & Warm Amber Bronze Meniscus */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-notes .liquid-glass-surface,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-notes .editorial-panel {
+  box-shadow: 0 16px 44px -8px rgba(15, 23, 42, 0.08),
+              0 4px 14px -2px rgba(217, 119, 6, 0.12),
+              inset 0 1.5px 2px 0 #ffffff,
+              inset 0 -1px 1px 0 rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Browser & Cloud Drive View: Daylight Chrome Azure Meniscus */
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-browser .browser-card,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-gdrive .browser-card,
+:is(html:not(.dark).theme-liquid-glass, html:not(.dark) .theme-liquid-glass, .theme-liquid-glass:not(.dark)) .dynamic-bg-box .browser-card {
+  box-shadow: 0 16px 44px -8px rgba(15, 23, 42, 0.08),
+              0 4px 14px -2px rgba(2, 132, 199, 0.11),
+              inset 0 1.5px 2px 0 #ffffff,
+              inset 0 -1px 1px 0 rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Solid Glass Theme styling */
+.theme-solid-glass nav,
+.theme-solid-glass header,
+.theme-solid-glass div[id^="journal-day-"],
+.theme-solid-glass .editorial-panel,
+.theme-solid-glass main article,
+.theme-solid-glass .bookmark-card,
+.theme-solid-glass .spotify-card,
+.theme-solid-glass .youtube-card,
+.theme-solid-glass .browser-card {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Organic Morphing Liquid Orbs Animation */
+@keyframes liquid-morph-1 {
+  0%, 100% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+  }
+  33% {
+    border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+    transform: translate(70px, -50px) rotate(60deg) scale(1.12);
+  }
+  66% {
+    border-radius: 30% 70% 70% 30% / 52% 59% 41% 48%;
+    transform: translate(-50px, 60px) rotate(-45deg) scale(0.95);
+  }
+}
+
+@keyframes liquid-morph-2 {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+  }
+  33% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: translate(-60px, 50px) rotate(-60deg) scale(1.1);
+  }
+  66% {
+    border-radius: 50% 50% 30% 70% / 55% 35% 65% 45%;
+    transform: translate(60px, -40px) rotate(45deg) scale(0.96);
+  }
+}
+
+@keyframes liquid-morph-3 {
+  0%, 100% {
+    border-radius: 50% 50% 50% 50% / 40% 60% 40% 60%;
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    border-radius: 35% 65% 60% 40% / 60% 35% 65% 40%;
+    transform: translate(50px, 50px) scale(1.18);
+  }
+}
+
+@keyframes liquid-caustics {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.08) rotate(3deg);
+  }
+}
+
+.animate-liquid-morph-1 {
+  animation: liquid-morph-1 18s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-liquid-morph-2 {
+  animation: liquid-morph-2 22s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-liquid-morph-3 {
+  animation: liquid-morph-3 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-liquid-caustics {
+  animation: liquid-caustics 12s ease-in-out infinite;
+}
+
+.font-serif-editorial {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-mono-editorial {
+  font-family: 'Space Mono', monospace;
+}
+
+.editorial-panel {
+  border: 1px solid var(--border);
+  background: #ffffff;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.05);
+}
+
+.dark .editorial-panel {
+  border: 1px solid var(--border);
+  background: #18181b;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.4);
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  background-color: var(--bg);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+body {
+  min-height: 100%;
+  min-height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Thin, overlay scrollbars to prevent layout jumping when zooming */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.4) transparent;
+}
+
+.dark * {
+  scrollbar-color: rgba(75, 85, 99, 0.4) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.35);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.6);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(107, 114, 128, 0.35);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.6);
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+.ios-glass {
+  background-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+.dark .ios-glass {
+  background-color: rgba(18, 18, 18, 0.68);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+.frosted-glass {
+  background-color: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.05), inset 0 1px 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.dark .frosted-glass {
+  background-color: rgba(18, 18, 22, 0.52);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.frosted-glass-card {
+  background-color: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+}
+
+.dark .frosted-glass-card {
+  background-color: rgba(24, 24, 28, 0.52);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   Dynamic Shifting Living Gradients (Silky Fluid Gradients for All Views)
+   ========================================================================== */
+
+@keyframes dynamicGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes orbDrift1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(50px, -40px) scale(1.12);
+  }
+  66% {
+    transform: translate(-40px, 35px) scale(0.92);
+  }
+}
+
+@keyframes orbDrift2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-45px, 35px) scale(1.08);
+  }
+  66% {
+    transform: translate(40px, -30px) scale(0.94);
+  }
+}
+
+@keyframes orbDrift3 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(35px, 45px) scale(1.1);
+  }
+}
+
+.animate-orb-drift-1 {
+  animation: orbDrift1 14s ease-in-out infinite alternate;
+}
+
+.animate-orb-drift-2 {
+  animation: orbDrift2 18s ease-in-out infinite alternate;
+}
+
+.animate-orb-drift-3 {
+  animation: orbDrift3 16s ease-in-out infinite alternate;
+}
+
+/* 1. Browser & Google Drive View (Google Chrome 4-Color Swirl: Yellow, Red, Green, Blue) */
+.dynamic-bg-browser,
+.spectral-bg-browser,
+.dynamic-bg-gdrive,
+.spectral-bg-gdrive {
+  background: linear-gradient(-45deg, #fef08a, #fee2e2, #dcfce7, #dbeafe, #fed7aa, #e0f2fe);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-browser,
+.dark .spectral-bg-browser,
+.dark .dynamic-bg-gdrive,
+.dark .spectral-bg-gdrive {
+  background: 
+    radial-gradient(ellipse at 15% 15%, rgba(251, 188, 5, 0.32) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 15%, rgba(234, 67, 53, 0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 85%, rgba(52, 168, 83, 0.3) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(66, 133, 244, 0.35) 0%, transparent 60%),
+    linear-gradient(135deg, #0e121a 0%, #090c13 50%, #06080d 100%);
+  background-size: 200% 200%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* 2. YouTube View (Dynamic Crimson, Ruby, Sunset Amber) */
+.dynamic-bg-youtube,
+.spectral-bg-youtube {
+  background: linear-gradient(-45deg, #ffe4e6, #fef2f2, #ffedd5, #fce7f3, #fee2e2, #fff1f2);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-youtube,
+.dark .spectral-bg-youtube {
+  background: linear-gradient(-45deg, #180306, #2d0610, #3f0918, #1a040b, #3b071a, #22030d, #420a1c);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* 3. Spotify View (Dynamic Emerald, Jade Aurora, Neon Lime) */
+
+/* Google Fit — warm amber/orange health atmosphere */
+.dynamic-bg-fit {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(249,115,22,.20), transparent 34%),
+    radial-gradient(circle at 85% 30%, rgba(245,158,11,.18), transparent 36%),
+    radial-gradient(circle at 45% 90%, rgba(234,88,12,.14), transparent 42%),
+    linear-gradient(135deg, #fff8f1 0%, #fffdf8 46%, #fff7ed 100%);
+}
+.dark .dynamic-bg-fit {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(249,115,22,.18), transparent 34%),
+    radial-gradient(circle at 85% 30%, rgba(245,158,11,.14), transparent 36%),
+    radial-gradient(circle at 45% 90%, rgba(234,88,12,.10), transparent 42%),
+    linear-gradient(135deg, #1a120d 0%, #151515 48%, #19120d 100%);
+}
+
+.dynamic-bg-spotify,
+.spectral-bg-spotify {
+  background: linear-gradient(-45deg, #dcfce7, #ccfbf1, #f0fdf4, #ecfdf5, #d1fae5, #e0f2fe);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-spotify,
+.dark .spectral-bg-spotify {
+  background: linear-gradient(-45deg, #02170c, #062716, #0c3622, #031b11, #0a3d27, #042415, #08432c);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* 4. Journal & Life View (Low-Poly Crystal Palette: Orange, Coral, Cyan, Royal Violet) */
+.dynamic-bg-journal,
+.spectral-bg-journal {
+  background: linear-gradient(-45deg, #ffedd5, #fce7f3, #e0e7ff, #ccfbf1, #ede9fe, #fee2e2);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 20s ease infinite;
+}
+
+.dark .dynamic-bg-journal,
+.dark .spectral-bg-journal {
+  background: linear-gradient(-45deg, #1f0a20, #0a1128, #051f24, #1a0826, #240e16, #0d1730);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 20s ease infinite;
+}
+
+/* 5. Map Timeline View (Topography Contour Elevation: Lime, Emerald, Gold Yellow, Terracotta, Deep Teal) */
+.dynamic-bg-maptimeline,
+.spectral-bg-maptimeline {
+  background: linear-gradient(-45deg, #dcfce7, #ecfccb, #fef08a, #ffedd5, #ccfbf1, #f3e8ff);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-maptimeline,
+.dark .spectral-bg-maptimeline {
+  background: linear-gradient(-45deg, #021a15, #0a2005, #1f1b03, #210d04, #12041c, #031821);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* 6. Notes & Diary View (Dynamic Molten Amber, Honey & Warm Bronze) */
+.dynamic-bg-notes,
+.spectral-bg-notes {
+  background: linear-gradient(-45deg, #fef3c7, #ffedd5, #fef9c3, #fed7aa, #fffbeb, #fef08a);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-notes,
+.dark .spectral-bg-notes {
+  background: linear-gradient(-45deg, #1c0f03, #2b1807, #3d220a, #1f1104, #44260b, #261405, #4d2a0e);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dynamic-gradient-dark {
+  background: linear-gradient(-45deg, #071926, #121035, #08222b, #1d0f36, #071e22, #141738);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dynamic-gradient-light {
+  background: linear-gradient(-45deg, #e0f2fe, #ede9fe, #ccfbf1, #e0e7ff, #fef3c7);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* Calming Multi-Color Hex Gradient for Journal & Life */
+@keyframes calmLifeGradientShift {
+  0% {
+    background-position: 0% 40%;
+  }
+  50% {
+    background-position: 100% 60%;
+  }
+  100% {
+    background-position: 0% 40%;
+  }
+}
+
+.journal-life-bg-dark {
+  background: linear-gradient(135deg, #0b1124 0%, #15102a 20%, #20132a 40%, #0d1e26 62%, #102420 80%, #1c152b 100%);
+  background-size: 300% 300%;
+  animation: calmLifeGradientShift 26s ease infinite;
+}
+
+.journal-life-bg-light {
+  background: linear-gradient(135deg, #f0f4ff 0%, #fbf1f8 25%, #f5f3ff 50%, #f0fdf9 75%, #fffbeb 100%);
+  background-size: 300% 300%;
+  animation: calmLifeGradientShift 26s ease infinite;
+}
+
+/* Journal Calming Overlays with Transparency & Backdrop Blur */
+.journal-card-overlay {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.dark .journal-card-overlay {
+  background: rgba(24, 24, 27, 0.65);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.journal-header-overlay {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.dark .journal-header-overlay {
+  background: rgba(24, 24, 27, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.journal-reflection-overlay {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .journal-reflection-overlay {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Glass Frost theme utility classes */
+.glass-frost-spotify {
+  background: rgba(6, 26, 15, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(30, 215, 96, 0.22);
+}
+
+.glass-frost-youtube {
+  background: rgba(31, 7, 9, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(239, 68, 68, 0.22);
+}
+
+.glass-frost-browser {
+  background: rgba(8, 24, 38, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(6, 182, 212, 0.22);
+}
+
+.glass-frost-box {
+  background: rgba(4, 21, 48, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(0, 97, 213, 0.25);
+}
+
+.glass-frost-journal {
+  background: rgba(15, 12, 38, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(99, 102, 241, 0.22);
+}
+
+.glass-frost-maptimeline {
+  background: rgba(5, 18, 45, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(37, 99, 235, 0.22);
+}
+
+.glass-frost-notes {
+  background: rgba(36, 20, 6, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(245, 158, 11, 0.22);
+}
+
+.glass-frost-photos {
+  background: rgba(36, 10, 18, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(244, 63, 94, 0.22);
+}
+
+.glass-frost-bookmarks {
+  background: rgba(8, 20, 46, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(59, 130, 246, 0.22);
+}
+
+/* 7. Box Cloud View (Signature Box Blue & Deep Cerulean) */
+.dynamic-bg-box,
+.spectral-bg-box {
+  background: linear-gradient(-45deg, #dbeafe, #e0f2fe, #bae6fd, #cffafe, #e0e7ff, #dbeafe);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-box,
+.dark .spectral-bg-box {
+  background: linear-gradient(-45deg, #02122c, #031d47, #072a66, #04193d, #09388a, #031638, #052354);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* 8. Google Photos View (Dynamic Coral, Sunset Rose & Sunrise Gold) */
+.dynamic-bg-photos,
+.spectral-bg-photos {
+  background: linear-gradient(-45deg, #ffe4e6, #ffedd5, #fef3c7, #fee2e2, #fce7f3, #fff1f2);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-photos,
+.dark .spectral-bg-photos {
+  background: linear-gradient(-45deg, #1f080e, #2d0b16, #3d141f, #1a080f, #3b111e, #220b13, #421624);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* 9. Bookmarks & Collections View (Initially Pink & Sea Green, Adaptive by Service/Media) */
+.dynamic-bg-bookmarks,
+.spectral-bg-bookmarks,
+.dynamic-bg-bookmarks-pink-seagreen {
+  background: linear-gradient(-45deg, #fce7f3, #ccfbf1, #fbcfe8, #d1fae5, #fed7aa, #99f6e4);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-bookmarks,
+.dark .spectral-bg-bookmarks,
+.dark .dynamic-bg-bookmarks-pink-seagreen {
+  background: linear-gradient(-45deg, #1e0514, #031a12, #2a081d, #052419, #200615, #061e19);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* Pinterest Adaptive Red */
+.dynamic-bg-bookmarks-pinterest {
+  background: linear-gradient(-45deg, #ffe4e6, #fee2e2, #fff1f2, #fed7aa, #fce7f3);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-bookmarks-pinterest {
+  background: linear-gradient(-45deg, #240408, #3b0710, #4c0a15, #1f0307, #3d0812);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* mymind Adaptive Radiant Warm Orange */
+.dynamic-bg-bookmarks-mymind {
+  background: linear-gradient(-45deg, #ffedd5, #fef3c7, #ffedd5, #fee2e2, #fed7aa);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-bookmarks-mymind {
+  background: linear-gradient(-45deg, #240e02, #381604, #421b06, #1c0a01, #361403);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* GitHub Adaptive Obsidian & Violet */
+.dynamic-bg-bookmarks-github {
+  background: linear-gradient(-45deg, #ede9fe, #f5f3ff, #e0e7ff, #f3e8ff, #fae8ff);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+.dark .dynamic-bg-bookmarks-github {
+  background: linear-gradient(-45deg, #0f091f, #160d2e, #1c113b, #0a0614, #170e30);
+  background-size: 350% 350%;
+  animation: dynamicGradientShift 18s ease infinite;
+}
+
+/* Custom Leaflet Pin & Map Container Isolation */
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1 !important;
+  isolation: isolate !important;
+  border-radius: inherit;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+/* Google Maps Dark Mode Tile Inversion */
+.google-map-dark-tiles {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 10 !important;
+}
+
+.leaflet-pane {
+  z-index: 2 !important;
+}
+
+.leaflet-tile-pane {
+  z-index: 2 !important;
+}
+
+.leaflet-overlay-pane {
+  z-index: 4 !important;
+}
+
+.leaflet-shadow-pane {
+  z-index: 5 !important;
+}
+
+.leaflet-marker-pane {
+  z-index: 6 !important;
+}
+
+.leaflet-tooltip-pane {
+  z-index: 7 !important;
+}
+
+.leaflet-popup-pane {
+  z-index: 8 !important;
+}
+
+.leaflet-control {
+  z-index: 10 !important;
+}
+
+.leaflet-custom-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 2.5px solid #2563eb;
+  border-radius: 9999px;
+  color: #1e40af;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.dark .leaflet-custom-pin {
+  background: #1e293b;
+  color: #60a5fa;
+  border-color: #3b82f6;
+}
+
+.leaflet-custom-pin:hover {
+  transform: scale(1.18);
+  z-index: 20 !important;
+}
+
+.leaflet-custom-pin-active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.45), 0 6px 16px rgba(0, 0, 0, 0.35) !important;
+  transform: scale(1.28) !important;
+  z-index: 30 !important;
+  animation: pulse-pin 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-pin {
+  0%, 100% {
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.45), 0 6px 16px rgba(0, 0, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.15), 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Custom Marker Cluster Styling */
+.custom-marker-cluster {
+  background: transparent !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+}
+
+.custom-marker-cluster:hover {
+  transform: scale(1.15);
+  z-index: 9999 !important;
+}
+
+.custom-marker-cluster-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 0 0 2px rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+}
+
+.dark .custom-marker-cluster-inner {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(30, 41, 59, 0.95);
+}
+
+/* Cluster Sizes & Gradients */
+.cluster-small .custom-marker-cluster-inner {
+  width: 32px;
+  height: 32px;
+  font-size: 11px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.cluster-medium .custom-marker-cluster-inner {
+  width: 38px;
+  height: 38px;
+  font-size: 12px;
+  background: linear-gradient(135deg, #6366f1, #4338ca);
+}
+
+.cluster-large .custom-marker-cluster-inner {
+  width: 44px;
+  height: 44px;
+  font-size: 13px;
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+
+.custom-marker-cluster-active .custom-marker-cluster-inner {
+  background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.5), 0 6px 20px rgba(0, 0, 0, 0.45) !important;
+  animation: pulse-cluster 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-cluster {
+  0%, 100% {
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.5), 0 6px 20px rgba(0, 0, 0, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(37, 99, 235, 0.2), 0 8px 24px rgba(0, 0, 0, 0.55);
+  }
+}
+

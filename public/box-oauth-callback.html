@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Box Cloud Authorization</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f8fafc;
+        color: #0f172a;
+      }
+      .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 400px;
+        border: 1px solid #e2e8f0;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e2e8f0;
+        border-top: 4px solid #0061d5;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1.5rem;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem;
+      }
+      p {
+        font-size: 0.875rem;
+        color: #64748b;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="spinner"></div>
+      <h2>Connecting to Box Cloud</h2>
+      <p>Exchanging credentials with your Box account. This window will close automatically.</p>
+    </div>
+    <script>
+      (function() {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('code');
+        const state = params.get('state');
+        const error = params.get('error');
+        const errorDescription = params.get('error_description');
+
+        if (window.opener) {
+          window.opener.postMessage({
+            type: 'BOX_OAUTH_RESPONSE',
+            code,
+            state,
+            error: error || (errorDescription ? errorDescription : null)
+          }, '*');
+          setTimeout(() => {
+            window.close();
+          }, 600);
+        } else {
+          // If navigated directly without opener
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1500);
+        }
+      })();
+    </script>
+  </body>
+</html>
