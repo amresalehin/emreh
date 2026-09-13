@@ -59,15 +59,11 @@ export function sanitizeDocumentHtml(input: string): string {
     const attrs = Array.from(element.attributes);
     for (const attr of attrs) {
       const name = attr.name.toLowerCase();
-      const value = attr.value;
       const keep =
         (tag === 'A' && (name === 'href' || name === 'title')) ||
-        ((tag === 'IMG') && (name === 'src' || name === 'alt' || name === 'title')) ||
         ((tag === 'TD' || tag === 'TH') && (name === 'colspan' || name === 'rowspan'));
 
-      if (!keep || name.startsWith('on') || name === 'style' || name === 'srcdoc') {
-        element.removeAttribute(attr.name);
-      }
+      if (!keep) element.removeAttribute(attr.name);
     }
 
     if (tag === 'A') {
@@ -82,15 +78,6 @@ export function sanitizeDocumentHtml(input: string): string {
         element.removeAttribute('target');
         element.removeAttribute('rel');
       }
-    }
-
-    // IMG is not emitted by Mammoth by default unless an image converter is
-    // configured. Handle it defensively in case that changes or older data is loaded.
-    if (tag === 'IMG') {
-      const src = element.getAttribute('src');
-      const safe = src ? safeUrl(src, true) : null;
-      if (!safe) element.remove();
-      else element.setAttribute('src', safe);
     }
   }
 
@@ -122,7 +109,6 @@ export async function processUploadedDocument(file: File): Promise<DocumentAttac
     fileType = 'image';
   }
 
-  // Convert file to Data URL for reliable in-memory persistence and offline preview
   const dataUrl = await new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result as string);
