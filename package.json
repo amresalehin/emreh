@@ -11,6 +11,8 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
+    "test": "tsx --test \"tests/**/*.test.ts\"",
+    "test:watch": "tsx --test --watch \"tests/**/*.test.ts\"",
     "electron:start": "electron electron/main.cjs",
     "dist": "npm run build",
     "dist:win": "npm run build && electron-builder --win --x64",
