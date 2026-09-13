@@ -7,6 +7,14 @@ import type { NoteObject } from '../src/types/notes';
 class MemoryStorage {
   private data = new Map<string, string>();
 
+  get length(): number {
+    return this.data.size;
+  }
+
+  key(index: number): string | null {
+    return Array.from(this.data.keys())[index] ?? null;
+  }
+
   getItem(key: string): string | null {
     return this.data.get(key) ?? null;
   }
