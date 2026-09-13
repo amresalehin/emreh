@@ -39,6 +39,9 @@ jobs:
       - name: Type-check production code
         run: bun run lint
 
+      - name: Run subsystem tests
+        run: bun run test
+
       - name: Build production application
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
