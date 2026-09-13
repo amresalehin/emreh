@@ -52,12 +52,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
     if (!containerRef.current) return;
     const observer = new ResizeObserver((entries) => {
       const entry = entries[0];
-      if (entry) {
-        setContainerDimensions({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        });
-      }
+      if (entry) setContainerDimensions({ width: entry.contentRect.width, height: entry.contentRect.height });
     });
     observer.observe(containerRef.current);
     return () => observer.disconnect();
@@ -71,12 +66,11 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
   };
 
   const handlePopOut = () => {
-    const newWindow = window.open('', '_blank', 'noopener,noreferrer');
-    if (newWindow) {
-      newWindow.document.open();
-      newWindow.document.write(bundledHtml);
-      newWindow.document.close();
-    }
+    // Never execute the uploaded ZIP as an unsandboxed same-origin document.
+    // Use a data URL so the new top-level document gets an opaque origin and
+    // cannot access Emreh's localStorage/cookies/DOM even though scripts run.
+    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(bundledHtml)}`;
+    window.open(dataUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleFullscreen = () => {
@@ -173,7 +167,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
           <button onClick={handleFullscreen} title="Fullscreen Sandbox" className="p-1.5 rounded-md hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-colors">
             <Maximize2 className="w-3.5 h-3.5" />
           </button>
-          <button onClick={handlePopOut} title="Open in new window / tab" className="p-1.5 rounded-md hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-colors">
+          <button onClick={handlePopOut} title="Open isolated copy in new window / tab" className="p-1.5 rounded-md hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-colors">
             <ExternalLink className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -183,13 +177,8 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
         <div style={{ width: typeof frameWidth === 'number' ? `${frameWidth}px` : '100%', height: typeof frameHeight === 'number' ? `${frameHeight}px` : '100%', transform: `scale(${effectiveScale})`, transformOrigin: 'center center', transition: 'width 0.2s ease, height 0.2s ease, transform 0.15s ease' }} className={`relative bg-black transition-shadow duration-300 flex flex-col overflow-hidden ${currentDevice === 'responsive' ? 'w-full h-full rounded-none' : 'rounded-2xl border-4 border-slate-800 shadow-2xl shadow-black/80 max-h-full max-w-full'}`}>
           {(currentDevice === 'mobile_iphone' || currentDevice === 'mobile_android') && <div className="h-4 bg-slate-900 flex items-center justify-center shrink-0 border-b border-slate-800/40 select-none"><div className="w-16 h-2.5 bg-slate-950 rounded-full" /></div>}
 
-          {/*
-            IMPORTANT: keep the runner opaque-origin sandboxed. Combining
-            allow-scripts with allow-same-origin on srcDoc content lets an
-            untrusted uploaded app act as same-origin content and escape the
-            intended isolation boundary. The bridge uses postMessage and does
-            not require same-origin access.
-          */}
+          {/* Keep the runner opaque-origin sandboxed. The uploaded ZIP can
+              execute scripts, but cannot share Emreh's storage or DOM origin. */}
           <iframe
             ref={iframeRef}
             srcDoc={bundledHtml}
