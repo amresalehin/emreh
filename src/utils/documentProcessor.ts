@@ -7,13 +7,6 @@ export function formatFileSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-/**
- * Mammoth intentionally does not sanitize generated HTML. Convert the result
- * into a tightly controlled subset before it can reach a dangerouslySetInnerHTML
- * sink. This protects both newly imported and re-rendered DOCX content from
- * javascript: URLs, event-handler attributes, active embeds, and other HTML that
- * should never execute inside the application origin.
- */
 export function sanitizeDocumentHtml(input: string): string {
   if (!input) return '';
 
@@ -28,14 +21,12 @@ export function sanitizeDocumentHtml(input: string): string {
     'TFOOT', 'TH', 'THEAD', 'TR', 'U', 'UL'
   ]);
 
-  const safeUrl = (value: string, allowDataImage = false): string | null => {
+  const safeUrl = (value: string): string | null => {
     const trimmed = value.trim();
     if (!trimmed) return null;
     try {
       const url = new URL(trimmed, window.location.origin);
-      if (url.protocol === 'http:' || url.protocol === 'https:') return url.toString();
-      if (allowDataImage && url.protocol === 'data:' && /^data:image\/(?:png|jpeg|gif|webp);/i.test(trimmed)) return trimmed;
-      return null;
+      return url.protocol === 'http:' || url.protocol === 'https:' ? url.toString() : null;
     } catch {
       return null;
     }
@@ -56,13 +47,11 @@ export function sanitizeDocumentHtml(input: string): string {
       continue;
     }
 
-    const attrs = Array.from(element.attributes);
-    for (const attr of attrs) {
+    for (const attr of Array.from(element.attributes)) {
       const name = attr.name.toLowerCase();
       const keep =
         (tag === 'A' && (name === 'href' || name === 'title')) ||
         ((tag === 'TD' || tag === 'TH') && (name === 'colspan' || name === 'rowspan'));
-
       if (!keep) element.removeAttribute(attr.name);
     }
 
@@ -93,17 +82,9 @@ export async function processUploadedDocument(file: File): Promise<DocumentAttac
   let fileType: DocumentAttachment['fileType'] = 'generic';
   if (lowerName.endsWith('.pdf') || mimeType === 'application/pdf') {
     fileType = 'pdf';
-  } else if (
-    lowerName.endsWith('.docx') ||
-    mimeType.includes('wordprocessingml') ||
-    mimeType.includes('msword')
-  ) {
+  } else if (lowerName.endsWith('.docx') || mimeType.includes('wordprocessingml') || mimeType.includes('msword')) {
     fileType = 'docx';
-  } else if (
-    lowerName.endsWith('.txt') ||
-    lowerName.endsWith('.md') ||
-    mimeType.startsWith('text/')
-  ) {
+  } else if (lowerName.endsWith('.txt') || lowerName.endsWith('.md') || mimeType.startsWith('text/')) {
     fileType = 'text';
   } else if (mimeType.startsWith('image/')) {
     fileType = 'image';
