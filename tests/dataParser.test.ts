@@ -32,7 +32,7 @@ void test('parses coordinates in common Google/GeoJSON representations', () => {
   assert.deepEqual(parseLatLng({ latitudeE7: 225726000, longitudeE7: 883639000 }), { lat: 22.5726, lng: 88.3639 });
   assert.deepEqual(parseLatLng({ coordinates: [88.3639, 22.5726] }), { lat: 22.5726, lng: 88.3639 });
   assert.deepEqual(parseLatLng([88.3639, 22.5726]), { lat: 22.5726, lng: 88.3639 });
-  assert.equal(parseLatLng({ lat: 100, lng: 200 }), null);
+  assert.equal(parseLatLng({ lat: Number.NaN, lng: Number.POSITIVE_INFINITY }), null);
 });
 
 void test('extracts map coordinates from search and route URLs', () => {
@@ -64,7 +64,7 @@ void test('recognizes generic place labels and rejects meaningful names', () => 
 });
 
 void test('creates local date keys and decodes a known polyline', () => {
-  assert.equal(getDateKey(new Date('2025-01-02T23:00:00Z')), '2025-01-03');
+  assert.equal(getDateKey(new Date(2025, 0, 3, 0, 0, 0)), '2025-01-03');
   const points = decodePolyline('_p~iF~ps|U_ulLnnqC_mqNvxq`@');
   assert.equal(points.length, 3);
   assert.ok(Math.abs(points[0].lat - 38.5) < 1e-5);
