@@ -64,19 +64,23 @@
         const errorDescription = params.get('error_description');
 
         if (window.opener) {
+          // Restrict delivery to the current app origin. The opener also validates
+          // the popup source and OAuth state before accepting the response.
+          const targetOrigin = window.location.origin;
           window.opener.postMessage({
             type: 'BOX_OAUTH_RESPONSE',
             code,
             state,
             error: error || (errorDescription ? errorDescription : null)
-          }, '*');
+          }, targetOrigin);
           setTimeout(() => {
             window.close();
           }, 600);
         } else {
-          // If navigated directly without opener
+          // If navigated directly without an opener, return to the app while
+          // preserving the deployed project base path when applicable.
           setTimeout(() => {
-            window.location.href = '/';
+            window.location.replace(new URL('./', document.baseURI).toString());
           }, 1500);
         }
       })();
