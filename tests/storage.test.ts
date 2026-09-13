@@ -35,13 +35,14 @@ class MemoryStorage {
 const storage = new MemoryStorage();
 
 function installBrowserFallback(): void {
-  (globalThis as typeof globalThis & { window?: Window }).window = {
+  const browserWindow = {
     localStorage: storage,
-  } as unknown as Window;
+  } as unknown as Window & typeof globalThis;
+  (globalThis as typeof globalThis & { window?: Window & typeof globalThis }).window = browserWindow;
 }
 
 function removeBrowserFallback(): void {
-  delete (globalThis as typeof globalThis & { window?: Window }).window;
+  delete (globalThis as typeof globalThis & { window?: Window & typeof globalThis }).window;
 }
 
 beforeEach(() => {
