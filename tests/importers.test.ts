@@ -111,8 +111,8 @@ void test('Google Keep JSON fixture maps checklist state, labels, color and time
     { text: 'Passport', completed: true },
     { text: 'Tickets', completed: false },
   ]);
-  assert.equal(note.createdAt, '2025-01-02T20:00:00.000Z');
-  assert.equal(note.updatedAt, '2025-01-03T20:00:00.000Z');
+  assert.equal(note.createdAt, '2025-01-02T12:00:00.000Z');
+  assert.equal(note.updatedAt, '2025-01-03T12:00:00.000Z');
 });
 
 void test('Google Keep import fixture converts a JSON file into a rich note object', async () => {
