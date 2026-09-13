@@ -184,11 +184,13 @@ void test('Screentime JSON fixture aggregates duration by date and category', as
 void test('Screentime CSV fixture converts seconds to minutes', async () => {
   const result = await parseScreentimeFiles([
     new File([
-      'Date,App,Duration Seconds\n',
-      '2025-01-07,Slack,120\n',
-      '2025-01-07,Slack,180\n',
-      '2025-01-07,YouTube,600\n',
-    ].join(''),
+      [
+        'Date,App,Duration Seconds\n',
+        '2025-01-07,Slack,120\n',
+        '2025-01-07,Slack,180\n',
+        '2025-01-07,YouTube,600\n',
+      ].join(''),
+    ],
     'screentime.csv',
     { type: 'text/csv' }),
   ]);
