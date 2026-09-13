@@ -25,7 +25,9 @@ async function parseJsonBody(req: any): Promise<any> {
 }
 
 /**
- * Vite plugin for Box Cloud OAuth and API proxy
+ * Vite plugin for Box Cloud OAuth and API proxy.
+ * OAuth client credentials are server-side only; the browser may provide the
+ * authorization code and redirect URI, but never a client secret.
  */
 export function boxVitePlugin(): Plugin {
   return {
@@ -33,16 +35,11 @@ export function boxVitePlugin(): Plugin {
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const url = req.url || '';
-
-        // Only intercept /api/box/* routes
-        if (!url.startsWith('/api/box/')) {
-          return next();
-        }
+        if (!url.startsWith('/api/box/')) return next();
 
         const parsedUrl = new URL(url, 'http://localhost');
         const pathname = parsedUrl.pathname;
 
-        // Set standard CORS and JSON headers
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT');
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -54,29 +51,22 @@ export function boxVitePlugin(): Plugin {
         }
 
         try {
-          // 1. GET /api/box/config
           if (pathname === '/api/box/config' && req.method === 'GET') {
-            const clientId = process.env.BOX_CLIENT_ID || '';
-            const hasSecret = Boolean(process.env.BOX_CLIENT_SECRET);
+            const clientId = (process.env.BOX_CLIENT_ID || '').trim();
             res.setHeader('Content-Type', 'application/json');
             res.statusCode = 200;
-            res.end(
-              JSON.stringify({
-                configured: Boolean(clientId),
-                clientId: clientId ? clientId.trim() : '',
-                hasSecret
-              })
-            );
+            res.end(JSON.stringify({
+              configured: Boolean(clientId && process.env.BOX_CLIENT_SECRET),
+              clientId
+            }));
             return;
           }
 
-          // 2. POST /api/box/oauth/token (Exchange Code for Access & Refresh Token)
           if (pathname === '/api/box/oauth/token' && req.method === 'POST') {
             const body = await parseJsonBody(req);
-            const { code, redirectUri, clientId, clientSecret } = body;
-
-            const effectiveClientId = (clientId || process.env.BOX_CLIENT_ID || '').trim();
-            const effectiveClientSecret = (clientSecret || process.env.BOX_CLIENT_SECRET || '').trim();
+            const { code, redirectUri } = body;
+            const clientId = (process.env.BOX_CLIENT_ID || '').trim();
+            const clientSecret = (process.env.BOX_CLIENT_SECRET || '').trim();
 
             if (!code) {
               res.setHeader('Content-Type', 'application/json');
@@ -85,42 +75,23 @@ export function boxVitePlugin(): Plugin {
               return;
             }
 
-            if (!effectiveClientId) {
+            if (!clientId || !clientSecret) {
               res.setHeader('Content-Type', 'application/json');
-              res.statusCode = 400;
-              res.end(
-                JSON.stringify({
-                  error: 'BOX_CLIENT_ID is not configured in environment or provided in request'
-                })
-              );
-              return;
-            }
-
-            if (!effectiveClientSecret) {
-              res.setHeader('Content-Type', 'application/json');
-              res.statusCode = 400;
-              res.end(
-                JSON.stringify({
-                  error: 'BOX_CLIENT_SECRET is not configured in environment or provided in request'
-                })
-              );
+              res.statusCode = 500;
+              res.end(JSON.stringify({ error: 'Box OAuth is not configured on the server' }));
               return;
             }
 
             const formData = new URLSearchParams();
             formData.append('grant_type', 'authorization_code');
             formData.append('code', code);
-            formData.append('client_id', effectiveClientId);
-            formData.append('client_secret', effectiveClientSecret);
-            if (redirectUri) {
-              formData.append('redirect_uri', redirectUri);
-            }
+            formData.append('client_id', clientId);
+            formData.append('client_secret', clientSecret);
+            if (redirectUri) formData.append('redirect_uri', redirectUri);
 
             const boxRes = await fetch('https://api.box.com/oauth2/token', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              },
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
               body: formData.toString()
             });
 
@@ -131,13 +102,11 @@ export function boxVitePlugin(): Plugin {
             return;
           }
 
-          // 3. POST /api/box/oauth/refresh (Refresh Access Token)
           if (pathname === '/api/box/oauth/refresh' && req.method === 'POST') {
             const body = await parseJsonBody(req);
-            const { refreshToken, clientId, clientSecret } = body;
-
-            const effectiveClientId = (clientId || process.env.BOX_CLIENT_ID || '').trim();
-            const effectiveClientSecret = (clientSecret || process.env.BOX_CLIENT_SECRET || '').trim();
+            const { refreshToken } = body;
+            const clientId = (process.env.BOX_CLIENT_ID || '').trim();
+            const clientSecret = (process.env.BOX_CLIENT_SECRET || '').trim();
 
             if (!refreshToken) {
               res.setHeader('Content-Type', 'application/json');
@@ -146,17 +115,22 @@ export function boxVitePlugin(): Plugin {
               return;
             }
 
+            if (!clientId || !clientSecret) {
+              res.setHeader('Content-Type', 'application/json');
+              res.statusCode = 500;
+              res.end(JSON.stringify({ error: 'Box OAuth is not configured on the server' }));
+              return;
+            }
+
             const formData = new URLSearchParams();
             formData.append('grant_type', 'refresh_token');
             formData.append('refresh_token', refreshToken);
-            formData.append('client_id', effectiveClientId);
-            formData.append('client_secret', effectiveClientSecret);
+            formData.append('client_id', clientId);
+            formData.append('client_secret', clientSecret);
 
             const boxRes = await fetch('https://api.box.com/oauth2/token', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              },
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
               body: formData.toString()
             });
 
@@ -167,33 +141,41 @@ export function boxVitePlugin(): Plugin {
             return;
           }
 
-          // 4. API Proxy for Box API (handles CORS seamlessly)
-          // /api/box/proxy?endpoint=/2.0/users/me
-          if (pathname.startsWith('/api/box/proxy')) {
+          if (pathname === '/api/box/proxy') {
             const authHeader = req.headers['authorization'];
             const endpoint = parsedUrl.searchParams.get('endpoint') || '';
 
-            if (!endpoint) {
+            if (!endpoint || !endpoint.startsWith('/2.0/')) {
               res.setHeader('Content-Type', 'application/json');
               res.statusCode = 400;
-              res.end(JSON.stringify({ error: 'Missing Box API endpoint query param' }));
+              res.end(JSON.stringify({ error: 'Invalid Box API endpoint' }));
               return;
             }
 
-            const targetUrl = `https://api.box.com${endpoint.startsWith('/') ? endpoint : '/' + endpoint}`;
-            const headers: Record<string, string> = {};
-            if (authHeader) headers['Authorization'] = authHeader as string;
-            if (req.headers['content-type']) headers['Content-Type'] = req.headers['content-type'] as string;
+            if (!authHeader || typeof authHeader !== 'string') {
+              res.setHeader('Content-Type', 'application/json');
+              res.statusCode = 401;
+              res.end(JSON.stringify({ error: 'Missing Box Authorization header' }));
+              return;
+            }
 
-            let fetchBody: any = undefined;
+            const targetUrl = `https://api.box.com${endpoint}`;
+            const headers: Record<string, string> = {
+              Authorization: authHeader,
+              Accept: 'application/json'
+            };
+            if (req.headers['content-type']) headers['Content-Type'] = String(req.headers['content-type']);
+
+            let fetchBody: string | undefined;
             if (['POST', 'PUT', 'PATCH'].includes(req.method || '')) {
-              fetchBody = await parseJsonBody(req);
+              const body = await parseJsonBody(req);
+              fetchBody = JSON.stringify(body);
             }
 
             const boxRes = await fetch(targetUrl, {
               method: req.method,
               headers,
-              body: fetchBody ? JSON.stringify(fetchBody) : undefined
+              body: fetchBody
             });
 
             const resText = await boxRes.text();
@@ -208,7 +190,7 @@ export function boxVitePlugin(): Plugin {
           console.error('[Box API Plugin Error]:', err);
           res.setHeader('Content-Type', 'application/json');
           res.statusCode = 500;
-          res.end(JSON.stringify({ error: err.message || 'Internal Box Plugin Error' }));
+          res.end(JSON.stringify({ error: err?.message || 'Internal Box Plugin Error' }));
         }
       });
     }
