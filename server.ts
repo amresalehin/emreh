@@ -9,7 +9,7 @@ const app = express();
 // In development, the app runs with Vite middleware behind AI Studio's dev reverse proxy (port 3000).
 // In production deployment (e.g. Cloud Run), process.env.PORT is provided by the container runtime.
 const isProduction = process.env.NODE_ENV === 'production' || (typeof __filename !== 'undefined' && __filename.endsWith('.cjs'));
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
