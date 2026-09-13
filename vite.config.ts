@@ -36,7 +36,9 @@ export default defineConfig(({ command }) => {
       boxVitePlugin(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.svg', 'app-icon.svg', 'apple-touch-icon.png', 'emreh-logo.jpg', 'pwa-192x192.png', 'pwa-512x512.png'],
+        // Keep only assets that actually exist in /public. A nonexistent
+        // pwa-512x512.png made the manifest advertise broken icon URLs.
+        includeAssets: ['favicon.svg', 'app-icon.svg', 'apple-touch-icon.png', 'emreh-logo.jpg', 'pwa-192x192.png'],
         manifest: {
           id: basePath,
           start_url: basePath,
@@ -53,19 +55,7 @@ export default defineConfig(({ command }) => {
               src: 'pwa-192x192.png',
               sizes: '192x192',
               type: 'image/png',
-              purpose: 'any'
-            },
-            {
-              src: 'pwa-512x512.png',
-              sizes: '512x512',
-              type: 'image/png',
-              purpose: 'any'
-            },
-            {
-              src: 'pwa-512x512.png',
-              sizes: '512x512',
-              type: 'image/png',
-              purpose: 'maskable'
+              purpose: 'any maskable'
             }
           ]
         },
@@ -118,7 +108,7 @@ export default defineConfig(({ command }) => {
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
+      // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
