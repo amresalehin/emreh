@@ -1,4 +1,4 @@
-import { dbGet, dbSet, dbDelete } from './storage';
+import { dbGet, dbSet, dbDeleteMany, dbSetVersioned } from './storage';
 import { TimelineItem, FitDailyMetric, ScreentimeDayData, CalendarEvent } from '../types';
 import { NoteObject } from '../types/notes';
 
@@ -26,11 +26,6 @@ async function getVersion(key: string): Promise<number> {
   const versionKey = key + VERSION_KEY_SUFFIX;
   const version = await dbGet<number>(versionKey, 0);
   return version;
-}
-
-async function setVersion(key: string, version: number): Promise<void> {
-  const versionKey = key + VERSION_KEY_SUFFIX;
-  await dbSet(versionKey, version);
 }
 
 async function getVersionedData<T>(key: string, defaultValue: T): Promise<VersionedData<T>> {
@@ -61,22 +56,16 @@ async function getVersionedData<T>(key: string, defaultValue: T): Promise<Versio
   };
 }
 
-async function setVersionedData<T>(key: string, data: T, version: number): Promise<void> {
-  await Promise.all([
-    dbSet(key, data),
-    setVersion(key, version)
-  ]);
-}
-
 export class PersistenceManager<T> {
   private config: PersistenceConfig<T>;
-  private pendingWrites: Map<string, { data: T; version: number }> = new Map();
-  private writeQueue: Array<() => Promise<void>> = [];
-  private isProcessing = false;
   private subscribers: Set<(data: T) => void> = new Set();
 
   constructor(config: PersistenceConfig<T>) {
     this.config = config;
+  }
+
+  private getVersionKey(): string {
+    return this.config.versionKey || this.config.key + VERSION_KEY_SUFFIX;
   }
 
   async load(): Promise<VersionedData<T>> {
@@ -93,17 +82,14 @@ export class PersistenceManager<T> {
       }
     }
 
-    const currentVersion = await getVersion(this.config.key);
-    
-    if (expectedVersion !== undefined && expectedVersion !== currentVersion) {
-      throw new Error(`Version conflict: expected ${expectedVersion}, current is ${currentVersion}`);
-    }
+    const newVersion = await dbSetVersioned(
+      this.config.key,
+      normalizedData,
+      this.getVersionKey(),
+      expectedVersion
+    );
 
-    const newVersion = currentVersion + 1;
-    await setVersionedData(this.config.key, normalizedData, newVersion);
-    
     this.notifySubscribers(normalizedData);
-    
     return { data: normalizedData, version: newVersion, lastModified: Date.now() };
   }
 
@@ -117,7 +103,7 @@ export class PersistenceManager<T> {
     } else {
       newData = current.data;
     }
-    
+
     for (const patch of patches) {
       switch (patch.type) {
         case 'set':
@@ -135,12 +121,14 @@ export class PersistenceManager<T> {
             const existing = (newData as Record<string, unknown>)[patch.key];
             if (existing && typeof existing === 'object' && typeof patch.value === 'object') {
               (newData as Record<string, unknown>)[patch.key] = { ...existing, ...patch.value };
+            } else {
+              (newData as Record<string, unknown>)[patch.key] = patch.value;
             }
           }
           break;
       }
     }
-    
+
     return this.save(newData, current.version);
   }
 
@@ -154,10 +142,7 @@ export class PersistenceManager<T> {
   }
 
   async delete(): Promise<void> {
-    await Promise.all([
-      dbDelete(this.config.key),
-      dbDelete(this.config.key + VERSION_KEY_SUFFIX)
-    ]);
+    await dbDeleteMany([this.config.key, this.getVersionKey()]);
     this.notifySubscribers(this.config.defaultValue);
   }
 }
@@ -233,28 +218,32 @@ export const notesPersistence = new PersistenceManager<NoteObject[]>({
 export async function persistTimelineIncremental(
   updates: Array<{ id: string; item?: TimelineItem; delete?: boolean }>
 ): Promise<VersionedData<TimelineItem[]>> {
-  const current = await timelinePersistence.load();
-  const currentList: TimelineItem[] = Array.isArray(current.data)
-    ? current.data
-    : (current.data && typeof current.data === 'object' ? Object.values(current.data) : []);
-  
-  const map = new Map<string, TimelineItem>();
-  for (const item of currentList) {
-    if (item && item.id) {
-      map.set(item.id, item);
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const current = await timelinePersistence.load();
+    const currentList: TimelineItem[] = Array.isArray(current.data)
+      ? current.data
+      : (current.data && typeof current.data === 'object' ? Object.values(current.data) : []);
+
+    const map = new Map<string, TimelineItem>();
+    for (const item of currentList) {
+      if (item && item.id) map.set(item.id, item);
+    }
+
+    for (const u of updates) {
+      if (u.delete) map.delete(u.id);
+      else if (u.item) map.set(u.id, u.item);
+    }
+
+    try {
+      return await timelinePersistence.save(Array.from(map.values()), current.version);
+    } catch (error) {
+      if (attempt === 2 || !String(error instanceof Error ? error.message : error).startsWith('Version conflict:')) {
+        throw error;
+      }
     }
   }
 
-  for (const u of updates) {
-    if (u.delete) {
-      map.delete(u.id);
-    } else if (u.item) {
-      map.set(u.id, u.item);
-    }
-  }
-
-  const updatedList = Array.from(map.values());
-  return timelinePersistence.save(updatedList);
+  throw new Error('Unable to persist timeline updates');
 }
 
 export async function persistFitMetricIncremental(
@@ -311,12 +300,18 @@ export async function persistBookmarkTagIncremental(
   const updated = add
     ? [...new Set([...existing, tag])]
     : existing.filter(t => t !== tag);
-  
-  return bookmarkTagsPersistence.patch([{
-    type: updated.length > 0 ? 'set' : 'delete',
-    key: url,
-    value: updated
-  }]);
+
+  return bookmarkTagsPersistence.save(
+    { ...current.data, ...(updated.length ? { [url]: updated } : {}) },
+    current.version
+  ).then(result => {
+    if (updated.length === 0 && result.data[url]) {
+      const cleaned = { ...result.data };
+      delete cleaned[url];
+      return bookmarkTagsPersistence.save(cleaned, result.version);
+    }
+    return result;
+  });
 }
 
 export async function persistSessionSnapshotIncremental(
@@ -333,16 +328,26 @@ export async function persistSessionSnapshotIncremental(
 export async function persistImportedFileIncremental(
   file: any
 ): Promise<VersionedData<any[]>> {
-  const current = await importedFilesPersistence.load();
-  const currentList: any[] = Array.isArray(current.data)
-    ? current.data
-    : (current.data && typeof current.data === 'object' ? Object.values(current.data) : []);
-  const existing = currentList.find(f => f && f.id === file.id);
-  const updated = existing
-    ? currentList.map(f => (f && f.id === file.id ? file : f))
-    : [file, ...currentList];
-  
-  return importedFilesPersistence.save(updated);
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const current = await importedFilesPersistence.load();
+    const currentList: any[] = Array.isArray(current.data)
+      ? current.data
+      : (current.data && typeof current.data === 'object' ? Object.values(current.data) : []);
+    const existing = currentList.find(f => f && f.id === file.id);
+    const updated = existing
+      ? currentList.map(f => (f && f.id === file.id ? file : f))
+      : [file, ...currentList];
+
+    try {
+      return await importedFilesPersistence.save(updated, current.version);
+    } catch (error) {
+      if (attempt === 2 || !String(error instanceof Error ? error.message : error).startsWith('Version conflict:')) {
+        throw error;
+      }
+    }
+  }
+
+  throw new Error('Unable to persist imported file');
 }
 
 export async function hydrateAllState(): Promise<{
