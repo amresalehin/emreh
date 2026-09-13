@@ -7,10 +7,10 @@
 export interface BoxUser {
   id: string;
   name: string;
-  login: string; // email address
+  login: string;
   avatar_url?: string;
-  space_amount: number; // total quota in bytes
-  space_used: number; // used space in bytes
+  space_amount: number;
+  space_used: number;
   max_upload_size: number;
   status: string;
   job_title?: string;
@@ -51,7 +51,6 @@ export interface BoxConfig {
   accessToken?: string;
   refreshToken?: string;
   clientId?: string;
-  clientSecret?: string;
   expiresAt?: number;
   user?: BoxUser | null;
   lastSyncTime?: string | null;
@@ -61,17 +60,14 @@ export interface BoxConfig {
 export interface BoxServerConfig {
   configured: boolean;
   clientId: string;
-  hasSecret: boolean;
 }
 
 const BOX_CONFIG_STORAGE_KEY = 'my_life_box_config_v2';
 const BOX_CUSTOM_ITEMS_STORAGE_KEY = 'my_life_box_custom_items_v2';
 
-// Empty seed list: NO demo data as requested by user
 export const SEED_BOX_ITEMS: BoxItem[] = [];
 export const DEMO_BOX_USER: BoxUser | null = null;
 
-// Helper: Format bytes to human readable string
 export function formatBoxFileSize(bytes: number): string {
   if (!bytes || bytes <= 0) return '0 B';
   const k = 1024;
@@ -80,38 +76,32 @@ export function formatBoxFileSize(bytes: number): string {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 }
 
-// Helper: Get item category
 export function getBoxItemCategory(item: BoxItem): 'folder' | 'document' | 'image' | 'audio' | 'video' | 'archive' | 'data' | 'other' {
   if (item.type === 'folder') return 'folder';
   const ext = (item.extension || item.name.split('.').pop() || '').toLowerCase();
-  
-  if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'heic'].includes(ext)) {
-    return 'image';
-  }
-  if (['mp3', 'wav', 'ogg', 'm4a', 'flac', 'aac'].includes(ext)) {
-    return 'audio';
-  }
-  if (['mp4', 'mov', 'webm', 'avi', 'mkv'].includes(ext)) {
-    return 'video';
-  }
-  if (['zip', 'tar', 'gz', '7z', 'rar'].includes(ext)) {
-    return 'archive';
-  }
-  if (['json', 'geojson', 'csv', 'sql', 'xml', 'html'].includes(ext)) {
-    return 'data';
-  }
-  if (['pdf', 'doc', 'docx', 'txt', 'md', 'rtf', 'odt', 'pages', 'xlsx', 'xls', 'pptx'].includes(ext)) {
-    return 'document';
-  }
+
+  if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff', 'heic'].includes(ext)) return 'image';
+  if (['mp3', 'wav', 'ogg', 'm4a', 'flac', 'aac'].includes(ext)) return 'audio';
+  if (['mp4', 'mov', 'webm', 'avi', 'mkv'].includes(ext)) return 'video';
+  if (['zip', 'tar', 'gz', '7z', 'rar'].includes(ext)) return 'archive';
+  if (['json', 'geojson', 'csv', 'sql', 'xml', 'html'].includes(ext)) return 'data';
+  if (['pdf', 'doc', 'docx', 'txt', 'md', 'rtf', 'odt', 'pages', 'xlsx', 'xls', 'pptx'].includes(ext)) return 'document';
   return 'other';
 }
 
-// Local Storage helpers
 export function getBoxConfig(): BoxConfig {
   try {
     const raw = localStorage.getItem(BOX_CONFIG_STORAGE_KEY);
     if (raw) {
-      return JSON.parse(raw);
+      const parsed = JSON.parse(raw) as BoxConfig;
+      // Older versions persisted clientSecret locally. Remove it immediately on read.
+      if ('clientSecret' in parsed) {
+        delete (parsed as BoxConfig & { clientSecret?: string }).clientSecret;
+        try {
+          localStorage.setItem(BOX_CONFIG_STORAGE_KEY, JSON.stringify(parsed));
+        } catch {}
+      }
+      return parsed;
     }
   } catch (err) {
     console.warn('Failed to parse Box config from localStorage', err);
@@ -126,7 +116,9 @@ export function getBoxConfig(): BoxConfig {
 
 export function saveBoxConfig(config: BoxConfig): void {
   try {
-    localStorage.setItem(BOX_CONFIG_STORAGE_KEY, JSON.stringify(config));
+    const safeConfig = { ...config } as BoxConfig & { clientSecret?: string };
+    delete safeConfig.clientSecret;
+    localStorage.setItem(BOX_CONFIG_STORAGE_KEY, JSON.stringify(safeConfig));
   } catch (err) {
     console.error('Failed to save Box config', err);
   }
@@ -143,9 +135,7 @@ export function clearBoxConfig(): void {
 export function getCustomBoxItems(): BoxItem[] {
   try {
     const raw = localStorage.getItem(BOX_CUSTOM_ITEMS_STORAGE_KEY);
-    if (raw) {
-      return JSON.parse(raw);
-    }
+    if (raw) return JSON.parse(raw);
   } catch (err) {
     console.warn('Failed to parse custom Box items', err);
   }
@@ -160,20 +150,16 @@ export function saveCustomBoxItems(items: BoxItem[]): void {
   }
 }
 
-// Check server environment configuration for Box OAuth
 export async function fetchBoxServerConfig(): Promise<BoxServerConfig> {
   try {
     const res = await fetch('/api/box/config');
-    if (res.ok) {
-      return await res.json();
-    }
+    if (res.ok) return await res.json();
   } catch (err) {
     console.warn('Could not fetch /api/box/config from server:', err);
   }
-  return { configured: false, clientId: '', hasSecret: false };
+  return { configured: false, clientId: '' };
 }
 
-// Construct Box OAuth Authorize URL
 export function getBoxAuthorizeUrl(clientId: string, redirectUri: string, state?: string): string {
   const params = new URLSearchParams({
     response_type: 'code',
@@ -184,123 +170,60 @@ export function getBoxAuthorizeUrl(clientId: string, redirectUri: string, state?
   return `https://account.box.com/api/oauth2/authorize?${params.toString()}`;
 }
 
-// Helper: Fetch with fallback to server proxy to bypass CORS
 async function fetchWithBoxFallback(url: string, options: RequestInit): Promise<Response> {
   try {
-    const res = await fetch(url, options);
-    return res;
+    return await fetch(url, options);
   } catch (networkError) {
     console.warn('Direct Box API request failed, routing through server proxy', networkError);
-    try {
-      const u = new URL(url);
-      const proxyUrl = `/api/box/proxy?endpoint=${encodeURIComponent(u.pathname + u.search)}`;
-      return await fetch(proxyUrl, options);
-    } catch {
-      throw networkError;
-    }
+    const u = new URL(url);
+    return await fetch(`/api/box/proxy?endpoint=${encodeURIComponent(u.pathname + u.search)}`, options);
   }
 }
 
-// Exchange Code for Access Token via Server or Direct API
+// Exchange the authorization code exclusively through the backend.
 export async function exchangeBoxCode(
   code: string,
-  clientId?: string,
-  clientSecret?: string,
+  _clientId?: string,
+  _unusedClientSecret?: string,
   redirectUri?: string
 ): Promise<{ access_token: string; refresh_token?: string; expires_in?: number }> {
-  // First attempt backend server route (which has BOX_CLIENT_ID & BOX_CLIENT_SECRET in env)
-  try {
-    const serverRes = await fetch('/api/box/oauth/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        code,
-        clientId,
-        clientSecret,
-        redirectUri
-      })
-    });
-
-    if (serverRes.ok) {
-      return await serverRes.json();
-    }
-    const errObj = await serverRes.json().catch(() => ({}));
-    if (errObj.error && !clientSecret) {
-      throw new Error(errObj.error);
-    }
-  } catch (serverErr: any) {
-    // If clientSecret was passed explicitly, try direct Box API
-    if (!clientSecret || !clientId) {
-      throw serverErr;
-    }
-  }
-
-  // Fallback to direct Box OAuth call if credentials are provided on client
-  if (!clientId || !clientSecret) {
-    throw new Error('BOX_CLIENT_ID or BOX_CLIENT_SECRET missing');
-  }
-
-  const formData = new URLSearchParams();
-  formData.append('grant_type', 'authorization_code');
-  formData.append('code', code);
-  formData.append('client_id', clientId);
-  formData.append('client_secret', clientSecret);
-  if (redirectUri) {
-    formData.append('redirect_uri', redirectUri);
-  }
-
-  const res = await fetch('https://api.box.com/oauth2/token', {
+  const serverRes = await fetch('/api/box/oauth/token', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: formData.toString()
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, redirectUri })
   });
 
-  if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`Box OAuth token exchange failed (${res.status}): ${errorText}`);
+  const data = await serverRes.json().catch(() => ({}));
+  if (!serverRes.ok) {
+    throw new Error(data.error || `Box OAuth token exchange failed (${serverRes.status})`);
   }
-
-  return await res.json();
+  return data;
 }
 
-// Refresh Box Token via Server
 export async function refreshBoxToken(
   refreshToken: string,
-  clientId?: string,
-  clientSecret?: string
+  _clientId?: string,
+  _unusedClientSecret?: string
 ): Promise<{ access_token: string; refresh_token?: string; expires_in?: number }> {
   const res = await fetch('/api/box/oauth/refresh', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      refreshToken,
-      clientId,
-      clientSecret
-    })
+    body: JSON.stringify({ refreshToken })
   });
 
+  const data = await res.json().catch(() => ({}));
   if (!res.ok) {
-    const errorData = await res.json().catch(() => ({}));
-    throw new Error(errorData.error || `Token refresh failed with status ${res.status}`);
+    throw new Error(data.error || `Token refresh failed with status ${res.status}`);
   }
-
-  return await res.json();
+  return data;
 }
 
-// Fetch Box Current User Info
 export async function fetchBoxCurrentUser(token: string): Promise<BoxUser> {
   const res = await fetchWithBoxFallback('https://api.box.com/2.0/users/me', {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
+    headers: { Authorization: `Bearer ${token}` }
   });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch Box user: ${res.statusText}`);
-  }
-
+  if (!res.ok) throw new Error(`Failed to fetch Box user: ${res.statusText}`);
   const data = await res.json();
   return {
     id: data.id,
@@ -316,158 +239,84 @@ export async function fetchBoxCurrentUser(token: string): Promise<BoxUser> {
   };
 }
 
-// Fetch Items inside a Folder
 export async function fetchBoxFolderItems(folderId: string, token: string): Promise<BoxItem[]> {
   const fields = 'id,type,name,size,created_at,modified_at,description,shared_link,item_status,path_collection,content_created_at,extension';
   const res = await fetchWithBoxFallback(`https://api.box.com/2.0/folders/${folderId}/items?fields=${fields}&limit=100`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
+    headers: { Authorization: `Bearer ${token}` }
   });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch Box folder ${folderId}: ${res.statusText}`);
-  }
-
+  if (!res.ok) throw new Error(`Failed to fetch Box folder ${folderId}: ${res.statusText}`);
   const data = await res.json();
   const entries: any[] = data.entries || [];
 
-  return entries.map(entry => {
-    const item: BoxItem = {
-      id: entry.id,
-      type: entry.type === 'folder' ? 'folder' : 'file',
-      name: entry.name,
-      size: entry.size || 0,
-      created_at: entry.created_at || entry.content_created_at || new Date().toISOString(),
-      modified_at: entry.modified_at || new Date().toISOString(),
-      description: entry.description || '',
-      extension: entry.extension || (entry.type === 'file' ? entry.name.split('.').pop() : undefined),
-      parent_id: folderId,
-      shared_link: entry.shared_link ? { url: entry.shared_link.url, download_url: entry.shared_link.download_url } : null,
-      path_collection: entry.path_collection
-    };
-    item.category = getBoxItemCategory(item);
-    return item;
-  });
+  return entries.map(entry => ({
+    id: entry.id,
+    type: entry.type === 'folder' ? 'folder' : 'file',
+    name: entry.name,
+    size: entry.size || 0,
+    created_at: entry.created_at,
+    modified_at: entry.modified_at,
+    description: entry.description,
+    extension: entry.extension,
+    item_status: entry.item_status,
+    parent_id: entry.path_collection?.entries?.at(-1)?.id || folderId,
+    shared_link: entry.shared_link || null,
+    path_collection: entry.path_collection,
+    category: getBoxItemCategory(entry as BoxItem)
+  }));
 }
 
-// Create a new folder on Box
-export async function createBoxFolder(parentId: string, name: string, token: string): Promise<BoxItem> {
+export async function createBoxFolder(folderId: string, name: string, token: string): Promise<BoxItem> {
   const res = await fetchWithBoxFallback('https://api.box.com/2.0/folders', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      name,
-      parent: { id: parentId }
-    })
+    body: JSON.stringify({ name, parent: { id: folderId } })
   });
-
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Failed to create folder on Box: ${err}`);
-  }
-
-  const data = await res.json();
-  const item: BoxItem = {
-    id: data.id,
-    type: 'folder',
-    name: data.name,
-    size: 0,
-    created_at: data.created_at || new Date().toISOString(),
-    modified_at: data.modified_at || new Date().toISOString(),
-    parent_id: parentId,
-    category: 'folder',
-    description: ''
-  };
-  return item;
+  if (!res.ok) throw new Error(`Failed to create Box folder: ${res.statusText}`);
+  return await res.json();
 }
 
-// Upload a file to Box
-export async function uploadBoxFile(parentId: string, file: File, token: string): Promise<BoxItem> {
-  const formData = new FormData();
-  const attributes = {
-    name: file.name,
-    parent: { id: parentId }
-  };
-  formData.append('attributes', JSON.stringify(attributes));
-  formData.append('file', file);
+export async function uploadBoxFile(folderId: string, file: File, token: string): Promise<BoxItem> {
+  const form = new FormData();
+  form.append('attributes', JSON.stringify({ name: file.name, parent: { id: folderId } }));
+  form.append('file', file);
 
-  const res = await fetch('https://upload.box.com/api/2.0/files/content', {
+  const res = await fetchWithBoxFallback('https://upload.box.com/api/2.0/files/content', {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`
-    },
-    body: formData
+    headers: { Authorization: `Bearer ${token}` },
+    body: form
   });
-
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Failed to upload file to Box: ${err}`);
-  }
-
+  if (!res.ok) throw new Error(`Failed to upload file: ${res.statusText}`);
   const data = await res.json();
-  const entry = data.entries?.[0] || data;
-
-  const item: BoxItem = {
-    id: entry.id,
-    type: 'file',
-    name: entry.name,
-    size: entry.size || file.size,
-    created_at: entry.created_at || new Date().toISOString(),
-    modified_at: entry.modified_at || new Date().toISOString(),
-    description: entry.description || '',
-    extension: file.name.split('.').pop() || '',
-    parent_id: parentId
-  };
-  item.category = getBoxItemCategory(item);
-  return item;
+  return data.entries?.[0] || data;
 }
 
-// Delete item on Box
-export async function deleteBoxItem(id: string, type: 'file' | 'folder', token: string): Promise<void> {
-  const endpoint = type === 'folder' ? `https://api.box.com/2.0/folders/${id}?recursive=true` : `https://api.box.com/2.0/files/${id}`;
-  const res = await fetchWithBoxFallback(endpoint, {
+export async function deleteBoxItem(itemId: string, itemType: 'file' | 'folder', token: string): Promise<void> {
+  const path = itemType === 'folder' ? `/2.0/folders/${itemId}?recursive=true` : `/2.0/files/${itemId}`;
+  const res = await fetchWithBoxFallback(`https://api.box.com${path}`, {
     method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
+    headers: { Authorization: `Bearer ${token}` }
   });
-
-  if (!res.ok && res.status !== 204) {
-    throw new Error(`Failed to delete Box item: ${res.statusText}`);
-  }
+  if (!res.ok) throw new Error(`Failed to delete Box item: ${res.statusText}`);
 }
 
-// Unified repository to get items for folder (no demo data, custom uploaded items only)
 export function getStoredItemsForFolder(folderId: string): BoxItem[] {
-  const custom = getCustomBoxItems();
-  return custom.filter(item => (item.parent_id || '0') === folderId);
+  return getCustomBoxItems().filter(item => (item.parent_id || '0') === folderId);
 }
 
-// Build breadcrumb trail from folder ID
-export function buildBreadcrumbs(folderId: string, currentItems: BoxItem[] = []): BoxBreadcrumb[] {
-  if (folderId === '0' || !folderId) {
-    return [{ id: '0', name: 'All Files' }];
+export function buildBreadcrumbs(folderId: string, items: BoxItem[]): BoxBreadcrumb[] {
+  const breadcrumbs: BoxBreadcrumb[] = [{ id: '0', name: 'All Files' }];
+  let currentId = folderId;
+  const seen = new Set<string>();
+  while (currentId && currentId !== '0' && !seen.has(currentId)) {
+    seen.add(currentId);
+    const current = items.find(item => item.id === currentId && item.type === 'folder');
+    if (!current) break;
+    breadcrumbs.splice(1, 0, { id: current.id, name: current.name });
+    currentId = current.parent_id || '0';
   }
-
-  const custom = getCustomBoxItems();
-  const allKnown = [...currentItems, ...custom];
-  const trail: BoxBreadcrumb[] = [];
-  let currentId: string | undefined = folderId;
-
-  while (currentId && currentId !== '0') {
-    const found = allKnown.find(i => i.id === currentId && i.type === 'folder');
-    if (found) {
-      trail.unshift({ id: found.id, name: found.name });
-      currentId = found.parent_id;
-    } else {
-      break;
-    }
-  }
-
-  trail.unshift({ id: '0', name: 'All Files' });
-  return trail;
+  return breadcrumbs;
 }
