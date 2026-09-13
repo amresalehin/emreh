@@ -8,7 +8,7 @@ import {
 import {
   BoxItem, BoxConfig, BoxBreadcrumb, BoxServerConfig,
   getBoxConfig, saveBoxConfig, clearBoxConfig, getCustomBoxItems,
-  saveCustomBoxItems, getStoredItemsForFolder, buildBreadcrumbs,
+  saveCustomBoxItems, getStoredItemsForFolder,
   formatBoxFileSize, getBoxItemCategory, getBoxAuthorizeUrl, exchangeBoxCode,
   fetchBoxCurrentUser, fetchBoxFolderItems, createBoxFolder, uploadBoxFile,
   deleteBoxItem, fetchBoxServerConfig
@@ -18,6 +18,18 @@ import { TimelineItem, ItemType } from '../../types';
 interface BoxCloudViewProps {
   onImportTimelineItems?: (items: TimelineItem[], sourceName: string) => void;
   onNavigateToView?: (view: string) => void;
+}
+
+const BOX_OAUTH_STATE_KEY = 'emreh_box_oauth_state_v1';
+
+function getBoxRedirectUri(): string {
+  return new URL('box-oauth-callback.html', document.baseURI).toString();
+}
+
+function createOAuthState(): string {
+  const bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
 export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItems }) => {
@@ -40,6 +52,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const oauthPopupRef = useRef<Window | null>(null);
 
   useEffect(() => {
     fetchBoxServerConfig().then(cfg => {
@@ -57,18 +70,14 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
         try {
           const liveItems = await fetchBoxFolderItems(folderId, config.accessToken);
           setItems(liveItems);
-          setBreadcrumbs(buildBreadcrumbs(folderId, liveItems));
         } catch (apiErr) {
           console.warn('Live Box API request failed, checking stored cache', apiErr);
           const stored = getStoredItemsForFolder(folderId);
           setItems(stored);
-          setBreadcrumbs(buildBreadcrumbs(folderId, stored));
           if (stored.length === 0) setStatusNotification({ type: 'info', message: 'Box folder is empty or not yet synchronized.' });
         }
       } else {
-        const stored = getStoredItemsForFolder(folderId);
-        setItems(stored);
-        setBreadcrumbs(buildBreadcrumbs(folderId, stored));
+        setItems(getStoredItemsForFolder(folderId));
       }
     } catch (err: any) {
       setStatusNotification({ type: 'error', message: err?.message || 'Failed to load folder items' });
@@ -84,6 +93,26 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
   useEffect(() => {
     const handleOAuthMessage = async (event: MessageEvent) => {
       if (event.data?.type !== 'BOX_OAUTH_RESPONSE') return;
+      if (event.origin !== window.location.origin) return;
+      if (oauthPopupRef.current && event.source !== oauthPopupRef.current) return;
+
+      const expectedState = (() => {
+        try {
+          return sessionStorage.getItem(BOX_OAUTH_STATE_KEY);
+        } catch {
+          return null;
+        }
+      })();
+      if (!expectedState || event.data.state !== expectedState) {
+        setStatusNotification({ type: 'error', message: 'Rejected Box OAuth response: invalid or expired authorization state.' });
+        return;
+      }
+
+      try {
+        sessionStorage.removeItem(BOX_OAUTH_STATE_KEY);
+      } catch {}
+      oauthPopupRef.current = null;
+
       const { code, error } = event.data;
       if (error) {
         setStatusNotification({ type: 'error', message: `Box Authorization Error: ${error}` });
@@ -92,16 +121,18 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
       if (!code) return;
       setIsLoading(true);
       try {
-        const redirectUri = `${window.location.origin}/box-oauth-callback.html`;
+        const redirectUri = getBoxRedirectUri();
         const effectiveClientId = config.clientId || serverConfig.clientId;
         if (!effectiveClientId) throw new Error('Box OAuth client ID is not configured.');
         const tokenData = await exchangeBoxCode(code, redirectUri);
+        if (!tokenData.access_token) throw new Error('Box did not return an access token.');
         const user = await fetchBoxCurrentUser(tokenData.access_token);
         const nextConfig: BoxConfig = {
           isConnected: true,
           authMode: 'oauth',
           accessToken: tokenData.access_token,
           refreshToken: tokenData.refresh_token,
+          expiresAt: tokenData.expires_in ? Date.now() + tokenData.expires_in * 1000 : undefined,
           clientId: effectiveClientId,
           user,
           lastSyncTime: new Date().toISOString()
@@ -111,6 +142,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
         setIsConnectModalOpen(false);
         setStatusNotification({ type: 'success', message: `Successfully connected Box Cloud for ${user.name}!` });
         setCurrentFolderId('0');
+        setBreadcrumbs([{ id: '0', name: 'All Files' }]);
         await refreshFolder('0');
       } catch (err: any) {
         setStatusNotification({ type: 'error', message: `Failed to exchange Box token: ${err.message}` });
@@ -123,21 +155,37 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
   }, [config.clientId, serverConfig.clientId]);
 
   const handleNavigateToFolder = (folderId: string) => {
+    if (folderId === '0') {
+      setBreadcrumbs([{ id: '0', name: 'All Files' }]);
+      setCurrentFolderId('0');
+      setSearchQuery('');
+      return;
+    }
+
+    const folder = items.find(item => item.id === folderId && item.type === 'folder');
+    if (folder) {
+      setBreadcrumbs(prev => {
+        const existingIndex = prev.findIndex(crumb => crumb.id === folderId);
+        if (existingIndex >= 0) return prev.slice(0, existingIndex + 1);
+        return [...prev, { id: folder.id, name: folder.name }];
+      });
+    }
     setCurrentFolderId(folderId);
     setSearchQuery('');
   };
 
   const createLocalFolder = (name: string) => {
+    const now = new Date().toISOString();
     const newFolder: BoxItem = {
       id: `fld_custom_${Date.now()}`,
       type: 'folder',
       name,
       size: 0,
-      created_at: new Date().toISOString(),
-      modified_at: new Date().toISOString(),
+      created_at: now,
+      modified_at: now,
       parent_id: currentFolderId,
       category: 'folder',
-      description: 'Custom folder created in Box Cloud'
+      description: 'Custom folder created locally in Emreh'
     };
     saveCustomBoxItems([newFolder, ...getCustomBoxItems()]);
     setItems(prev => [newFolder, ...prev]);
@@ -152,16 +200,18 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
         try {
           const created = await createBoxFolder(currentFolderId, name, config.accessToken);
           setItems(prev => [created, ...prev]);
+          setStatusNotification({ type: 'success', message: `Created Box folder "${name}"` });
         } catch (apiErr) {
-          console.warn('Direct API create folder failed, saving locally', apiErr);
+          console.warn('Box API folder creation failed; saving locally instead', apiErr);
           createLocalFolder(name);
+          setStatusNotification({ type: 'info', message: `Box folder creation failed; saved "${name}" locally in Emreh instead.` });
         }
       } else {
         createLocalFolder(name);
+        setStatusNotification({ type: 'success', message: `Created local folder "${name}"` });
       }
       setNewFolderName('');
       setIsNewFolderModalOpen(false);
-      setStatusNotification({ type: 'success', message: `Created folder "${name}"` });
     } catch (err: any) {
       setStatusNotification({ type: 'error', message: err?.message || 'Could not create folder' });
     } finally {
@@ -169,10 +219,18 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
     }
   };
 
+  const readFileAsDataUrl = (file: File): Promise<string> => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+
   const handleUploadFiles = async (fileList: FileList | null) => {
     if (!fileList?.length) return;
     setIsLoading(true);
     const uploadedItems: BoxItem[] = [];
+    const localFallbackCount = { value: 0 };
     try {
       for (let i = 0; i < fileList.length; i++) {
         const file = fileList[i];
@@ -181,13 +239,21 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
             uploadedItems.push(await uploadBoxFile(currentFolderId, file, config.accessToken));
             continue;
           } catch (apiErr) {
-            console.warn('Direct Box API upload failed, creating cached item', apiErr);
+            console.warn('Box API upload failed, creating local fallback item', apiErr);
+            localFallbackCount.value += 1;
           }
         }
         let previewText: string | undefined;
         let thumbUrl: string | undefined;
-        if (file.type.startsWith('image/')) thumbUrl = URL.createObjectURL(file);
-        else if (file.type.startsWith('text/') || file.name.endsWith('.md') || file.name.endsWith('.json')) previewText = await file.text();
+        if (file.type.startsWith('image/')) {
+          try {
+            thumbUrl = await readFileAsDataUrl(file);
+          } catch (thumbErr) {
+            console.warn('Failed to persist image thumbnail', thumbErr);
+          }
+        } else if (file.type.startsWith('text/') || file.name.endsWith('.md') || file.name.endsWith('.json')) {
+          previewText = await file.text();
+        }
         const customItem: BoxItem = {
           id: `file_custom_${Date.now()}_${i}`,
           type: 'file',
@@ -195,7 +261,7 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
           size: file.size,
           created_at: new Date().toISOString(),
           modified_at: new Date().toISOString(),
-          description: `Uploaded file (${file.type || 'unknown'})`,
+          description: `Stored locally in Emreh (${file.type || 'unknown'})`,
           extension: file.name.split('.').pop() || '',
           parent_id: currentFolderId,
           thumbnail_url: thumbUrl,
@@ -205,9 +271,14 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
         uploadedItems.push(customItem);
       }
       if (uploadedItems.length) {
-        saveCustomBoxItems([...uploadedItems, ...getCustomBoxItems()]);
+        const localItems = uploadedItems.filter(item => item.id.startsWith('file_custom_'));
+        if (localItems.length) saveCustomBoxItems([...localItems, ...getCustomBoxItems()]);
         setItems(prev => [...uploadedItems, ...prev]);
-        setStatusNotification({ type: 'success', message: `Uploaded ${uploadedItems.length} ${uploadedItems.length === 1 ? 'file' : 'files'} to Box` });
+        if (localFallbackCount.value > 0) {
+          setStatusNotification({ type: 'info', message: `${uploadedItems.length} file(s) processed; ${localFallbackCount.value} saved locally because Box upload failed.` });
+        } else {
+          setStatusNotification({ type: 'success', message: `Uploaded ${uploadedItems.length} ${uploadedItems.length === 1 ? 'file' : 'files'} to Box` });
+        }
       }
     } catch (err: any) {
       setStatusNotification({ type: 'error', message: `Upload failed: ${err.message}` });
@@ -286,16 +357,31 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
       setStatusNotification({ type: 'error', message: 'Box Client ID is required. Please set BOX_CLIENT_ID in your environment or enter it in settings.' });
       return;
     }
-    const redirectUri = `${window.location.origin}/box-oauth-callback.html`;
-    window.open(getBoxAuthorizeUrl(clientId, redirectUri), 'box_oauth_popup', 'width=600,height=720');
+    const state = createOAuthState();
+    try {
+      sessionStorage.setItem(BOX_OAUTH_STATE_KEY, state);
+    } catch {
+      setStatusNotification({ type: 'error', message: 'Unable to start Box OAuth securely because session storage is unavailable.' });
+      return;
+    }
+    const redirectUri = getBoxRedirectUri();
+    const popup = window.open(getBoxAuthorizeUrl(clientId, redirectUri, state), 'box_oauth_popup', 'width=600,height=720');
+    if (!popup) {
+      sessionStorage.removeItem(BOX_OAUTH_STATE_KEY);
+      setStatusNotification({ type: 'error', message: 'Box OAuth popup was blocked. Allow popups for Emreh and try again.' });
+      return;
+    }
+    oauthPopupRef.current = popup;
   };
+
+  const redirectUri = getBoxRedirectUri();
 
   return (
     <div className="flex-1 flex flex-col h-full min-h-0 overflow-hidden relative"
       onDragOver={e => { e.preventDefault(); setIsDraggingOver(true); }}
       onDragLeave={() => setIsDraggingOver(false)}
-      onDrop={e => { e.preventDefault(); setIsDraggingOver(false); handleUploadFiles(e.dataTransfer.files); }}>
-      <input ref={fileInputRef} type="file" multiple className="hidden" onChange={e => handleUploadFiles(e.target.files)} />
+      onDrop={e => { e.preventDefault(); setIsDraggingOver(false); void handleUploadFiles(e.dataTransfer.files); }}>
+      <input ref={fileInputRef} type="file" multiple className="hidden" onChange={e => { void handleUploadFiles(e.target.files); }} />
       <div className="py-3 px-4 sm:px-6 border-b border-black/8 dark:border-white/10 bg-white/45 dark:bg-[#121214]/50 sticky top-0 z-20 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0"><div className="w-9 h-9 rounded-xl bg-[#0061D5] flex items-center justify-center text-white"><Cloud className="w-5 h-5" /></div><div><h1 className="text-base font-bold text-gray-950 dark:text-white">Box Cloud Storage</h1><p className="text-xs text-gray-600 dark:text-gray-400 truncate">{config.isConnected && activeUser ? `${activeUser.name} • ${activeUser.login}` : serverConfig.configured ? 'BOX_CLIENT_ID detected in environment • Ready to connect with Box OAuth' : 'Connect with Box OAuth 2.0 or Developer Token to sync your files'}</p></div></div>
         <div className="flex items-center gap-2"><button onClick={() => setIsConnectModalOpen(true)} className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-500/15"><Shield className="w-3.5 h-3.5 inline mr-1" />{config.isConnected ? 'Box Settings' : 'Connect Box'}</button><button onClick={() => fileInputRef.current?.click()} className="px-3 py-1.5 rounded-xl text-xs font-semibold text-white bg-[#0061D5]"><Upload className="w-3.5 h-3.5 inline mr-1" />Upload</button><button onClick={() => setIsNewFolderModalOpen(true)} className="px-3 py-1.5 rounded-xl text-xs font-semibold"><FolderPlus className="w-3.5 h-3.5 inline mr-1" />New Folder</button><button onClick={() => refreshFolder()} disabled={isLoading} className="p-2 rounded-xl"><RefreshCw className={isLoading ? 'w-3.5 h-3.5 animate-spin' : 'w-3.5 h-3.5'} /></button><button onClick={() => setViewMode('grid')} className="p-2 rounded-xl"><Grid className="w-3.5 h-3.5" /></button><button onClick={() => setViewMode('list')} className="p-2 rounded-xl"><ListIcon className="w-3.5 h-3.5" /></button></div>
@@ -309,9 +395,9 @@ export const BoxCloudView: React.FC<BoxCloudViewProps> = ({ onImportTimelineItem
         {viewMode === 'list' && displayItems.length > 0 && <div className="rounded-2xl border overflow-hidden"><table className="w-full text-left text-xs"><thead><tr className="border-b"><th className="py-2.5 px-4">Name</th><th className="py-2.5 px-4">Size</th><th className="py-2.5 px-4">Modified</th><th className="py-2.5 px-4 text-right">Actions</th></tr></thead><tbody>{displayItems.map(item => <tr key={item.id} className="border-b"><td className="py-2.5 px-4"><div className="flex items-center gap-2.5">{renderItemIcon(item)}<span className="font-semibold truncate">{item.name}</span></div></td><td className="py-2.5 px-4">{item.type === 'folder' ? '—' : formatBoxFileSize(item.size)}</td><td className="py-2.5 px-4">{new Date(item.modified_at).toLocaleDateString()}</td><td className="py-2.5 px-4 text-right"><button onClick={() => setPreviewItem(item)} className="mr-2"><Eye className="w-3.5 h-3.5" /></button><button onClick={() => handleDeleteItem(item)}><Trash2 className="w-3.5 h-3.5 text-rose-600" /></button></td></tr>)}</tbody></table></div>}
         {displayItems.length === 0 && !isLoading && <div className="py-16 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed rounded-3xl"><Cloud className="w-10 h-10 mb-3" /><h3 className="text-base font-bold">{config.isConnected ? 'This Box folder is empty' : 'No Box Account Connected'}</h3><p className="text-xs text-gray-500 max-w-md mt-1.5">{config.isConnected ? 'No files or folders found in this directory.' : 'Connect your Box account via OAuth 2.0 to access your real Box files and timeline backups, or upload local files.'}</p><div className="mt-5 flex items-center gap-3"><button onClick={() => setIsConnectModalOpen(true)} className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#0061D5]"><Link2 className="w-3.5 h-3.5 inline mr-1" />Connect Box Account</button><button onClick={() => fileInputRef.current?.click()} className="px-4 py-2 rounded-xl text-xs font-semibold border"><Upload className="w-3.5 h-3.5 inline mr-1" />Upload Local Files</button></div></div>}
       </div>
-      {isConnectModalOpen && <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"><div className="w-full max-w-lg rounded-3xl bg-white dark:bg-[#18181b] shadow-2xl p-6"><div className="flex items-center justify-between"><div><h3 className="text-base font-bold">Box Cloud Connection</h3><p className="text-xs text-gray-500">Connect your real Box account via OAuth 2.0 or Box Developer Token</p></div><button onClick={() => setIsConnectModalOpen(false)}><X className="w-4 h-4" /></button></div><div className="space-y-4 mt-4"><div className="p-4 rounded-2xl border border-blue-500/30"><div className="flex items-center justify-between mb-2"><span className="text-xs font-bold">Option 1: Box OAuth 2.0</span><span className="text-[10px]">{serverConfig.configured ? 'BOX_CLIENT_ID Active' : 'Standard Flow'}</span></div><p className="text-xs text-gray-600 dark:text-gray-300 mb-3">Authorize with your Box account. Tokens are exchanged securely via the backend.</p><div className="p-2.5 rounded-xl bg-black/5 text-[11px] flex items-center justify-between mb-3"><span className="truncate font-mono">Redirect URI: {window.location.origin}/box-oauth-callback.html</span><button onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/box-oauth-callback.html`); setCopiedId('redirect_uri'); setTimeout(() => setCopiedId(null), 1500); }} className="text-blue-600 font-bold ml-2">{copiedId === 'redirect_uri' ? 'Copied' : 'Copy'}</button></div>{!serverConfig.configured && <input type="text" placeholder="Box App Client ID" value={config.clientId || ''} onChange={e => setConfig(prev => ({ ...prev, clientId: e.target.value }))} className="w-full px-3 py-1.5 mb-3 border rounded-xl text-xs" />}<button onClick={handleLaunchOAuth} className="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-[#0061D5]">Connect with Box OAuth</button></div><div className="p-4 rounded-2xl border"><span className="text-xs font-bold flex items-center gap-1.5 mb-2"><Key className="w-3.5 h-3.5 text-blue-600" />Option 2: Instant Developer Token</span><p className="text-xs text-gray-600 dark:text-gray-400 mb-3">Generate a 1-hour Developer Token from Box Developer Console &gt; Configuration &gt; Developer Token:</p><div className="flex gap-2"><input type="password" placeholder="Paste Box Developer Token..." value={config.accessToken || ''} onChange={e => setConfig(prev => ({ ...prev, accessToken: e.target.value }))} className="flex-1 px-3 py-1.5 border rounded-xl text-xs" /><button onClick={async () => { if (!config.accessToken) { setStatusNotification({ type: 'error', message: 'Please paste a Box Developer Token' }); return; } setIsLoading(true); try { const user = await fetchBoxCurrentUser(config.accessToken); const nextConfig: BoxConfig = { isConnected: true, authMode: 'token', accessToken: config.accessToken, user, lastSyncTime: new Date().toISOString() }; saveBoxConfig(nextConfig); setConfig(nextConfig); setIsConnectModalOpen(false); setStatusNotification({ type: 'success', message: `Connected to Box Cloud as ${user.name}!` }); await refreshFolder('0'); } catch (err: any) { setStatusNotification({ type: 'error', message: `Token validation failed: ${err.message}` }); } finally { setIsLoading(false); } }} className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-gray-800">Verify Token</button></div></div>{config.isConnected && <div className="flex justify-end pt-2 border-t"><button onClick={() => { clearBoxConfig(); const nextConfig: BoxConfig = { isConnected: false, authMode: 'oauth', user: null }; setConfig(nextConfig); setItems([]); setIsConnectModalOpen(false); }} className="text-xs font-semibold text-rose-600">Disconnect Box Account</button></div>}</div></div></div>}
-      {isNewFolderModalOpen && <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"><div className="w-full max-w-md rounded-3xl bg-white dark:bg-[#18181b] shadow-2xl p-6"><div className="flex items-center justify-between"><h3 className="text-base font-bold">New Folder in Box</h3><button onClick={() => setIsNewFolderModalOpen(false)}><X className="w-4 h-4" /></button></div><input type="text" placeholder="Folder Name" value={newFolderName} onChange={e => setNewFolderName(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleCreateFolder()} className="w-full mt-4 px-3.5 py-2.5 border rounded-xl text-xs" /><div className="flex justify-end gap-2 mt-4"><button onClick={() => setIsNewFolderModalOpen(false)} className="px-3 py-1.5 rounded-xl text-xs">Cancel</button><button onClick={handleCreateFolder} disabled={!newFolderName.trim() || isLoading} className="px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-[#0061D5] disabled:opacity-50">Create Folder</button></div></div></div>}
-      {previewItem && <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"><div className="w-full max-w-xl rounded-3xl bg-white dark:bg-[#18181b] shadow-2xl p-6"><div className="flex items-start justify-between"><div className="flex items-center gap-3">{renderItemIcon(previewItem)}<div><h3 className="text-base font-bold truncate">{previewItem.name}</h3><p className="text-xs text-gray-500">{formatBoxFileSize(previewItem.size)} • Modified {new Date(previewItem.modified_at).toLocaleString()}</p></div></div><button onClick={() => setPreviewItem(null)}><X className="w-4 h-4" /></button></div>{previewItem.category === 'image' && previewItem.thumbnail_url ? <img src={previewItem.thumbnail_url} alt={previewItem.name} className="max-h-72 w-auto object-contain rounded-xl mx-auto mt-4" /> : previewItem.content_preview ? <pre className="mt-4 text-xs font-mono whitespace-pre-wrap max-h-60 overflow-y-auto">{previewItem.content_preview}</pre> : <div className="mt-4 p-8 text-center text-gray-500">Box file preview</div>}<div className="flex justify-end gap-2 mt-4 pt-3 border-t"><button onClick={() => handleDeleteItem(previewItem)} className="px-3 py-1.5 rounded-xl text-xs text-rose-600">Delete</button>{onImportTimelineItems && <button onClick={() => { handleIngestToTimeline(previewItem); setPreviewItem(null); }} className="px-3.5 py-1.5 rounded-xl text-xs text-blue-600">Add to Timeline</button>}<button onClick={() => setPreviewItem(null)} className="px-4 py-1.5 rounded-xl text-xs text-white bg-gray-900">Close</button></div></div></div>}
+      {isConnectModalOpen && <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"><div className="w-full max-w-lg rounded-3xl bg-white dark:bg-[#18181b] shadow-2xl p-6"><div className="flex items-center justify-between"><div><h3 className="text-base font-bold">Box Cloud Connection</h3><p className="text-xs text-gray-500">Connect your real Box account via OAuth 2.0 or Box Developer Token</p></div><button onClick={() => setIsConnectModalOpen(false)}><X className="w-4 h-4" /></button></div><div className="space-y-4 mt-4"><div className="p-4 rounded-2xl border border-blue-500/30"><div className="flex items-center justify-between mb-2"><span className="text-xs font-bold">Option 1: Box OAuth 2.0</span><span className="text-[10px]">{serverConfig.configured ? 'BOX_CLIENT_ID Active' : 'Standard Flow'}</span></div><p className="text-xs text-gray-600 dark:text-gray-300 mb-3">Authorize with your Box account. Tokens are exchanged securely via the backend.</p><div className="p-2.5 rounded-xl bg-black/5 text-[11px] flex items-center justify-between mb-3"><span className="truncate font-mono">Redirect URI: {redirectUri}</span><button onClick={() => { navigator.clipboard.writeText(redirectUri); setCopiedId('redirect_uri'); setTimeout(() => setCopiedId(null), 1500); }} className="text-blue-600 font-bold ml-2">{copiedId === 'redirect_uri' ? 'Copied' : 'Copy'}</button></div>{!serverConfig.configured && <input type="text" placeholder="Box App Client ID" value={config.clientId || ''} onChange={e => setConfig(prev => ({ ...prev, clientId: e.target.value }))} className="w-full px-3 py-1.5 mb-3 border rounded-xl text-xs" />}<button onClick={handleLaunchOAuth} className="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-[#0061D5]">Connect with Box OAuth</button></div><div className="p-4 rounded-2xl border"><span className="text-xs font-bold flex items-center gap-1.5 mb-2"><Key className="w-3.5 h-3.5 text-blue-600" />Option 2: Instant Developer Token</span><p className="text-xs text-gray-600 dark:text-gray-400 mb-3">Generate a 1-hour Developer Token from Box Developer Console &gt; Configuration &gt; Developer Token:</p><div className="flex gap-2"><input type="password" placeholder="Paste Box Developer Token..." value={config.accessToken || ''} onChange={e => setConfig(prev => ({ ...prev, accessToken: e.target.value }))} className="flex-1 px-3 py-1.5 border rounded-xl text-xs" /><button onClick={async () => { if (!config.accessToken) { setStatusNotification({ type: 'error', message: 'Please paste a Box Developer Token' }); return; } setIsLoading(true); try { const user = await fetchBoxCurrentUser(config.accessToken); const nextConfig: BoxConfig = { isConnected: true, authMode: 'token', accessToken: config.accessToken, user, lastSyncTime: new Date().toISOString() }; saveBoxConfig(nextConfig); setConfig(nextConfig); setIsConnectModalOpen(false); setStatusNotification({ type: 'success', message: `Connected to Box Cloud as ${user.name}!` }); await refreshFolder('0'); } catch (err: any) { setStatusNotification({ type: 'error', message: `Token validation failed: ${err.message}` }); } finally { setIsLoading(false); } }} className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-gray-800">Verify Token</button></div></div>{config.isConnected && <div className="flex justify-end pt-2 border-t"><button onClick={() => { clearBoxConfig(); try { sessionStorage.removeItem(BOX_OAUTH_STATE_KEY); } catch {} oauthPopupRef.current = null; const nextConfig: BoxConfig = { isConnected: false, authMode: 'oauth', user: null }; setConfig(nextConfig); setItems([]); setBreadcrumbs([{ id: '0', name: 'All Files' }]); setIsConnectModalOpen(false); }} className="text-xs font-semibold text-rose-600">Disconnect Box Account</button></div>}</div></div></div>}
+      {isNewFolderModalOpen && <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"><div className="w-full max-w-md rounded-3xl bg-white dark:bg-[#18181b] shadow-2xl p-6"><div className="flex items-center justify-between"><h3 className="text-base font-bold">New Folder in Box</h3><button onClick={() => setIsNewFolderModalOpen(false)}><X className="w-4 h-4" /></button></div><input type="text" placeholder="Folder Name" value={newFolderName} onChange={e => setNewFolderName(e.target.value)} onKeyDown={e => e.key === 'Enter' && void handleCreateFolder()} className="w-full mt-4 px-3.5 py-2.5 border rounded-xl text-xs" /><div className="flex justify-end gap-2 mt-4"><button onClick={() => setIsNewFolderModalOpen(false)} className="px-3 py-1.5 rounded-xl text-xs">Cancel</button><button onClick={() => void handleCreateFolder()} disabled={!newFolderName.trim() || isLoading} className="px-4 py-1.5 rounded-xl text-xs font-bold text-white bg-[#0061D5] disabled:opacity-50">Create Folder</button></div></div></div>}
+      {previewItem && <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60"><div className="w-full max-w-xl rounded-3xl bg-white dark:bg-[#18181b] shadow-2xl p-6"><div className="flex items-start justify-between"><div className="flex items-center gap-3">{renderItemIcon(previewItem)}<div><h3 className="text-base font-bold truncate">{previewItem.name}</h3><p className="text-xs text-gray-500">{formatBoxFileSize(previewItem.size)} • Modified {new Date(previewItem.modified_at).toLocaleString()}</p></div></div><button onClick={() => setPreviewItem(null)}><X className="w-4 h-4" /></button></div>{previewItem.category === 'image' && previewItem.thumbnail_url ? <img src={previewItem.thumbnail_url} alt={previewItem.name} className="max-h-72 w-auto object-contain rounded-xl mx-auto mt-4" /> : previewItem.content_preview ? <pre className="mt-4 text-xs font-mono whitespace-pre-wrap max-h-60 overflow-y-auto">{previewItem.content_preview}</pre> : <div className="mt-4 p-8 text-center text-gray-500">Box file preview</div>}<div className="flex justify-end gap-2 mt-4 pt-3 border-t"><button onClick={() => void handleDeleteItem(previewItem)} className="px-3 py-1.5 rounded-xl text-xs text-rose-600">Delete</button>{onImportTimelineItems && <button onClick={() => { handleIngestToTimeline(previewItem); setPreviewItem(null); }} className="px-3.5 py-1.5 rounded-xl text-xs text-blue-600">Add to Timeline</button>}<button onClick={() => setPreviewItem(null)} className="px-4 py-1.5 rounded-xl text-xs text-white bg-gray-900">Close</button></div></div></div>}
     </div>
   );
 };
