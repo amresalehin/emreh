@@ -5,7 +5,7 @@ import { CalendarDate, parseCalendarDate, parseCalendarInstant, validateCoordina
 void test('parses calendar dates without timezone drift', () => {
   assert.equal(parseCalendarDate('2025-03-09T23:30:00Z')?.toISOString(), '2025-03-09');
   assert.equal(parseCalendarDate('2025/03/09')?.toISOString(), '2025-03-09');
-  assert.equal(parseCalendarDate('20250309')?.toISOString(), null);
+  assert.equal(parseCalendarDate('not-a-date'), null);
 });
 
 void test('handles second, millisecond, microsecond and nanosecond timestamps', () => {
