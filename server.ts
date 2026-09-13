@@ -26,10 +26,6 @@ app.get('/api/health', (_req: Request, res: Response) => {
 
 /**
  * SSRF-safe outbound URL validation.
- *
- * The old implementation only checked a few IPv4 string prefixes before allowing
- * arbitrary server-side requests. This version resolves hostnames and rejects
- * loopback, private, link-local, multicast, unspecified and other reserved IPs.
  */
 function isForbiddenIp(address: string): boolean {
   const normalized = address.toLowerCase();
@@ -39,26 +35,24 @@ function isForbiddenIp(address: string): boolean {
   if (version === 4) {
     const octets = normalized.split('.').map(Number);
     const [a, b] = octets;
-    if (a === 0) return true;                    // 0.0.0.0/8
-    if (a === 10) return true;                   // RFC1918
-    if (a === 127) return true;                  // loopback
-    if (a === 169 && b === 254) return true;     // link-local
-    if (a === 172 && b >= 16 && b <= 31) return true; // RFC1918
-    if (a === 192 && b === 168) return true;    // RFC1918
-    if (a === 100 && b >= 64 && b <= 127) return true; // CGNAT
-    if (a === 192 && b === 0) return true;       // IETF protocol assignments
-    if (a === 198 && (b === 18 || b === 19)) return true; // benchmark
-    if (a >= 224) return true;                   // multicast/reserved
+    if (a === 0) return true;
+    if (a === 10) return true;
+    if (a === 127) return true;
+    if (a === 169 && b === 254) return true;
+    if (a === 172 && b >= 16 && b <= 31) return true;
+    if (a === 192 && b === 168) return true;
+    if (a === 100 && b >= 64 && b <= 127) return true;
+    if (a === 192 && b === 0) return true;
+    if (a === 198 && (b === 18 || b === 19)) return true;
+    if (a >= 224) return true;
     return false;
   }
 
-  // IPv6: reject loopback, unspecified, link-local, unique-local, multicast,
-  // documentation, IPv4-mapped private/loopback addresses, etc.
   const hex = normalized.replace(/^\[|\]$/g, '');
   if (hex === '::' || hex === '::1') return true;
-  if (hex.startsWith('fe8') || hex.startsWith('fe9') || hex.startsWith('fea') || hex.startsWith('feb')) return true; // fe80::/10
-  if (hex.startsWith('fc') || hex.startsWith('fd')) return true; // fc00::/7
-  if (hex.startsWith('ff')) return true; // ff00::/8
+  if (/^fe[89ab]/i.test(hex)) return true;
+  if (/^fc|^fd/i.test(hex)) return true;
+  if (/^ff/i.test(hex)) return true;
 
   const mapped = hex.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/i);
   if (mapped) return isForbiddenIp(mapped[1]);
@@ -87,8 +81,6 @@ async function validateOutboundUrl(stringUrl: string): Promise<URL> {
     return parsed;
   }
 
-  // Resolve all addresses so a public-looking hostname cannot point at an
-  // internal/private destination. All returned addresses must be safe.
   const addresses = await dns.lookup(hostname, { all: true, verbatim: true });
   if (!addresses.length || addresses.some(entry => isForbiddenIp(entry.address))) {
     throw new Error('Hostname resolves to a private, local, link-local, multicast, or reserved IP address');
@@ -108,7 +100,13 @@ async function readResponseWithLimit(response: globalThis.Response, maxBytes: nu
   }
 
   const reader = response.body?.getReader();
-  if (!reader) return Buffer.from(await response.arrayBuffer());
+  if (!reader) {
+    const data = Buffer.from(await response.arrayBuffer());
+    if (data.length > maxBytes) {
+      throw new Error(`Upstream response exceeds the ${maxBytes} byte limit`);
+    }
+    return data;
+  }
 
   const chunks: Buffer[] = [];
   let total = 0;
@@ -166,10 +164,7 @@ async function safeFetchWithRedirects(
 }
 
 /**
- * Dedicated generic proxy only for existing app callers.
- * It is deliberately restricted to GET/HEAD so it cannot be used as an
- * arbitrary cross-site write primitive, and outbound validation is performed
- * before every request and redirect.
+ * Generic GET/HEAD proxy retained for existing app callers.
  */
 app.all('/api/proxy/fetch', async (req: Request, res: Response): Promise<void> => {
   const targetUrl = (req.query.url as string) || req.body?.url;
@@ -242,15 +237,11 @@ app.all('/api/proxy/fetch', async (req: Request, res: Response): Promise<void> =
     const dataBuffer = await readResponseWithLimit(upstreamRes, MAX_PROXY_RESPONSE_BYTES);
     res.status(upstreamRes.status).send(dataBuffer);
   } catch (err: any) {
-    clearTimeout(timeoutId);
     const isTimeout = err?.name === 'AbortError';
     res.status(isTimeout ? 504 : 502).json({
       ok: false,
-      error: isTimeout
-        ? 'Proxy request timed out.'
-        : err?.message || 'Unable to connect to target server.'
+      error: isTimeout ? 'Proxy request timed out.' : err?.message || 'Unable to connect to target server.'
     });
-    return;
   } finally {
     clearTimeout(timeoutId);
   }
@@ -258,7 +249,6 @@ app.all('/api/proxy/fetch', async (req: Request, res: Response): Promise<void> =
 
 /**
  * Dedicated Raindrop API Proxy (/api/sync/raindrop)
- * Forwards requests to https://api.raindrop.io/rest/v1/...
  */
 app.all('/api/sync/raindrop', async (req: Request, res: Response): Promise<void> => {
   const endpoint = (req.query.path as string) || req.body?.path || 'user';
@@ -351,7 +341,6 @@ app.all('/api/sync/pinterest', async (req: Request, res: Response): Promise<void
 
 /**
  * Dedicated RSS / XML Feed Proxy (/api/proxy/rss)
- * Reliably pulls RSS XML feeds without browser CORS or origin restrictions
  */
 app.get('/api/proxy/rss', async (req: Request, res: Response): Promise<void> => {
   const feedUrl = req.query.url as string;
@@ -460,16 +449,16 @@ app.get('/api/box/config', (_req: Request, res: Response) => {
 
 app.post('/api/box/oauth/token', async (req: Request, res: Response) => {
   try {
-    const { code, redirectUri, clientId, clientSecret } = req.body || {};
-    const effectiveClientId = (clientId || process.env.BOX_CLIENT_ID || '').trim();
-    const effectiveClientSecret = (clientSecret || process.env.BOX_CLIENT_SECRET || '').trim();
+    const { code, redirectUri } = req.body || {};
+    const effectiveClientId = (process.env.BOX_CLIENT_ID || '').trim();
+    const effectiveClientSecret = (process.env.BOX_CLIENT_SECRET || '').trim();
 
     if (!code) {
       res.status(400).json({ error: 'Missing authorization code' });
       return;
     }
     if (!effectiveClientId || !effectiveClientSecret) {
-      res.status(400).json({ error: 'BOX_CLIENT_ID or BOX_CLIENT_SECRET not configured' });
+      res.status(500).json({ error: 'Box OAuth is not configured on the server' });
       return;
     }
 
@@ -490,7 +479,101 @@ app.post('/api/box/oauth/token', async (req: Request, res: Response) => {
     const boxData = await boxRes.json();
     res.status(boxRes.status).json(boxData);
   } catch (err: any) {
-    res.status(502).json({ error: err.message || 'Box OAuth request failed' });
+    res.status(502).json({ error: err?.message || 'Failed to exchange Box authorization code' });
   }
 });
 
+app.post('/api/box/oauth/refresh', async (req: Request, res: Response) => {
+  try {
+    const { refreshToken } = req.body || {};
+    const effectiveClientId = (process.env.BOX_CLIENT_ID || '').trim();
+    const effectiveClientSecret = (process.env.BOX_CLIENT_SECRET || '').trim();
+
+    if (!refreshToken) {
+      res.status(400).json({ error: 'Missing refresh token' });
+      return;
+    }
+    if (!effectiveClientId || !effectiveClientSecret) {
+      res.status(500).json({ error: 'Box OAuth is not configured on the server' });
+      return;
+    }
+
+    const formData = new URLSearchParams();
+    formData.append('grant_type', 'refresh_token');
+    formData.append('refresh_token', refreshToken);
+    formData.append('client_id', effectiveClientId);
+    formData.append('client_secret', effectiveClientSecret);
+
+    const boxRes = await fetch('https://api.box.com/oauth2/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formData.toString()
+    });
+
+    const boxData = await boxRes.json();
+    res.status(boxRes.status).json(boxData);
+  } catch (err: any) {
+    res.status(502).json({ error: err?.message || 'Failed to refresh Box token' });
+  }
+});
+
+// Box API Proxy - endpoint remains fixed to api.box.com and never accepts an arbitrary host.
+app.all('/api/box/proxy', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const endpoint = String(req.query.endpoint || '');
+    if (!endpoint || !endpoint.startsWith('/2.0/')) {
+      res.status(400).json({ error: 'Invalid Box API endpoint' });
+      return;
+    }
+
+    const authHeader = req.headers['authorization'];
+    if (!authHeader || typeof authHeader !== 'string') {
+      res.status(401).json({ error: 'Missing Box Authorization header' });
+      return;
+    }
+
+    const boxRes = await fetch(`https://api.box.com${endpoint}`, {
+      method: req.method,
+      headers: {
+        'Authorization': authHeader,
+        'Accept': 'application/json',
+        ...(req.headers['content-type'] ? { 'Content-Type': String(req.headers['content-type']) } : {})
+      },
+      ...(req.method !== 'GET' && req.method !== 'HEAD' ? { body: JSON.stringify(req.body || {}) } : {})
+    });
+
+    const text = await boxRes.text();
+    res.setHeader('Content-Type', boxRes.headers.get('content-type') || 'application/json');
+    res.status(boxRes.status).send(text);
+  } catch (err: any) {
+    res.status(502).json({ error: err?.message || 'Box API proxy request failed' });
+  }
+});
+
+if (isProduction) {
+  const distPath = path.resolve(process.cwd(), 'dist');
+  app.use(express.static(distPath));
+
+  app.get('*', (_req: Request, res: Response) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
+
+async function startServer() {
+  if (!isProduction) {
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'spa'
+    });
+    app.use(vite.middlewares);
+  }
+
+  app.listen(PORT, () => {
+    console.log(`Emreh server listening on http://localhost:${PORT}`);
+  });
+}
+
+startServer().catch((err) => {
+  console.error('Failed to start Emreh server:', err);
+  process.exit(1);
+});
