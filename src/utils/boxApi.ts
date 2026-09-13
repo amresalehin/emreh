@@ -72,7 +72,7 @@ export function formatBoxFileSize(bytes: number): string {
   if (!bytes || bytes <= 0) return '0 B';
   const k = 1024;
   const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  const i = Math.min(sizes.length - 1, Math.floor(Math.log(bytes) / Math.log(k)));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 }
 
@@ -93,10 +93,10 @@ export function getBoxConfig(): BoxConfig {
   try {
     const raw = localStorage.getItem(BOX_CONFIG_STORAGE_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw) as BoxConfig;
+      const parsed = JSON.parse(raw) as BoxConfig & { clientSecret?: string };
       // Older versions persisted clientSecret locally. Remove it immediately on read.
       if ('clientSecret' in parsed) {
-        delete (parsed as BoxConfig & { clientSecret?: string }).clientSecret;
+        delete parsed.clientSecret;
         try {
           localStorage.setItem(BOX_CONFIG_STORAGE_KEY, JSON.stringify(parsed));
         } catch {}
@@ -116,9 +116,7 @@ export function getBoxConfig(): BoxConfig {
 
 export function saveBoxConfig(config: BoxConfig): void {
   try {
-    const safeConfig = { ...config } as BoxConfig & { clientSecret?: string };
-    delete safeConfig.clientSecret;
-    localStorage.setItem(BOX_CONFIG_STORAGE_KEY, JSON.stringify(safeConfig));
+    localStorage.setItem(BOX_CONFIG_STORAGE_KEY, JSON.stringify(config));
   } catch (err) {
     console.error('Failed to save Box config', err);
   }
@@ -160,12 +158,12 @@ export async function fetchBoxServerConfig(): Promise<BoxServerConfig> {
   return { configured: false, clientId: '' };
 }
 
-export function getBoxAuthorizeUrl(clientId: string, redirectUri: string, state?: string): string {
+export function getBoxAuthorizeUrl(clientId: string, redirectUri: string, state: string): string {
   const params = new URLSearchParams({
     response_type: 'code',
     client_id: clientId,
     redirect_uri: redirectUri,
-    state: state || 'box_auth_' + Date.now()
+    state
   });
   return `https://account.box.com/api/oauth2/authorize?${params.toString()}`;
 }
@@ -183,8 +181,6 @@ async function fetchWithBoxFallback(url: string, options: RequestInit): Promise<
 // Exchange the authorization code exclusively through the backend.
 export async function exchangeBoxCode(
   code: string,
-  _clientId?: string,
-  _unusedClientSecret?: string,
   redirectUri?: string
 ): Promise<{ access_token: string; refresh_token?: string; expires_in?: number }> {
   const serverRes = await fetch('/api/box/oauth/token', {
@@ -201,9 +197,7 @@ export async function exchangeBoxCode(
 }
 
 export async function refreshBoxToken(
-  refreshToken: string,
-  _clientId?: string,
-  _unusedClientSecret?: string
+  refreshToken: string
 ): Promise<{ access_token: string; refresh_token?: string; expires_in?: number }> {
   const res = await fetch('/api/box/oauth/refresh', {
     method: 'POST',
@@ -241,13 +235,21 @@ export async function fetchBoxCurrentUser(token: string): Promise<BoxUser> {
 
 export async function fetchBoxFolderItems(folderId: string, token: string): Promise<BoxItem[]> {
   const fields = 'id,type,name,size,created_at,modified_at,description,shared_link,item_status,path_collection,content_created_at,extension';
-  const res = await fetchWithBoxFallback(`https://api.box.com/2.0/folders/${folderId}/items?fields=${fields}&limit=100`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
+  const entries: any[] = [];
+  let marker: string | undefined;
 
-  if (!res.ok) throw new Error(`Failed to fetch Box folder ${folderId}: ${res.statusText}`);
-  const data = await res.json();
-  const entries: any[] = data.entries || [];
+  do {
+    const params = new URLSearchParams({ fields, limit: '1000', usemarker: 'true' });
+    if (marker) params.set('marker', marker);
+    const res = await fetchWithBoxFallback(`https://api.box.com/2.0/folders/${folderId}/items?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!res.ok) throw new Error(`Failed to fetch Box folder ${folderId}: ${res.statusText}`);
+    const data = await res.json();
+    if (Array.isArray(data.entries)) entries.push(...data.entries);
+    marker = data.next_marker || undefined;
+  } while (marker);
 
   return entries.map(entry => ({
     id: entry.id,
